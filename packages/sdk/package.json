@@ -1,0 +1,48 @@
+{
+  "name": "@dzbot/sdk",
+  "version": "0.1.0",
+  "description": "Build your own DayZ Discord bot or website on dzbot: players, wallets, shop, tickets, kill feed and every other dzbot feature through one typed client, plus Sign in with dzbot, webhooks and live events.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://developers.dzbot.de/sdk/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siemendev/dzbot-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siemendev/dzbot-sdk/issues"
+  },
+  "keywords": [
+    "dayz",
+    "dzbot",
+    "nitrado",
+    "discord-bot",
+    "dayz-server",
+    "api",
+    "sdk",
+    "webhooks",
+    "oauth"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/packages/sdk/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/packages/sdk/src/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./api": {
+      "types": "./dist/packages/sdk/src/api.d.ts",
+      "import": "./dist/api.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}

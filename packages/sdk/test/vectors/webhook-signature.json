@@ -1,0 +1,132 @@
+{
+  "description": "dzbot-signature: t=<unix seconds>,v1=<hex HMAC-SHA256(secret, \"<t>.<raw body>\")>; tolerance 300 s; the signature is checked before the time. Shared by the PHP signer test and the SDK tests.",
+  "tolerance": 300,
+  "cases": [
+    {
+      "description": "valid signature, same second",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": true
+    },
+    {
+      "description": "valid signature at the edge of the 300 s tolerance",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225900,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": true
+    },
+    {
+      "description": "rotation: one of two v1 entries matches",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=39e24b4e4b2bcdb411a467eab665cb85b977e7d1d5367f62fea0b3b2a039dfcc,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": true
+    },
+    {
+      "description": "multi-byte UTF-8 body",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"a1\",\"name\":\"ticket.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"ticket\":{\"subject\":\"Grüße – Basis weg 🏚️\"}}}",
+      "header": "t=1767225600,v1=ef7ffd60d053061a211f39750df1e50a23e15f6df6c2dd4cc2caffdc15032390",
+      "valid": true
+    },
+    {
+      "description": "signed with another secret",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=5559924dfb333465bc4526a81364a3bb5f3a9f4d2248622b7d8c2209c46260eb",
+      "valid": false,
+      "error": "no_match"
+    },
+    {
+      "description": "body changed after signing",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}} ",
+      "header": "t=1767225600,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "no_match"
+    },
+    {
+      "description": "timestamp changed after signing",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225601,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225601,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "no_match"
+    },
+    {
+      "description": "too old: 301 s",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225901,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "timestamp_out_of_range"
+    },
+    {
+      "description": "too far in the future",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225200,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "timestamp_out_of_range"
+    },
+    {
+      "description": "no header",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "",
+      "valid": false,
+      "error": "missing_header"
+    },
+    {
+      "description": "no timestamp",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "bad_format"
+    },
+    {
+      "description": "no v1 signature",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=1767225600",
+      "valid": false,
+      "error": "bad_format"
+    },
+    {
+      "description": "timestamp not a number",
+      "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
+      "timestamp": 1767225600,
+      "now": 1767225600,
+      "body": "{\"id\":\"9f2c4e6a8b0d1f3e5a7c9e1b3d5f7a90\",\"name\":\"order.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"server\":{\"id\":12,\"name\":\"Chernarus PvP\"},\"order\":{\"id\":4711,\"code\":\"7KQM\",\"total\":2500}}}",
+      "header": "t=soon,v1=f7488354a91b76add19d9c27813fbd554136af5df0654369342b8e1e752d4cbd",
+      "valid": false,
+      "error": "bad_format"
+    }
+  ]
+}
