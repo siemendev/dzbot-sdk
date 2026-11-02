@@ -59,6 +59,12 @@ export interface GetApiAdminAccounting200Response {
      * @memberof GetApiAdminAccounting200Response
      */
     categoryBreakdown?: Array<GetApiAdminAccounting200ResponseCategoryBreakdownInner>;
+    /**
+     * Run by the platform operator: manual bookings carry a VAT treatment for its VAT return
+     * @type {boolean}
+     * @memberof GetApiAdminAccounting200Response
+     */
+    platformOwned?: boolean;
 }
 
 /**
@@ -81,6 +87,7 @@ export function GetApiAdminAccounting200ResponseFromJSONTyped(json: any, ignoreD
         'kpis': json['kpis'] == null ? undefined : ((json['kpis'] as Array<any>).map(GetApiAdminAccounting200ResponseKpisInnerFromJSON)),
         'monthlyBreakdown': json['monthlyBreakdown'] == null ? undefined : ((json['monthlyBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseMonthlyBreakdownInnerFromJSON)),
         'categoryBreakdown': json['categoryBreakdown'] == null ? undefined : ((json['categoryBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseCategoryBreakdownInnerFromJSON)),
+        'platformOwned': json['platformOwned'] == null ? undefined : json['platformOwned'],
     };
 }
 
@@ -98,6 +105,7 @@ export function GetApiAdminAccounting200ResponseToJSONTyped(value?: GetApiAdminA
         'kpis': value['kpis'] == null ? undefined : ((value['kpis'] as Array<any>).map(GetApiAdminAccounting200ResponseKpisInnerToJSON)),
         'monthlyBreakdown': value['monthlyBreakdown'] == null ? undefined : ((value['monthlyBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseMonthlyBreakdownInnerToJSON)),
         'categoryBreakdown': value['categoryBreakdown'] == null ? undefined : ((value['categoryBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseCategoryBreakdownInnerToJSON)),
+        'platformOwned': value['platformOwned'],
     };
 }
 

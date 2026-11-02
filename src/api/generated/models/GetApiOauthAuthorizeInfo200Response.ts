@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect } from './GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect';
+import {
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSONTyped,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSONTyped,
+} from './GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect';
+
 /**
  * 
  * @export
@@ -27,10 +35,10 @@ export interface GetApiOauthAuthorizeInfo200Response {
     clientName: string;
     /**
      * 
-     * @type {string}
+     * @type {GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect}
      * @memberof GetApiOauthAuthorizeInfo200Response
      */
-    redirectHost: string;
+    redirect: GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect;
     /**
      * 
      * @type {boolean}
@@ -44,7 +52,7 @@ export interface GetApiOauthAuthorizeInfo200Response {
  */
 export function instanceOfGetApiOauthAuthorizeInfo200Response(value: object): value is GetApiOauthAuthorizeInfo200Response {
     if (!('clientName' in value) || value['clientName'] === undefined) return false;
-    if (!('redirectHost' in value) || value['redirectHost'] === undefined) return false;
+    if (!('redirect' in value) || value['redirect'] === undefined) return false;
     if (!('writeRequested' in value) || value['writeRequested'] === undefined) return false;
     return true;
 }
@@ -60,7 +68,7 @@ export function GetApiOauthAuthorizeInfo200ResponseFromJSONTyped(json: any, igno
     return {
         
         'clientName': json['clientName'],
-        'redirectHost': json['redirectHost'],
+        'redirect': GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSON(json['redirect']),
         'writeRequested': json['writeRequested'],
     };
 }
@@ -77,7 +85,7 @@ export function GetApiOauthAuthorizeInfo200ResponseToJSONTyped(value?: GetApiOau
     return {
         
         'clientName': value['clientName'],
-        'redirectHost': value['redirectHost'],
+        'redirect': GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSON(value['redirect']),
         'writeRequested': value['writeRequested'],
     };
 }

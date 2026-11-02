@@ -64,12 +64,34 @@ export interface PatchApiAdminAccountingManualUpdateRequest {
      */
     notes?: string | null;
     /**
+     * Why a zero-rate booking carries no German VAT; only kept for organizations the platform runs itself
+     * @type {string}
+     * @memberof PatchApiAdminAccountingManualUpdateRequest
+     */
+    vatTreatment?: PatchApiAdminAccountingManualUpdateRequestVatTreatmentEnum | null;
+    /**
      * 
      * @type {Array<GetApiAdminAccountingEntryDetail200ResponseLineItemsInner>}
      * @memberof PatchApiAdminAccountingManualUpdateRequest
      */
     lineItems?: Array<GetApiAdminAccountingEntryDetail200ResponseLineItemsInner>;
 }
+
+
+/**
+ * @export
+ */
+export const PatchApiAdminAccountingManualUpdateRequestVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type PatchApiAdminAccountingManualUpdateRequestVatTreatmentEnum = typeof PatchApiAdminAccountingManualUpdateRequestVatTreatmentEnum[keyof typeof PatchApiAdminAccountingManualUpdateRequestVatTreatmentEnum];
+
 
 /**
  * Check if a given object implements the PatchApiAdminAccountingManualUpdateRequest interface.
@@ -94,6 +116,7 @@ export function PatchApiAdminAccountingManualUpdateRequestFromJSONTyped(json: an
         'vendor': json['vendor'] == null ? undefined : json['vendor'],
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
         'notes': json['notes'] == null ? undefined : json['notes'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'lineItems': json['lineItems'] == null ? undefined : ((json['lineItems'] as Array<any>).map(GetApiAdminAccountingEntryDetail200ResponseLineItemsInnerFromJSON)),
     };
 }
@@ -115,6 +138,7 @@ export function PatchApiAdminAccountingManualUpdateRequestToJSONTyped(value?: Pa
         'vendor': value['vendor'],
         'invoiceReference': value['invoiceReference'],
         'notes': value['notes'],
+        'vatTreatment': value['vatTreatment'],
         'lineItems': value['lineItems'] == null ? undefined : ((value['lineItems'] as Array<any>).map(GetApiAdminAccountingEntryDetail200ResponseLineItemsInnerToJSON)),
     };
 }

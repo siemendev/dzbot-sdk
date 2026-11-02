@@ -49,6 +49,12 @@ export interface GetApiPlatformAdminInvoiceSettingsGet200Response {
      * @memberof GetApiPlatformAdminInvoiceSettingsGet200Response
      */
     vatRatePercent?: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof GetApiPlatformAdminInvoiceSettingsGet200Response
+     */
+    vatLiableSince?: Date | null;
 }
 
 /**
@@ -73,6 +79,7 @@ export function GetApiPlatformAdminInvoiceSettingsGet200ResponseFromJSONTyped(js
         'issuerTaxId': json['issuerTaxId'] == null ? undefined : json['issuerTaxId'],
         'footerText': json['footerText'] == null ? undefined : json['footerText'],
         'vatRatePercent': json['vatRatePercent'] == null ? undefined : json['vatRatePercent'],
+        'vatLiableSince': json['vatLiableSince'] == null ? undefined : (new Date(json['vatLiableSince'])),
     };
 }
 
@@ -92,6 +99,7 @@ export function GetApiPlatformAdminInvoiceSettingsGet200ResponseToJSONTyped(valu
         'issuerTaxId': value['issuerTaxId'],
         'footerText': value['footerText'],
         'vatRatePercent': value['vatRatePercent'],
+        'vatLiableSince': value['vatLiableSince'] == null ? undefined : ((value['vatLiableSince'] as any).toISOString()),
     };
 }
 

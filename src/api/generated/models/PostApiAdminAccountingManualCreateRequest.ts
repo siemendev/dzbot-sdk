@@ -70,6 +70,12 @@ export interface PostApiAdminAccountingManualCreateRequest {
      */
     notes?: string | null;
     /**
+     * Why a zero-rate booking carries no German VAT; only kept for organizations the platform runs itself
+     * @type {string}
+     * @memberof PostApiAdminAccountingManualCreateRequest
+     */
+    vatTreatment?: PostApiAdminAccountingManualCreateRequestVatTreatmentEnum | null;
+    /**
      * Book the entry org-wide (no server attribution) instead of against the current server.
      * @type {boolean}
      * @memberof PostApiAdminAccountingManualCreateRequest
@@ -99,6 +105,20 @@ export const PostApiAdminAccountingManualCreateRequestDirectionEnum = {
 } as const;
 export type PostApiAdminAccountingManualCreateRequestDirectionEnum = typeof PostApiAdminAccountingManualCreateRequestDirectionEnum[keyof typeof PostApiAdminAccountingManualCreateRequestDirectionEnum];
 
+/**
+ * @export
+ */
+export const PostApiAdminAccountingManualCreateRequestVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type PostApiAdminAccountingManualCreateRequestVatTreatmentEnum = typeof PostApiAdminAccountingManualCreateRequestVatTreatmentEnum[keyof typeof PostApiAdminAccountingManualCreateRequestVatTreatmentEnum];
+
 
 /**
  * Check if a given object implements the PostApiAdminAccountingManualCreateRequest interface.
@@ -124,6 +144,7 @@ export function PostApiAdminAccountingManualCreateRequestFromJSONTyped(json: any
         'vendor': json['vendor'] == null ? undefined : json['vendor'],
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
         'notes': json['notes'] == null ? undefined : json['notes'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'orgWide': json['orgWide'] == null ? undefined : json['orgWide'],
         'teamMemberId': json['teamMemberId'] == null ? undefined : json['teamMemberId'],
         'lineItems': json['lineItems'] == null ? undefined : ((json['lineItems'] as Array<any>).map(GetApiAdminAccountingEntryDetail200ResponseLineItemsInnerFromJSON)),
@@ -148,6 +169,7 @@ export function PostApiAdminAccountingManualCreateRequestToJSONTyped(value?: Pos
         'vendor': value['vendor'],
         'invoiceReference': value['invoiceReference'],
         'notes': value['notes'],
+        'vatTreatment': value['vatTreatment'],
         'orgWide': value['orgWide'],
         'teamMemberId': value['teamMemberId'],
         'lineItems': value['lineItems'] == null ? undefined : ((value['lineItems'] as Array<any>).map(GetApiAdminAccountingEntryDetail200ResponseLineItemsInnerToJSON)),

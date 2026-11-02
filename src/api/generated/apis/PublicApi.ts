@@ -16,11 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   GetApiPublicFactionTags200Response,
+  GetApiPublicHost200Response,
   GetApiPublicMapConfig200Response,
   GetApiPublicMapPlaces200Response,
+  GetApiPublicMapRoute200Response,
   GetApiPublicMapServers200Response,
+  GetApiPublicPopulation200Response,
   GetApiPublicServerInfo200Response,
   GetApiPublicSubscriptions200Response,
+  GetApiPublicWhitelist200Response,
   GetApiPublicWikiServer200Response,
   GetApiPublicWikiServerShop200Response,
   GetApiPublicWikiServers200Response,
@@ -36,16 +40,24 @@ import type {
 import {
     GetApiPublicFactionTags200ResponseFromJSON,
     GetApiPublicFactionTags200ResponseToJSON,
+    GetApiPublicHost200ResponseFromJSON,
+    GetApiPublicHost200ResponseToJSON,
     GetApiPublicMapConfig200ResponseFromJSON,
     GetApiPublicMapConfig200ResponseToJSON,
     GetApiPublicMapPlaces200ResponseFromJSON,
     GetApiPublicMapPlaces200ResponseToJSON,
+    GetApiPublicMapRoute200ResponseFromJSON,
+    GetApiPublicMapRoute200ResponseToJSON,
     GetApiPublicMapServers200ResponseFromJSON,
     GetApiPublicMapServers200ResponseToJSON,
+    GetApiPublicPopulation200ResponseFromJSON,
+    GetApiPublicPopulation200ResponseToJSON,
     GetApiPublicServerInfo200ResponseFromJSON,
     GetApiPublicServerInfo200ResponseToJSON,
     GetApiPublicSubscriptions200ResponseFromJSON,
     GetApiPublicSubscriptions200ResponseToJSON,
+    GetApiPublicWhitelist200ResponseFromJSON,
+    GetApiPublicWhitelist200ResponseToJSON,
     GetApiPublicWikiServer200ResponseFromJSON,
     GetApiPublicWikiServer200ResponseToJSON,
     GetApiPublicWikiServerShop200ResponseFromJSON,
@@ -142,6 +154,12 @@ export interface GetApiPublicMapPlacesRequest {
     map: string;
 }
 
+export interface GetApiPublicMapRouteRequest {
+    mission: string;
+    from: string;
+    to: string;
+}
+
 export interface GetApiPublicMapServersRequest {
     mission: string;
 }
@@ -153,6 +171,10 @@ export interface GetApiPublicMapZonesRequest {
 export interface GetApiPublicPlayerProfileRequest {
     xServerSubdomain: string;
     id: number;
+}
+
+export interface GetApiPublicPopulationRequest {
+    xServerSubdomain: string;
 }
 
 export interface GetApiPublicSearchRequest {
@@ -185,6 +207,10 @@ export interface GetApiPublicServerInfoRequest {
 }
 
 export interface GetApiPublicSubscriptionsRequest {
+    xServerSubdomain: string;
+}
+
+export interface GetApiPublicWhitelistRequest {
     xServerSubdomain: string;
 }
 
@@ -383,6 +409,32 @@ export class PublicApi extends runtime.BaseAPI {
      */
     async getApiPublicGuestConfig(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getApiPublicGuestConfigRaw(initOverrides);
+    }
+
+    /**
+     * The server the requested hostname belongs to
+     */
+    async getApiPublicHostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPublicHost200Response>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/public/host`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPublicHost200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The server the requested hostname belongs to
+     */
+    async getApiPublicHost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPublicHost200Response> {
+        const response = await this.getApiPublicHostRaw(initOverrides);
+        return await response.value();
     }
 
     /**
@@ -1011,6 +1063,73 @@ export class PublicApi extends runtime.BaseAPI {
     }
 
     /**
+     * Fastest route by car between two points of a map
+     */
+    async getApiPublicMapRouteRaw(requestParameters: GetApiPublicMapRouteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPublicMapRoute200Response>> {
+        if (requestParameters['mission'] == null) {
+            throw new runtime.RequiredError(
+                'mission',
+                'Required parameter "mission" was null or undefined when calling getApiPublicMapRoute().'
+            );
+        }
+
+        if (requestParameters['from'] == null) {
+            throw new runtime.RequiredError(
+                'from',
+                'Required parameter "from" was null or undefined when calling getApiPublicMapRoute().'
+            );
+        }
+
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling getApiPublicMapRoute().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['mission'] != null) {
+            queryParameters['mission'] = requestParameters['mission'];
+        }
+
+        if (requestParameters['from'] != null) {
+            queryParameters['from'] = requestParameters['from'];
+        }
+
+        if (requestParameters['to'] != null) {
+            queryParameters['to'] = requestParameters['to'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/public/map/route`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPublicMapRoute200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Fastest route by car between two points of a map
+     */
+    async getApiPublicMapRoute(requestParameters: GetApiPublicMapRouteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPublicMapRoute200Response> {
+        const response = await this.getApiPublicMapRouteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Servers that show their map of a mission to everyone — the public servers of the public map
      */
     async getApiPublicMapServersRaw(requestParameters: GetApiPublicMapServersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPublicMapServers200Response>> {
@@ -1149,6 +1268,51 @@ export class PublicApi extends runtime.BaseAPI {
      */
     async getApiPublicPlayerProfile(requestParameters: GetApiPublicPlayerProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicPlayerProfile> {
         const response = await this.getApiPublicPlayerProfileRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * How full the server is right now — the count the in-game server browser shows, not who is online
+     */
+    async getApiPublicPopulationRaw(requestParameters: GetApiPublicPopulationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPublicPopulation200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiPublicPopulation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/public/population`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPublicPopulation200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * How full the server is right now — the count the in-game server browser shows, not who is online
+     */
+    async getApiPublicPopulation(requestParameters: GetApiPublicPopulationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPublicPopulation200Response> {
+        const response = await this.getApiPublicPopulationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1478,6 +1642,51 @@ export class PublicApi extends runtime.BaseAPI {
      */
     async getApiPublicSupport(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getApiPublicSupportRaw(initOverrides);
+    }
+
+    /**
+     * Whether the server lets only whitelisted players in right now, and when a scheduled task next switches that
+     */
+    async getApiPublicWhitelistRaw(requestParameters: GetApiPublicWhitelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPublicWhitelist200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiPublicWhitelist().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/public/whitelist`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPublicWhitelist200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Whether the server lets only whitelisted players in right now, and when a scheduled task next switches that
+     */
+    async getApiPublicWhitelist(requestParameters: GetApiPublicWhitelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPublicWhitelist200Response> {
+        const response = await this.getApiPublicWhitelistRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

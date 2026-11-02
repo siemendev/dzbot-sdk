@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './AccountingApi';
 export * from './AdminApi';
+export * from './AdminModsApi';
 export * from './AuthApi';
 export * from './BookmakerApi';
 export * from './ClaimApi';
@@ -14,6 +15,7 @@ export * from './LiveApi';
 export * from './MapMarkersApi';
 export * from './MapViewStatesApi';
 export * from './MeApi';
+export * from './ModsApi';
 export * from './NitradoApi';
 export * from './OAuthApi';
 export * from './OrganizationApi';

@@ -33,6 +33,12 @@ export interface GetApiAdminItemCategoriesFormData200Response {
      * @memberof GetApiAdminItemCategoriesFormData200Response
      */
     groups?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
+    /**
+     * 
+     * @type {Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>}
+     * @memberof GetApiAdminItemCategoriesFormData200Response
+     */
+    factions?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
 }
 
 /**
@@ -53,6 +59,7 @@ export function GetApiAdminItemCategoriesFormData200ResponseFromJSONTyped(json: 
     return {
         
         'groups': json['groups'] == null ? undefined : ((json['groups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
+        'factions': json['factions'] == null ? undefined : ((json['factions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
     };
 }
 
@@ -68,6 +75,7 @@ export function GetApiAdminItemCategoriesFormData200ResponseToJSONTyped(value?: 
     return {
         
         'groups': value['groups'] == null ? undefined : ((value['groups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
+        'factions': value['factions'] == null ? undefined : ((value['factions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
     };
 }
 

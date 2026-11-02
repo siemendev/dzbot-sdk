@@ -108,6 +108,12 @@ export interface PostApiAdminItemSetsCreate201ResponseItem {
     groupIds?: Array<number>;
     /**
      * 
+     * @type {Array<number>}
+     * @memberof PostApiAdminItemSetsCreate201ResponseItem
+     */
+    factionIds?: Array<number>;
+    /**
+     * 
      * @type {string}
      * @memberof PostApiAdminItemSetsCreate201ResponseItem
      */
@@ -143,6 +149,7 @@ export function PostApiAdminItemSetsCreate201ResponseItemFromJSONTyped(json: any
         'categoryId': json['categoryId'] == null ? undefined : json['categoryId'],
         'categoryName': json['categoryName'] == null ? undefined : PostApiAdminItemSetsCreate201ResponseItemCategoryNameFromJSON(json['categoryName']),
         'groupIds': json['groupIds'] == null ? undefined : json['groupIds'],
+        'factionIds': json['factionIds'] == null ? undefined : json['factionIds'],
         'updatedAt': json['updatedAt'] == null ? undefined : json['updatedAt'],
     };
 }
@@ -170,6 +177,7 @@ export function PostApiAdminItemSetsCreate201ResponseItemToJSONTyped(value?: Pos
         'categoryId': value['categoryId'],
         'categoryName': PostApiAdminItemSetsCreate201ResponseItemCategoryNameToJSON(value['categoryName']),
         'groupIds': value['groupIds'],
+        'factionIds': value['factionIds'],
         'updatedAt': value['updatedAt'],
     };
 }

@@ -24,12 +24,6 @@ export interface PostApiCreatorsModsCreate201Response {
      * @type {number}
      * @memberof PostApiCreatorsModsCreate201Response
      */
-    versionId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PostApiCreatorsModsCreate201Response
-     */
     modId?: number;
 }
 
@@ -50,7 +44,6 @@ export function PostApiCreatorsModsCreate201ResponseFromJSONTyped(json: any, ign
     }
     return {
         
-        'versionId': json['versionId'] == null ? undefined : json['versionId'],
         'modId': json['modId'] == null ? undefined : json['modId'],
     };
 }
@@ -66,7 +59,6 @@ export function PostApiCreatorsModsCreate201ResponseToJSONTyped(value?: PostApiC
 
     return {
         
-        'versionId': value['versionId'],
         'modId': value['modId'],
     };
 }

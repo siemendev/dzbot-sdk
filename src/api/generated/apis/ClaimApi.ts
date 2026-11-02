@@ -16,12 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   GetApiShopClaim200Response,
+  GetApiShopClaimConnection200Response,
   PostApiShopClaimComplete200Response,
   PostApiShopClaimCompleteRequest,
 } from '../models/index';
 import {
     GetApiShopClaim200ResponseFromJSON,
     GetApiShopClaim200ResponseToJSON,
+    GetApiShopClaimConnection200ResponseFromJSON,
+    GetApiShopClaimConnection200ResponseToJSON,
     PostApiShopClaimComplete200ResponseFromJSON,
     PostApiShopClaimComplete200ResponseToJSON,
     PostApiShopClaimCompleteRequestFromJSON,
@@ -33,9 +36,17 @@ export interface GetApiShopClaimRequest {
     username: string;
 }
 
+export interface GetApiShopClaimConnectionRequest {
+    xServerSubdomain: string;
+}
+
 export interface PostApiShopClaimCompleteOperationRequest {
     xServerSubdomain: string;
     postApiShopClaimCompleteRequest: PostApiShopClaimCompleteRequest;
+}
+
+export interface PostApiShopClaimConnectionLinkRequest {
+    xServerSubdomain: string;
 }
 
 /**
@@ -100,6 +111,51 @@ export class ClaimApi extends runtime.BaseAPI {
     }
 
     /**
+     * The console account of the user that the claim page can link in one step
+     */
+    async getApiShopClaimConnectionRaw(requestParameters: GetApiShopClaimConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiShopClaimConnection200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiShopClaimConnection().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/claim/connection`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiShopClaimConnection200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The console account of the user that the claim page can link in one step
+     */
+    async getApiShopClaimConnection(requestParameters: GetApiShopClaimConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiShopClaimConnection200Response> {
+        const response = await this.getApiShopClaimConnectionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Claim step 2 — link the player to the user account
      */
     async postApiShopClaimCompleteRaw(requestParameters: PostApiShopClaimCompleteOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiShopClaimComplete200Response>> {
@@ -151,6 +207,51 @@ export class ClaimApi extends runtime.BaseAPI {
      */
     async postApiShopClaimComplete(requestParameters: PostApiShopClaimCompleteOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiShopClaimComplete200Response> {
         const response = await this.postApiShopClaimCompleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Link the user to their player on this server through their verified console account
+     */
+    async postApiShopClaimConnectionLinkRaw(requestParameters: PostApiShopClaimConnectionLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiShopClaimComplete200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiShopClaimConnectionLink().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/claim/connection`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiShopClaimComplete200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Link the user to their player on this server through their verified console account
+     */
+    async postApiShopClaimConnectionLink(requestParameters: PostApiShopClaimConnectionLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiShopClaimComplete200Response> {
+        const response = await this.postApiShopClaimConnectionLinkRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -63,6 +63,18 @@ export interface GetApiAdminItemCategoriesList200ResponseItemsInner {
      * @memberof GetApiAdminItemCategoriesList200ResponseItemsInner
      */
     groupNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof GetApiAdminItemCategoriesList200ResponseItemsInner
+     */
+    factionIds?: Array<number>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GetApiAdminItemCategoriesList200ResponseItemsInner
+     */
+    factionNames?: Array<string>;
 }
 
 /**
@@ -88,6 +100,8 @@ export function GetApiAdminItemCategoriesList200ResponseItemsInnerFromJSONTyped(
         'itemCount': json['itemCount'] == null ? undefined : json['itemCount'],
         'groupIds': json['groupIds'] == null ? undefined : json['groupIds'],
         'groupNames': json['groupNames'] == null ? undefined : json['groupNames'],
+        'factionIds': json['factionIds'] == null ? undefined : json['factionIds'],
+        'factionNames': json['factionNames'] == null ? undefined : json['factionNames'],
     };
 }
 
@@ -108,6 +122,8 @@ export function GetApiAdminItemCategoriesList200ResponseItemsInnerToJSONTyped(va
         'itemCount': value['itemCount'],
         'groupIds': value['groupIds'],
         'groupNames': value['groupNames'],
+        'factionIds': value['factionIds'],
+        'factionNames': value['factionNames'],
     };
 }
 

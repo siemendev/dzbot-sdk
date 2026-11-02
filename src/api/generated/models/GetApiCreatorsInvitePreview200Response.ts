@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GetApiCreatorsModsAccess200ResponseServersInner } from './GetApiCreatorsModsAccess200ResponseServersInner';
+import type { GetApiCreatorsModsAccess200ResponseOrganizationsInner } from './GetApiCreatorsModsAccess200ResponseOrganizationsInner';
 import {
-    GetApiCreatorsModsAccess200ResponseServersInnerFromJSON,
-    GetApiCreatorsModsAccess200ResponseServersInnerFromJSONTyped,
-    GetApiCreatorsModsAccess200ResponseServersInnerToJSON,
-    GetApiCreatorsModsAccess200ResponseServersInnerToJSONTyped,
-} from './GetApiCreatorsModsAccess200ResponseServersInner';
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSON,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSONTyped,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSON,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSONTyped,
+} from './GetApiCreatorsModsAccess200ResponseOrganizationsInner';
 
 /**
  * 
@@ -65,10 +65,10 @@ export interface GetApiCreatorsInvitePreview200Response {
     rights?: Array<string>;
     /**
      * 
-     * @type {Array<GetApiCreatorsModsAccess200ResponseServersInner>}
+     * @type {Array<GetApiCreatorsModsAccess200ResponseOrganizationsInner>}
      * @memberof GetApiCreatorsInvitePreview200Response
      */
-    servers?: Array<GetApiCreatorsModsAccess200ResponseServersInner>;
+    organizations?: Array<GetApiCreatorsModsAccess200ResponseOrganizationsInner>;
 }
 
 /**
@@ -94,7 +94,7 @@ export function GetApiCreatorsInvitePreview200ResponseFromJSONTyped(json: any, i
         'targetName': json['targetName'] == null ? undefined : json['targetName'],
         'invitedBy': json['invitedBy'] == null ? undefined : json['invitedBy'],
         'rights': json['rights'] == null ? undefined : json['rights'],
-        'servers': json['servers'] == null ? undefined : ((json['servers'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseServersInnerFromJSON)),
+        'organizations': json['organizations'] == null ? undefined : ((json['organizations'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSON)),
     };
 }
 
@@ -115,7 +115,7 @@ export function GetApiCreatorsInvitePreview200ResponseToJSONTyped(value?: GetApi
         'targetName': value['targetName'],
         'invitedBy': value['invitedBy'],
         'rights': value['rights'],
-        'servers': value['servers'] == null ? undefined : ((value['servers'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseServersInnerToJSON)),
+        'organizations': value['organizations'] == null ? undefined : ((value['organizations'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSON)),
     };
 }
 

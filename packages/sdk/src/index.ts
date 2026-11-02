@@ -1,10 +1,23 @@
 export { Dzbot, encodeQuery } from './client'
 export type {
+  Activity,
+  Combatant,
   DzbotOptions,
   Identity,
+  Kill,
+  Leaderboard,
+  LeaderboardBoard,
+  LeaderboardPeriod,
+  MyServer,
+  PlayerStats,
+  ServerEvent,
+  ServerEventStatus,
+  Standing,
   OrderItem,
   OrderOptions,
   PlayerSummary,
+  Population,
+  Profile,
   Query,
   QueryValue,
   RequestOptions,
@@ -13,6 +26,7 @@ export type {
   SearchOptions,
   SearchPage,
   SearchPageInfo,
+  WhitelistStatus,
 } from './client'
 export { OAuthClient, MemoryTokenStore, SessionStorageTokenStore } from './oauth'
 export type { OAuthClientOptions, TokenStore, Tokens } from './oauth'

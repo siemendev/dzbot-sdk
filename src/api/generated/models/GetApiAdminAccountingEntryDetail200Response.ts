@@ -154,6 +154,12 @@ export interface GetApiAdminAccountingEntryDetail200Response {
      */
     notes?: string | null;
     /**
+     * Why a zero-rate booking carries no German VAT; only kept for organizations the platform runs itself
+     * @type {string}
+     * @memberof GetApiAdminAccountingEntryDetail200Response
+     */
+    vatTreatment?: GetApiAdminAccountingEntryDetail200ResponseVatTreatmentEnum | null;
+    /**
      * 
      * @type {GetApiAdminAccountingEntryDetail200ResponseTeamMember}
      * @memberof GetApiAdminAccountingEntryDetail200Response
@@ -279,6 +285,20 @@ export interface GetApiAdminAccountingEntryDetail200Response {
 /**
  * @export
  */
+export const GetApiAdminAccountingEntryDetail200ResponseVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type GetApiAdminAccountingEntryDetail200ResponseVatTreatmentEnum = typeof GetApiAdminAccountingEntryDetail200ResponseVatTreatmentEnum[keyof typeof GetApiAdminAccountingEntryDetail200ResponseVatTreatmentEnum];
+
+/**
+ * @export
+ */
 export const GetApiAdminAccountingEntryDetail200ResponseMissingEnum = {
     LineItems: 'line_items',
     Amounts: 'amounts',
@@ -330,6 +350,7 @@ export function GetApiAdminAccountingEntryDetail200ResponseFromJSONTyped(json: a
         'invoiceNumber': json['invoiceNumber'] == null ? undefined : json['invoiceNumber'],
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
         'notes': json['notes'] == null ? undefined : json['notes'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'teamMember': json['teamMember'] == null ? undefined : GetApiAdminAccountingEntryDetail200ResponseTeamMemberFromJSON(json['teamMember']),
         'playerId': json['playerId'] == null ? undefined : json['playerId'],
         'playerUsername': json['playerUsername'] == null ? undefined : json['playerUsername'],
@@ -378,6 +399,7 @@ export function GetApiAdminAccountingEntryDetail200ResponseToJSONTyped(value?: G
         'invoiceNumber': value['invoiceNumber'],
         'invoiceReference': value['invoiceReference'],
         'notes': value['notes'],
+        'vatTreatment': value['vatTreatment'],
         'teamMember': GetApiAdminAccountingEntryDetail200ResponseTeamMemberToJSON(value['teamMember']),
         'playerId': value['playerId'],
         'playerUsername': value['playerUsername'],

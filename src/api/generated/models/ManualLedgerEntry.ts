@@ -131,6 +131,12 @@ export interface ManualLedgerEntry {
      * @type {string}
      * @memberof ManualLedgerEntry
      */
+    vatTreatment?: ManualLedgerEntryVatTreatmentEnum | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ManualLedgerEntry
+     */
     notes?: string | null;
     /**
      * 
@@ -192,6 +198,20 @@ export type ManualLedgerEntryStatusEnum = typeof ManualLedgerEntryStatusEnum[key
 /**
  * @export
  */
+export const ManualLedgerEntryVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type ManualLedgerEntryVatTreatmentEnum = typeof ManualLedgerEntryVatTreatmentEnum[keyof typeof ManualLedgerEntryVatTreatmentEnum];
+
+/**
+ * @export
+ */
 export const ManualLedgerEntryMissingEnum = {
     LineItems: 'line_items',
     Amounts: 'amounts',
@@ -242,6 +262,7 @@ export function ManualLedgerEntryFromJSONTyped(json: any, ignoreDiscriminator: b
         'partner': json['partner'] == null ? undefined : NamedRefFromJSON(json['partner']),
         'organization': json['organization'] == null ? undefined : NamedRefFromJSON(json['organization']),
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'notes': json['notes'] == null ? undefined : json['notes'],
         'serverId': json['serverId'] == null ? undefined : json['serverId'],
         'reversalOfId': json['reversalOfId'] == null ? undefined : json['reversalOfId'],
@@ -276,6 +297,7 @@ export function ManualLedgerEntryToJSONTyped(value?: ManualLedgerEntry | null, i
         'partner': NamedRefToJSON(value['partner']),
         'organization': NamedRefToJSON(value['organization']),
         'invoiceReference': value['invoiceReference'],
+        'vatTreatment': value['vatTreatment'],
         'notes': value['notes'],
         'serverId': value['serverId'],
         'reversalOfId': value['reversalOfId'],

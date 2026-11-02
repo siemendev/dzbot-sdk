@@ -13,8 +13,16 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetApiShopMap200ResponseOverlaySat } from './GetApiShopMap200ResponseOverlaySat';
+import {
+    GetApiShopMap200ResponseOverlaySatFromJSON,
+    GetApiShopMap200ResponseOverlaySatFromJSONTyped,
+    GetApiShopMap200ResponseOverlaySatToJSON,
+    GetApiShopMap200ResponseOverlaySatToJSONTyped,
+} from './GetApiShopMap200ResponseOverlaySat';
+
 /**
- * Tiles that draw the objects of the server's mods; only the listed tiles (`<zoom>/<x>/<z>`) exist. The template is a storage path below the uploads base URL.
+ * Tiles that draw the objects of the server's mods; only the listed tiles (`<zoom>/<x>/<z>`) exist. The template is a storage path below the uploads base URL. `sat` holds the same objects as top views for the satellite view; null until rendered, then the satellite view uses the outline tiles.
  * @export
  * @interface GetApiShopMap200ResponseOverlay
  */
@@ -31,6 +39,12 @@ export interface GetApiShopMap200ResponseOverlay {
      * @memberof GetApiShopMap200ResponseOverlay
      */
     tiles: Array<string>;
+    /**
+     * 
+     * @type {GetApiShopMap200ResponseOverlaySat}
+     * @memberof GetApiShopMap200ResponseOverlay
+     */
+    sat: GetApiShopMap200ResponseOverlaySat | null;
 }
 
 /**
@@ -39,6 +53,7 @@ export interface GetApiShopMap200ResponseOverlay {
 export function instanceOfGetApiShopMap200ResponseOverlay(value: object): value is GetApiShopMap200ResponseOverlay {
     if (!('tileUrlTemplate' in value) || value['tileUrlTemplate'] === undefined) return false;
     if (!('tiles' in value) || value['tiles'] === undefined) return false;
+    if (!('sat' in value) || value['sat'] === undefined) return false;
     return true;
 }
 
@@ -54,6 +69,7 @@ export function GetApiShopMap200ResponseOverlayFromJSONTyped(json: any, ignoreDi
         
         'tileUrlTemplate': json['tileUrlTemplate'],
         'tiles': json['tiles'],
+        'sat': GetApiShopMap200ResponseOverlaySatFromJSON(json['sat']),
     };
 }
 
@@ -70,6 +86,7 @@ export function GetApiShopMap200ResponseOverlayToJSONTyped(value?: GetApiShopMap
         
         'tileUrlTemplate': value['tileUrlTemplate'],
         'tiles': value['tiles'],
+        'sat': GetApiShopMap200ResponseOverlaySatToJSON(value['sat']),
     };
 }
 

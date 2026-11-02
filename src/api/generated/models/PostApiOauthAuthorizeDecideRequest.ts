@@ -37,6 +37,12 @@ export interface PostApiOauthAuthorizeDecideRequest {
      * @memberof PostApiOauthAuthorizeDecideRequest
      */
     write: boolean;
+    /**
+     * The user confirmed an unverified redirect address; required to approve one
+     * @type {boolean}
+     * @memberof PostApiOauthAuthorizeDecideRequest
+     */
+    trustRedirect?: boolean;
 }
 
 /**
@@ -62,6 +68,7 @@ export function PostApiOauthAuthorizeDecideRequestFromJSONTyped(json: any, ignor
         'query': json['query'],
         'approve': json['approve'],
         'write': json['write'],
+        'trustRedirect': json['trustRedirect'] == null ? undefined : json['trustRedirect'],
     };
 }
 
@@ -79,6 +86,7 @@ export function PostApiOauthAuthorizeDecideRequestToJSONTyped(value?: PostApiOau
         'query': value['query'],
         'approve': value['approve'],
         'write': value['write'],
+        'trustRedirect': value['trustRedirect'],
     };
 }
 

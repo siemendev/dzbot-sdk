@@ -48,6 +48,12 @@ export interface GetApiAdminItemSetsFormData200Response {
     groups?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
     /**
      * 
+     * @type {Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>}
+     * @memberof GetApiAdminItemSetsFormData200Response
+     */
+    factions?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof GetApiAdminItemSetsFormData200Response
      */
@@ -85,6 +91,7 @@ export function GetApiAdminItemSetsFormData200ResponseFromJSONTyped(json: any, i
         
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(GetApiAdminFactionsFormData200ResponseOffersInnerFromJSON)),
         'groups': json['groups'] == null ? undefined : ((json['groups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
+        'factions': json['factions'] == null ? undefined : ((json['factions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
         'availableItems': json['availableItems'] == null ? undefined : json['availableItems'],
         'orderLimitTypes': json['orderLimitTypes'] == null ? undefined : json['orderLimitTypes'],
         'vehicleClasses': json['vehicleClasses'] == null ? undefined : json['vehicleClasses'],
@@ -104,6 +111,7 @@ export function GetApiAdminItemSetsFormData200ResponseToJSONTyped(value?: GetApi
         
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(GetApiAdminFactionsFormData200ResponseOffersInnerToJSON)),
         'groups': value['groups'] == null ? undefined : ((value['groups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
+        'factions': value['factions'] == null ? undefined : ((value['factions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
         'availableItems': value['availableItems'],
         'orderLimitTypes': value['orderLimitTypes'],
         'vehicleClasses': value['vehicleClasses'],

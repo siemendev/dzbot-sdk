@@ -330,6 +330,7 @@ export interface DzbotEventPayloads {
     logEventId: string | null
     playerId: number | null
     data: {
+      during_restart: boolean
       last_pvp_action: {
         string: string
         timestamp: number

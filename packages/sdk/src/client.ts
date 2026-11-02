@@ -5,11 +5,14 @@ import { LiveEvents } from './live'
 import type { OAuthClient } from './oauth'
 
 export interface DzbotOptions {
-  /** The subdomain of the dzbot server (`your-server` for your-server.dzbot.de). */
-  server: string
+  /**
+   * The subdomain of the dzbot server (`your-server` for your-server.dzbot.de). Required with an API key. With an
+   * org-wide sign-in leave it out and pick the server per call with {@link Dzbot.forServer}.
+   */
+  server?: string
   /** A server API key (`dzk_…`). Secret: only on a server, never in a browser. */
   apiKey?: string
-  /** "Sign in with dzbot": the signed-in user's tokens. */
+  /** "Sign in with dzbot": the signed-in user's tokens. Without `apiKey` and `oauth` the client reads public data only. */
   oauth?: OAuthClient
   /** Defaults to https://api.dzbot.de */
   baseUrl?: string
@@ -40,6 +43,152 @@ export interface Identity {
   /** The concrete rights the key or token holds on this server. */
   rights: string[]
   app: { id: number; name: string } | null
+}
+
+/** A server a sign-in reaches, and the signed-in user's player there. */
+export interface MyServer {
+  id: number
+  subdomain: string
+  name: string
+  /** The server's colour: amber, teal, cyan, fuchsia, lime or orange. */
+  palette: string
+  /** The server's website, on its own domain when it has one. */
+  url: string
+  /** Null where the user has not linked a game account on this server yet. `whitelisted`: on the server's whitelist, whether or not it is on right now. */
+  player: { id: number; name: string | null; gameId: string | null; whitelisted: boolean; lastOnline: string | null } | null
+}
+
+/** The signed-in player's own profile on a server (`player.shop_profile.access`). */
+export interface Profile {
+  id: number
+  username: string
+  displayName: string
+  avatarUrl: string | null
+  /** The organization-wide wallet: the same on every server of the organization. */
+  balance: number
+  /** The organization's in-game currency, e.g. "Rubel"; empty when none is set. */
+  currency: string
+  rulesAccepted: boolean
+  hasActiveBanRestriction: boolean
+}
+
+/** How full a server is right now; `players` is null when nothing can tell. Public. */
+export interface Population {
+  players: number | null
+  slots: number | null
+  queue: number | null
+  asOf: string | null
+}
+
+/** Whether a server lets only whitelisted players in right now; `changesAt` is when a scheduled task next switches that, if one does. Public. */
+export interface WhitelistStatus {
+  enabled: boolean
+  changesAt: string | null
+}
+
+/** The public leaderboards; `most-active` counts minutes online, `longest-kill` metres. */
+export type LeaderboardBoard =
+  | 'pvp-kills'
+  | 'pvp-kd'
+  | 'kill-streak'
+  | 'longest-kill'
+  | 'base-building'
+  | 'vehicle-hits'
+  | 'most-active'
+  | 'casino-net-profit'
+  | 'casino-net-loss'
+  | 'casino-biggest-win'
+  | 'casino-volume'
+
+export type LeaderboardPeriod = 'all_time' | 'month' | 'week'
+
+/** A server's top ten on one board, counted since its last stats wipe. Public where the server shows leaderboards to guests. */
+export interface Leaderboard {
+  period: LeaderboardPeriod
+  currency: string
+  entries: Array<{ player: string; playerId: number | null; value: number; hasProfile: boolean }>
+  /** K/D boards only rank players with at least this many kills. */
+  minimumKills: number
+  wipeDate: string
+}
+
+export interface Combatant {
+  id: number | null
+  name: string
+  avatarUrl: string | null
+  faction: { id: number; name: string; color: string | null } | null
+}
+
+/** One line of the kill feed: a kill (`attacker` set) or a death to the environment (`cause` set). */
+export interface Kill {
+  id: string
+  kind: 'kill' | 'environment'
+  time: string
+  attacker: Combatant | null
+  victim: Combatant
+  weapon: string | null
+  /** Metres. */
+  distance: number | null
+  cause: string | null
+  /** e.g. `team_kill`. */
+  flags: string[]
+}
+
+export type ServerEventStatus = 'registration_open' | 'registration_closed' | 'running' | 'finished' | 'cancelled'
+
+/** An event of the server — a tournament, a race, a team fight. */
+export interface ServerEvent {
+  id: number
+  code: string | null
+  name: string
+  description: string | null
+  status: ServerEventStatus
+  scheduledStartAt: string | null
+  scheduledEndAt: string | null
+  registrationClosesAt: string | null
+  participantCount: number
+  entryFee: number
+  potAmount: number
+  /** The event's page, relative to the server's website. */
+  path: string | null
+}
+
+/** How many players were online over time, as the public server list records it. */
+export interface Activity {
+  resolution: '15m' | '1h' | '1d'
+  from: string
+  to: string
+  /** `players` is the average over the step, `peak` its highest count. */
+  points: Array<{ at: string; players: number | null; peak: number | null; queuePeak: number | null; slots: number | null }>
+}
+
+/** Where a player stands on one board: `rank` is null below the board's minimum. */
+export interface Standing {
+  value: number
+  rank: number | null
+  total: number
+  aheadValue: number | null
+  tenthValue: number | null
+  minimumKills: number
+  kills: number | null
+  pending: boolean
+}
+
+/** The signed-in player's statistics on this server since its last stats wipe, their alts included. */
+export interface PlayerStats {
+  wipeDate: string
+  accounts: Array<{ id: number; name: string }>
+  personal: {
+    deaths: number
+    pvp_deaths: number
+    death_streak: number
+    online_streak: number
+    current_kill_streak: number
+    last_pvp_kill: string | null
+    last_pvp_death: string | null
+  }
+  /** `stat` is the board in snake case (`pvp_kills`, `most_active`, …); `casino_net` joins the two casino balance boards. */
+  boards: Array<{ stat: string; standing: Standing; best: { period: LeaderboardPeriod; rank: number } | null }>
 }
 
 export interface SearchHit<F = Record<string, unknown>> {
@@ -106,7 +255,8 @@ export interface OrderOptions {
 
 /** The client: everything goes through `request()`, the helpers below are shortcuts. */
 export class Dzbot {
-  readonly server: string
+  /** Null on a client of an org-wide sign-in that has not picked a server ({@link Dzbot.forServer}). */
+  readonly server: string | null
   readonly baseUrl: string
   readonly players: Players
   readonly wallet: Wallet
@@ -117,14 +267,16 @@ export class Dzbot {
   private readonly fetchImpl: FetchLike
   private readonly userAgent: string
   private readonly sleep: (ms: number) => Promise<void>
+  private readonly options: DzbotOptions
 
   constructor(options: DzbotOptions) {
-    if (!options.server) throw new Error('`server` is required: the subdomain of your dzbot server')
-    if (!options.apiKey === !options.oauth) throw new Error('Pass either `apiKey` or `oauth`')
+    if (options.apiKey && options.oauth) throw new Error('Pass either `apiKey` or `oauth`, not both')
+    if (!options.server && !options.oauth) throw new Error('`server` is required: the subdomain of your dzbot server')
     if (options.apiKey && isBrowser()) {
       throw new Error('API keys are secret; use Sign in with dzbot (OAuthClient) in the browser')
     }
-    this.server = options.server
+    this.options = options
+    this.server = options.server ?? null
     this.baseUrl = (options.baseUrl ?? DEFAULT_API_URL).replace(/\/+$/, '')
     this.apiKey = options.apiKey
     this.oauth = options.oauth
@@ -141,15 +293,21 @@ export class Dzbot {
     return this.apiKey !== undefined
   }
 
-  private async token(): Promise<string> {
-    return this.apiKey ?? (await this.oauth!.accessToken())
+  /** The same client on another server of the organization — for an org-wide sign-in, or public reads. */
+  forServer(server: string): Dzbot {
+    return new Dzbot({ ...this.options, server })
+  }
+
+  private async token(): Promise<string | null> {
+    return this.apiKey ?? (this.oauth ? await this.oauth.accessToken() : null)
   }
 
   private async headers(extra: Record<string, string> = {}): Promise<Record<string, string>> {
+    const token = await this.token()
     return {
       accept: 'application/json',
-      authorization: `Bearer ${await this.token()}`,
-      'x-server-subdomain': this.server,
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+      ...(this.server ? { 'x-server-subdomain': this.server } : {}),
       // Browsers forbid setting User-Agent, and an extra header would need a CORS allowance.
       ...(isBrowser() ? {} : { 'user-agent': this.userAgent }),
       ...extra,
@@ -214,6 +372,68 @@ export class Dzbot {
     return this.get<Identity>('/api/developer/me')
   }
 
+  /** The servers the sign-in reaches (all of the app's servers for an org-wide sign-in) and the user's player on each. */
+  async myServers(): Promise<MyServer[]> {
+    return (await this.get<{ servers: MyServer[] }>('/api/developer/me/servers')).servers
+  }
+
+  /** The signed-in player's own profile on this server, with the organization-wide balance. */
+  profile(): Promise<Profile> {
+    return this.get<Profile>('/api/shop/profile')
+  }
+
+  /** How full this server is right now. Public: works without signing in. */
+  population(): Promise<Population> {
+    return this.get<Population>('/api/public/population')
+  }
+
+  /** Whether this server's whitelist is on right now and when it next switches. Public: works without signing in. */
+  whitelist(): Promise<WhitelistStatus> {
+    return this.get<WhitelistStatus>('/api/public/whitelist')
+  }
+
+  /** One leaderboard of this server. Public where the server shows leaderboards to guests (else a 403). */
+  async leaderboard(board: LeaderboardBoard, options: { period?: LeaderboardPeriod } = {}): Promise<Leaderboard> {
+    const { period, currency, entries, minimumKills, wipeDate } = await this.get<Leaderboard>(`/api/public/leaderboard/${board}`, { period: options.period })
+    return { period, currency, entries, minimumKills, wipeDate }
+  }
+
+  /** The newest kills and deaths of this server's kill feed, newest first. Public where the server shows its kill feed to guests (else a 403). */
+  async killfeed(options: { limit?: number } = {}): Promise<Kill[]> {
+    const page = await this.get<SearchPage<Omit<Kill, 'id'>>>('/api/public/search/combat_event', { limit: options.limit ?? 20 })
+    return page.items.map((hit) => ({ ...hit.fields!, id: hit.id }))
+  }
+
+  /** Events that are open for registration, about to start or running, soonest first. Public where the server shows events to guests. */
+  upcomingEvents(options: { limit?: number } = {}): Promise<ServerEvent[]> {
+    return this.serverEvents(['registration_open', 'registration_closed', 'running'], 'start', options.limit)
+  }
+
+  /** Finished events, latest first. */
+  pastEvents(options: { limit?: number } = {}): Promise<ServerEvent[]> {
+    return this.serverEvents(['finished'], '-start', options.limit)
+  }
+
+  private async serverEvents(status: ServerEventStatus[], sort: string, limit = 10): Promise<ServerEvent[]> {
+    const page = await this.get<SearchPage<Omit<ServerEvent, 'id' | 'code' | 'path'>>>('/api/public/search/event', { status, sort, limit })
+    return page.items.map((hit) => ({ ...hit.fields!, id: Number(hit.id), code: hit.code, path: hit.path }))
+  }
+
+  /**
+   * Players online over time, from the public server list: `15m` steps for up to 7 days (default 1), `1h` for up to
+   * 7 (default 7), `1d` for up to 90 (default 30). Public.
+   */
+  async activity(options: { resolution?: Activity['resolution']; days?: number } = {}): Promise<Activity> {
+    if (!this.server) throw new Error('activity() needs a server: use forServer()')
+    const { resolution, from, to, points } = await this.get<Activity>(`/api/public/server-list/${encodeURIComponent(this.server)}/activity`, options)
+    return { resolution, from, to, points }
+  }
+
+  /** The signed-in player's statistics on this server and where they stand on every leaderboard (`player.shop_profile.access`). */
+  stats(): Promise<PlayerStats> {
+    return this.get<PlayerStats>('/api/shop/profile/stats')
+  }
+
   private searchPath(type: string, area: SearchArea | undefined): string {
     const door = (area ?? (this.usesApiKey ? 'admin' : 'player')) === 'admin' ? '/api/admin/search' : '/api/search'
     return `${door}/${encodeURIComponent(type)}`
@@ -245,8 +465,8 @@ export class Dzbot {
   configuration(): Configuration {
     return new Configuration({
       basePath: this.baseUrl,
-      accessToken: () => this.token(),
-      headers: { 'X-Server-Subdomain': this.server },
+      accessToken: async () => (await this.token()) ?? '',
+      headers: this.server ? { 'X-Server-Subdomain': this.server } : {},
       fetchApi: (input, init) => this.fetchImpl(typeof input === 'string' ? input : input.toString(), init),
     })
   }

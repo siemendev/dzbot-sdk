@@ -52,12 +52,15 @@ export interface OAuthClientOptions {
   /** Only for confidential clients running on a server. Without it the client is public and relies on PKCE alone. */
   clientSecret?: string
   redirectUri: string
-  /** The subdomain of the dzbot server the user signs in on. */
-  server: string
+  /**
+   * The subdomain of the dzbot server the user signs in on; the sign-in then works on that server only. Leave it
+   * out for one sign-in on dzbot.de that covers every server the app is enabled on.
+   */
+  server?: string
   store?: TokenStore
   /** Defaults to https://api.dzbot.de */
   baseUrl?: string
-  /** Where the server's website lives; defaults to https://<server>.dzbot.de */
+  /** Where the user signs in; defaults to https://<server>.dzbot.de, or https://dzbot.de without a server. */
   siteUrl?: string
   fetch?: FetchLike
 }
@@ -73,7 +76,8 @@ const REFRESH_MARGIN_MS = 60_000
 /** "Sign in with dzbot": authorization code with PKCE, refresh and revoke. */
 export class OAuthClient {
   readonly clientId: string
-  readonly server: string
+  /** Null for an org-wide sign-in. */
+  readonly server: string | null
   private readonly clientSecret: string | undefined
   private readonly redirectUri: string
   private readonly store: TokenStore
@@ -89,10 +93,10 @@ export class OAuthClient {
     this.clientId = options.clientId
     this.clientSecret = options.clientSecret
     this.redirectUri = options.redirectUri
-    this.server = options.server
+    this.server = options.server ?? null
     this.store = options.store ?? (isBrowser() && globalThis.sessionStorage ? new SessionStorageTokenStore() : new MemoryTokenStore())
     this.baseUrl = (options.baseUrl ?? DEFAULT_API_URL).replace(/\/+$/, '')
-    this.siteUrl = (options.siteUrl ?? `https://${options.server}.dzbot.de`).replace(/\/+$/, '')
+    this.siteUrl = (options.siteUrl ?? (options.server ? `https://${options.server}.dzbot.de` : 'https://dzbot.de')).replace(/\/+$/, '')
     this.fetchImpl = options.fetch ?? ((input, init) => globalThis.fetch(input, init))
   }
 
@@ -101,7 +105,7 @@ export class OAuthClient {
   }
 
   private key(suffix = ''): string {
-    return `dzbot:${this.clientId}:${this.server}${suffix}`
+    return `dzbot:${this.clientId}:${this.server ?? '*'}${suffix}`
   }
 
   /** The URL to send the user to. `scope` are access-right keys (wildcards allowed); empty asks for identity only. */
@@ -120,7 +124,8 @@ export class OAuthClient {
       code_challenge: await pkceChallenge(verifier),
       code_challenge_method: 'S256',
     })
-    return `${this.siteUrl}/oauth/authorize?${params.toString()}`
+    // dzbot.de's own /oauth/authorize is the MCP consent; an app's org-wide sign-in has its own page there.
+    return `${this.siteUrl}/oauth/authorize${this.server ? '' : '/app'}?${params.toString()}`
   }
 
   /** Finishes the sign-in on the redirect URI: checks `state`, exchanges the code and stores the tokens. */
@@ -219,8 +224,8 @@ export class OAuthClient {
       accessToken: body.access_token,
       refreshToken: body.refresh_token ?? null,
       expiresAt: Date.now() + body.expires_in * 1000,
-      // The grant's server travels as a `server:<id>` scope; it is no right.
-      scope: body.scope ? body.scope.split(' ').filter((scope) => scope && !scope.startsWith('server:')) : [],
+      // The grant's binding travels as a `server:<id>` or `org:<id>` scope; it is no right.
+      scope: body.scope ? body.scope.split(' ').filter((scope) => scope && !scope.startsWith('server:') && !scope.startsWith('org:')) : [],
     }
     await this.store.set(this.key(), JSON.stringify(tokens))
     return tokens

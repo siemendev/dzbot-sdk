@@ -15,25 +15,35 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeleteApiCreatorsModsDelete400Response,
   GetApiAuthDiscordUrl200Response,
   PostApiAuthDiscordCallback200Response,
+  PostApiAuthDiscordCallback400Response,
   PostApiAuthDiscordCallbackRequest,
+  PostApiAuthHandoff200Response,
+  PostApiAuthHandoffIssueRequest,
+  PostApiAuthHandoffRequest,
   PostApiAuthLogout200Response,
   PostApiAuthMagicLink200Response,
   PostApiAuthMagicLinkRequest,
   PostApiAuthRefresh200Response,
   PostApiAuthSignupSourceRequest,
+  RedirectTarget,
 } from '../models/index';
 import {
-    DeleteApiCreatorsModsDelete400ResponseFromJSON,
-    DeleteApiCreatorsModsDelete400ResponseToJSON,
     GetApiAuthDiscordUrl200ResponseFromJSON,
     GetApiAuthDiscordUrl200ResponseToJSON,
     PostApiAuthDiscordCallback200ResponseFromJSON,
     PostApiAuthDiscordCallback200ResponseToJSON,
+    PostApiAuthDiscordCallback400ResponseFromJSON,
+    PostApiAuthDiscordCallback400ResponseToJSON,
     PostApiAuthDiscordCallbackRequestFromJSON,
     PostApiAuthDiscordCallbackRequestToJSON,
+    PostApiAuthHandoff200ResponseFromJSON,
+    PostApiAuthHandoff200ResponseToJSON,
+    PostApiAuthHandoffIssueRequestFromJSON,
+    PostApiAuthHandoffIssueRequestToJSON,
+    PostApiAuthHandoffRequestFromJSON,
+    PostApiAuthHandoffRequestToJSON,
     PostApiAuthLogout200ResponseFromJSON,
     PostApiAuthLogout200ResponseToJSON,
     PostApiAuthMagicLink200ResponseFromJSON,
@@ -44,10 +54,20 @@ import {
     PostApiAuthRefresh200ResponseToJSON,
     PostApiAuthSignupSourceRequestFromJSON,
     PostApiAuthSignupSourceRequestToJSON,
+    RedirectTargetFromJSON,
+    RedirectTargetToJSON,
 } from '../models/index';
 
 export interface PostApiAuthDiscordCallbackOperationRequest {
     postApiAuthDiscordCallbackRequest: PostApiAuthDiscordCallbackRequest;
+}
+
+export interface PostApiAuthHandoffOperationRequest {
+    postApiAuthHandoffRequest: PostApiAuthHandoffRequest;
+}
+
+export interface PostApiAuthHandoffIssueOperationRequest {
+    postApiAuthHandoffIssueRequest: PostApiAuthHandoffIssueRequest;
 }
 
 export interface PostApiAuthMagicLinkOperationRequest {
@@ -122,6 +142,86 @@ export class AuthApi extends runtime.BaseAPI {
      */
     async postApiAuthDiscordCallback(requestParameters: PostApiAuthDiscordCallbackOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAuthDiscordCallback200Response> {
         const response = await this.postApiAuthDiscordCallbackRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Trade a one-time handoff token for a session on this custom domain
+     */
+    async postApiAuthHandoffRaw(requestParameters: PostApiAuthHandoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAuthHandoff200Response>> {
+        if (requestParameters['postApiAuthHandoffRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiAuthHandoffRequest',
+                'Required parameter "postApiAuthHandoffRequest" was null or undefined when calling postApiAuthHandoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/api/auth/handoff`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAuthHandoffRequestToJSON(requestParameters['postApiAuthHandoffRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAuthHandoff200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Trade a one-time handoff token for a session on this custom domain
+     */
+    async postApiAuthHandoff(requestParameters: PostApiAuthHandoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAuthHandoff200Response> {
+        const response = await this.postApiAuthHandoffRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Hand the current login over to a server\'s custom domain
+     */
+    async postApiAuthHandoffIssueRaw(requestParameters: PostApiAuthHandoffIssueOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedirectTarget>> {
+        if (requestParameters['postApiAuthHandoffIssueRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiAuthHandoffIssueRequest',
+                'Required parameter "postApiAuthHandoffIssueRequest" was null or undefined when calling postApiAuthHandoffIssue().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/auth/handoff/issue`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAuthHandoffIssueRequestToJSON(requestParameters['postApiAuthHandoffIssueRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RedirectTargetFromJSON(jsonValue));
+    }
+
+    /**
+     * Hand the current login over to a server\'s custom domain
+     */
+    async postApiAuthHandoffIssue(requestParameters: PostApiAuthHandoffIssueOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RedirectTarget> {
+        const response = await this.postApiAuthHandoffIssueRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

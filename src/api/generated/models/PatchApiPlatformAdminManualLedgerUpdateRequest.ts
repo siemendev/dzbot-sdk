@@ -70,12 +70,34 @@ export interface PatchApiPlatformAdminManualLedgerUpdateRequest {
      */
     notes?: string | null;
     /**
+     * Why a zero-rate booking carries no German VAT
+     * @type {string}
+     * @memberof PatchApiPlatformAdminManualLedgerUpdateRequest
+     */
+    vatTreatment?: PatchApiPlatformAdminManualLedgerUpdateRequestVatTreatmentEnum | null;
+    /**
      * 
      * @type {Array<PostApiPlatformAdminManualLedgerCreateRequestLineItemsInner>}
      * @memberof PatchApiPlatformAdminManualLedgerUpdateRequest
      */
     lineItems?: Array<PostApiPlatformAdminManualLedgerCreateRequestLineItemsInner>;
 }
+
+
+/**
+ * @export
+ */
+export const PatchApiPlatformAdminManualLedgerUpdateRequestVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type PatchApiPlatformAdminManualLedgerUpdateRequestVatTreatmentEnum = typeof PatchApiPlatformAdminManualLedgerUpdateRequestVatTreatmentEnum[keyof typeof PatchApiPlatformAdminManualLedgerUpdateRequestVatTreatmentEnum];
+
 
 /**
  * Check if a given object implements the PatchApiPlatformAdminManualLedgerUpdateRequest interface.
@@ -101,6 +123,7 @@ export function PatchApiPlatformAdminManualLedgerUpdateRequestFromJSONTyped(json
         'organizationId': json['organizationId'] == null ? undefined : json['organizationId'],
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
         'notes': json['notes'] == null ? undefined : json['notes'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'lineItems': json['lineItems'] == null ? undefined : ((json['lineItems'] as Array<any>).map(PostApiPlatformAdminManualLedgerCreateRequestLineItemsInnerFromJSON)),
     };
 }
@@ -123,6 +146,7 @@ export function PatchApiPlatformAdminManualLedgerUpdateRequestToJSONTyped(value?
         'organizationId': value['organizationId'],
         'invoiceReference': value['invoiceReference'],
         'notes': value['notes'],
+        'vatTreatment': value['vatTreatment'],
         'lineItems': value['lineItems'] == null ? undefined : ((value['lineItems'] as Array<any>).map(PostApiPlatformAdminManualLedgerCreateRequestLineItemsInnerToJSON)),
     };
 }

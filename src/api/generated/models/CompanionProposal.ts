@@ -86,7 +86,8 @@ export const CompanionProposalStatusEnum = {
     Approved: 'approved',
     Executed: 'executed',
     Rejected: 'rejected',
-    Failed: 'failed'
+    Failed: 'failed',
+    Superseded: 'superseded'
 } as const;
 export type CompanionProposalStatusEnum = typeof CompanionProposalStatusEnum[keyof typeof CompanionProposalStatusEnum];
 

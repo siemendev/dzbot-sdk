@@ -37,6 +37,12 @@ export interface GetApiShopBaseAlarmDetail200Response {
      * @memberof GetApiShopBaseAlarmDetail200Response
      */
     allowedToChangePosition?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetApiShopBaseAlarmDetail200Response
+     */
+    mayDelete?: boolean;
 }
 
 /**
@@ -59,6 +65,7 @@ export function GetApiShopBaseAlarmDetail200ResponseFromJSONTyped(json: any, ign
         'alarm': json['alarm'] == null ? undefined : json['alarm'],
         'positionLogs': json['positionLogs'] == null ? undefined : json['positionLogs'],
         'allowedToChangePosition': json['allowedToChangePosition'] == null ? undefined : json['allowedToChangePosition'],
+        'mayDelete': json['mayDelete'] == null ? undefined : json['mayDelete'],
     };
 }
 
@@ -76,6 +83,7 @@ export function GetApiShopBaseAlarmDetail200ResponseToJSONTyped(value?: GetApiSh
         'alarm': value['alarm'],
         'positionLogs': value['positionLogs'],
         'allowedToChangePosition': value['allowedToChangePosition'],
+        'mayDelete': value['mayDelete'],
     };
 }
 

@@ -49,6 +49,12 @@ export interface PutApiPlatformAdminInvoiceSettingsPutRequest {
      * @memberof PutApiPlatformAdminInvoiceSettingsPutRequest
      */
     vatRatePercent?: number;
+    /**
+     * When the platform became liable for VAT; bookings before it stay out of the VAT return.
+     * @type {Date}
+     * @memberof PutApiPlatformAdminInvoiceSettingsPutRequest
+     */
+    vatLiableSince?: Date | null;
 }
 
 /**
@@ -73,6 +79,7 @@ export function PutApiPlatformAdminInvoiceSettingsPutRequestFromJSONTyped(json: 
         'issuerTaxId': json['issuerTaxId'] == null ? undefined : json['issuerTaxId'],
         'footerText': json['footerText'] == null ? undefined : json['footerText'],
         'vatRatePercent': json['vatRatePercent'] == null ? undefined : json['vatRatePercent'],
+        'vatLiableSince': json['vatLiableSince'] == null ? undefined : (new Date(json['vatLiableSince'])),
     };
 }
 
@@ -92,6 +99,7 @@ export function PutApiPlatformAdminInvoiceSettingsPutRequestToJSONTyped(value?: 
         'issuerTaxId': value['issuerTaxId'],
         'footerText': value['footerText'],
         'vatRatePercent': value['vatRatePercent'],
+        'vatLiableSince': value['vatLiableSince'] == null ? undefined : ((value['vatLiableSince'] as any).toISOString()),
     };
 }
 

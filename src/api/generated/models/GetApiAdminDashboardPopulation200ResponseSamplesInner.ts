@@ -43,6 +43,12 @@ export interface GetApiAdminDashboardPopulation200ResponseSamplesInner {
      * @memberof GetApiAdminDashboardPopulation200ResponseSamplesInner
      */
     slots: number;
+    /**
+     * Average players of the same bucket on the seven days before, null without any
+     * @type {number}
+     * @memberof GetApiAdminDashboardPopulation200ResponseSamplesInner
+     */
+    average: number | null;
 }
 
 /**
@@ -53,6 +59,7 @@ export function instanceOfGetApiAdminDashboardPopulation200ResponseSamplesInner(
     if (!('players' in value) || value['players'] === undefined) return false;
     if (!('queue' in value) || value['queue'] === undefined) return false;
     if (!('slots' in value) || value['slots'] === undefined) return false;
+    if (!('average' in value) || value['average'] === undefined) return false;
     return true;
 }
 
@@ -70,6 +77,7 @@ export function GetApiAdminDashboardPopulation200ResponseSamplesInnerFromJSONTyp
         'players': json['players'],
         'queue': json['queue'],
         'slots': json['slots'],
+        'average': json['average'],
     };
 }
 
@@ -88,6 +96,7 @@ export function GetApiAdminDashboardPopulation200ResponseSamplesInnerToJSONTyped
         'players': value['players'],
         'queue': value['queue'],
         'slots': value['slots'],
+        'average': value['average'],
     };
 }
 
