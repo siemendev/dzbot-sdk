@@ -38,7 +38,7 @@ export interface GetApiOauthConnections200ResponseInner {
      */
     kind: GetApiOauthConnections200ResponseInnerKindEnum;
     /**
-     * 
+     * Where an app signed in: its server, or the organization for a sign-in that covers all its servers
      * @type {string}
      * @memberof GetApiOauthConnections200ResponseInner
      */

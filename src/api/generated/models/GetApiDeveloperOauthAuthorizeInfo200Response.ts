@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect } from './GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect';
+import {
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSONTyped,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSONTyped,
+} from './GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect';
 import type { GetApiDeveloperOauthAuthorizeInfo200ResponseRightsInner } from './GetApiDeveloperOauthAuthorizeInfo200ResponseRightsInner';
 import {
     GetApiDeveloperOauthAuthorizeInfo200ResponseRightsInnerFromJSON,
@@ -27,6 +34,13 @@ import {
     GetApiDeveloperOauthAuthorizeInfo200ResponseServerToJSON,
     GetApiDeveloperOauthAuthorizeInfo200ResponseServerToJSONTyped,
 } from './GetApiDeveloperOauthAuthorizeInfo200ResponseServer';
+import type { GetApiAdminShopCopyPreview200ResponseTargetGroupsInner } from './GetApiAdminShopCopyPreview200ResponseTargetGroupsInner';
+import {
+    GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerFromJSON,
+    GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerFromJSONTyped,
+    GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerToJSON,
+    GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerToJSONTyped,
+} from './GetApiAdminShopCopyPreview200ResponseTargetGroupsInner';
 import type { GetApiDeveloperOauthAuthorizeInfo200ResponseApp } from './GetApiDeveloperOauthAuthorizeInfo200ResponseApp';
 import {
     GetApiDeveloperOauthAuthorizeInfo200ResponseAppFromJSON,
@@ -34,6 +48,13 @@ import {
     GetApiDeveloperOauthAuthorizeInfo200ResponseAppToJSON,
     GetApiDeveloperOauthAuthorizeInfo200ResponseAppToJSONTyped,
 } from './GetApiDeveloperOauthAuthorizeInfo200ResponseApp';
+import type { GetApiDeveloperOauthAuthorizeInfo200ResponseServersInner } from './GetApiDeveloperOauthAuthorizeInfo200ResponseServersInner';
+import {
+    GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerFromJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerFromJSONTyped,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerToJSON,
+    GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerToJSONTyped,
+} from './GetApiDeveloperOauthAuthorizeInfo200ResponseServersInner';
 
 /**
  * 
@@ -52,13 +73,25 @@ export interface GetApiDeveloperOauthAuthorizeInfo200Response {
      * @type {GetApiDeveloperOauthAuthorizeInfo200ResponseServer}
      * @memberof GetApiDeveloperOauthAuthorizeInfo200Response
      */
-    server: GetApiDeveloperOauthAuthorizeInfo200ResponseServer;
+    server: GetApiDeveloperOauthAuthorizeInfo200ResponseServer | null;
     /**
      * 
-     * @type {string}
+     * @type {GetApiAdminShopCopyPreview200ResponseTargetGroupsInner}
      * @memberof GetApiDeveloperOauthAuthorizeInfo200Response
      */
-    redirectHost: string;
+    organization: GetApiAdminShopCopyPreview200ResponseTargetGroupsInner;
+    /**
+     * Every server the grant reaches and whether the user has a player there
+     * @type {Array<GetApiDeveloperOauthAuthorizeInfo200ResponseServersInner>}
+     * @memberof GetApiDeveloperOauthAuthorizeInfo200Response
+     */
+    servers: Array<GetApiDeveloperOauthAuthorizeInfo200ResponseServersInner>;
+    /**
+     * 
+     * @type {GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect}
+     * @memberof GetApiDeveloperOauthAuthorizeInfo200Response
+     */
+    redirect: GetApiDeveloperOauthAuthorizeInfo200ResponseRedirect;
     /**
      * 
      * @type {boolean}
@@ -79,7 +112,9 @@ export interface GetApiDeveloperOauthAuthorizeInfo200Response {
 export function instanceOfGetApiDeveloperOauthAuthorizeInfo200Response(value: object): value is GetApiDeveloperOauthAuthorizeInfo200Response {
     if (!('app' in value) || value['app'] === undefined) return false;
     if (!('server' in value) || value['server'] === undefined) return false;
-    if (!('redirectHost' in value) || value['redirectHost'] === undefined) return false;
+    if (!('organization' in value) || value['organization'] === undefined) return false;
+    if (!('servers' in value) || value['servers'] === undefined) return false;
+    if (!('redirect' in value) || value['redirect'] === undefined) return false;
     if (!('needsClaim' in value) || value['needsClaim'] === undefined) return false;
     if (!('rights' in value) || value['rights'] === undefined) return false;
     return true;
@@ -97,7 +132,9 @@ export function GetApiDeveloperOauthAuthorizeInfo200ResponseFromJSONTyped(json: 
         
         'app': GetApiDeveloperOauthAuthorizeInfo200ResponseAppFromJSON(json['app']),
         'server': GetApiDeveloperOauthAuthorizeInfo200ResponseServerFromJSON(json['server']),
-        'redirectHost': json['redirectHost'],
+        'organization': GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerFromJSON(json['organization']),
+        'servers': ((json['servers'] as Array<any>).map(GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerFromJSON)),
+        'redirect': GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectFromJSON(json['redirect']),
         'needsClaim': json['needsClaim'],
         'rights': ((json['rights'] as Array<any>).map(GetApiDeveloperOauthAuthorizeInfo200ResponseRightsInnerFromJSON)),
     };
@@ -116,7 +153,9 @@ export function GetApiDeveloperOauthAuthorizeInfo200ResponseToJSONTyped(value?: 
         
         'app': GetApiDeveloperOauthAuthorizeInfo200ResponseAppToJSON(value['app']),
         'server': GetApiDeveloperOauthAuthorizeInfo200ResponseServerToJSON(value['server']),
-        'redirectHost': value['redirectHost'],
+        'organization': GetApiAdminShopCopyPreview200ResponseTargetGroupsInnerToJSON(value['organization']),
+        'servers': ((value['servers'] as Array<any>).map(GetApiDeveloperOauthAuthorizeInfo200ResponseServersInnerToJSON)),
+        'redirect': GetApiDeveloperOauthAuthorizeInfo200ResponseRedirectToJSON(value['redirect']),
         'needsClaim': value['needsClaim'],
         'rights': ((value['rights'] as Array<any>).map(GetApiDeveloperOauthAuthorizeInfo200ResponseRightsInnerToJSON)),
     };

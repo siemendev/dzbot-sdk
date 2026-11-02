@@ -76,6 +76,12 @@ export interface PostApiPlatformAdminManualLedgerCreateRequest {
      */
     notes?: string | null;
     /**
+     * Why a zero-rate booking carries no German VAT
+     * @type {string}
+     * @memberof PostApiPlatformAdminManualLedgerCreateRequest
+     */
+    vatTreatment?: PostApiPlatformAdminManualLedgerCreateRequestVatTreatmentEnum | null;
+    /**
      * 
      * @type {Array<PostApiPlatformAdminManualLedgerCreateRequestLineItemsInner>}
      * @memberof PostApiPlatformAdminManualLedgerCreateRequest
@@ -92,6 +98,20 @@ export const PostApiPlatformAdminManualLedgerCreateRequestDirectionEnum = {
     Debit: 'debit'
 } as const;
 export type PostApiPlatformAdminManualLedgerCreateRequestDirectionEnum = typeof PostApiPlatformAdminManualLedgerCreateRequestDirectionEnum[keyof typeof PostApiPlatformAdminManualLedgerCreateRequestDirectionEnum];
+
+/**
+ * @export
+ */
+export const PostApiPlatformAdminManualLedgerCreateRequestVatTreatmentEnum = {
+    Domestic: 'domestic',
+    EuService: 'eu_service',
+    NonEuService: 'non_eu_service',
+    EuGoods: 'eu_goods',
+    ImportVat: 'import_vat',
+    ForeignSupply: 'foreign_supply',
+    None: 'none'
+} as const;
+export type PostApiPlatformAdminManualLedgerCreateRequestVatTreatmentEnum = typeof PostApiPlatformAdminManualLedgerCreateRequestVatTreatmentEnum[keyof typeof PostApiPlatformAdminManualLedgerCreateRequestVatTreatmentEnum];
 
 
 /**
@@ -119,6 +139,7 @@ export function PostApiPlatformAdminManualLedgerCreateRequestFromJSONTyped(json:
         'organizationId': json['organizationId'] == null ? undefined : json['organizationId'],
         'invoiceReference': json['invoiceReference'] == null ? undefined : json['invoiceReference'],
         'notes': json['notes'] == null ? undefined : json['notes'],
+        'vatTreatment': json['vatTreatment'] == null ? undefined : json['vatTreatment'],
         'lineItems': json['lineItems'] == null ? undefined : ((json['lineItems'] as Array<any>).map(PostApiPlatformAdminManualLedgerCreateRequestLineItemsInnerFromJSON)),
     };
 }
@@ -142,6 +163,7 @@ export function PostApiPlatformAdminManualLedgerCreateRequestToJSONTyped(value?:
         'organizationId': value['organizationId'],
         'invoiceReference': value['invoiceReference'],
         'notes': value['notes'],
+        'vatTreatment': value['vatTreatment'],
         'lineItems': value['lineItems'] == null ? undefined : ((value['lineItems'] as Array<any>).map(PostApiPlatformAdminManualLedgerCreateRequestLineItemsInnerToJSON)),
     };
 }

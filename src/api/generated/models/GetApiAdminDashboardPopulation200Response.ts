@@ -59,7 +59,8 @@ export interface GetApiAdminDashboardPopulation200Response {
  */
 export const GetApiAdminDashboardPopulation200ResponsePeriodEnum = {
     _24h: '24h',
-    _7d: '7d'
+    _7d: '7d',
+    _30d: '30d'
 } as const;
 export type GetApiAdminDashboardPopulation200ResponsePeriodEnum = typeof GetApiAdminDashboardPopulation200ResponsePeriodEnum[keyof typeof GetApiAdminDashboardPopulation200ResponsePeriodEnum];
 

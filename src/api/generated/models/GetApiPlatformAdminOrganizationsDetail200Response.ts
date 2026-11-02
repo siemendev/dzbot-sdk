@@ -40,6 +40,12 @@ export interface GetApiPlatformAdminOrganizationsDetail200Response {
      */
     name: string;
     /**
+     * Run by the platform operator: internal fees, bookings count as the platform's own
+     * @type {boolean}
+     * @memberof GetApiPlatformAdminOrganizationsDetail200Response
+     */
+    platformOwned: boolean;
+    /**
      * 
      * @type {Date}
      * @memberof GetApiPlatformAdminOrganizationsDetail200Response
@@ -59,6 +65,7 @@ export interface GetApiPlatformAdminOrganizationsDetail200Response {
 export function instanceOfGetApiPlatformAdminOrganizationsDetail200Response(value: object): value is GetApiPlatformAdminOrganizationsDetail200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('platformOwned' in value) || value['platformOwned'] === undefined) return false;
     if (!('servers' in value) || value['servers'] === undefined) return false;
     return true;
 }
@@ -75,6 +82,7 @@ export function GetApiPlatformAdminOrganizationsDetail200ResponseFromJSONTyped(j
         
         'id': json['id'],
         'name': json['name'],
+        'platformOwned': json['platformOwned'],
         'createdAt': json['createdAt'] == null ? undefined : (new Date(json['createdAt'])),
         'servers': ((json['servers'] as Array<any>).map(GetApiPlatformAdminOrganizationsDetail200ResponseServersInnerFromJSON)),
     };
@@ -93,6 +101,7 @@ export function GetApiPlatformAdminOrganizationsDetail200ResponseToJSONTyped(val
         
         'id': value['id'],
         'name': value['name'],
+        'platformOwned': value['platformOwned'],
         'createdAt': value['createdAt'] == null ? undefined : ((value['createdAt'] as any).toISOString()),
         'servers': ((value['servers'] as Array<any>).map(GetApiPlatformAdminOrganizationsDetail200ResponseServersInnerToJSON)),
     };

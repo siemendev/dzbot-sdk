@@ -15,53 +15,31 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeleteApiCreatorsModsDelete400Response,
-  GetApiAdminCustomModsPathSuggestions200Response,
   GetApiCreatorsInvitePreview200Response,
   GetApiCreatorsModsAccess200Response,
-  GetApiCreatorsModsDetail200Response,
-  GetApiCreatorsModsFileDetail200Response,
-  GetApiCreatorsModsLogs200Response,
   GetApiCreatorsStripeStatus200Response,
-  PostApiAdminAccountingManualCreate200Response,
+  GetApiCreatorsToolsMapHeight200Response,
   PostApiAdminDevelopersAppOauthSecret200Response,
   PostApiCreatorsActionsToggleVerification200Response,
   PostApiCreatorsInviteRedeem200Response,
   PostApiCreatorsInviteRedeemRequest,
-  PostApiCreatorsModsConfigCreateRequest,
   PostApiCreatorsModsCreate201Response,
   PostApiCreatorsModsCreateRequest,
-  PostApiCreatorsModsDuplicate200Response,
-  PostApiCreatorsModsFilePreview200Response,
   PostApiCreatorsModsInviteCreate201Response,
-  PostApiCreatorsModsNewVersion200Response,
-  PostApiCreatorsModsNewVersion400Response,
-  PostApiCreatorsModsServerGrant200Response,
-  PostApiCreatorsModsServerGrantRequest,
+  PostApiCreatorsModsOrganizationGrant200Response,
+  PostApiCreatorsModsOrganizationGrantRequest,
   PostApiCreatorsStripeLink200Response,
   PutApiCreatorsModsAccessUpdateRequest,
-  PutApiCreatorsModsFileUpdateRequest,
-  PutApiCreatorsModsFilesReorder200Response,
 } from '../models/index';
 import {
-    DeleteApiCreatorsModsDelete400ResponseFromJSON,
-    DeleteApiCreatorsModsDelete400ResponseToJSON,
-    GetApiAdminCustomModsPathSuggestions200ResponseFromJSON,
-    GetApiAdminCustomModsPathSuggestions200ResponseToJSON,
     GetApiCreatorsInvitePreview200ResponseFromJSON,
     GetApiCreatorsInvitePreview200ResponseToJSON,
     GetApiCreatorsModsAccess200ResponseFromJSON,
     GetApiCreatorsModsAccess200ResponseToJSON,
-    GetApiCreatorsModsDetail200ResponseFromJSON,
-    GetApiCreatorsModsDetail200ResponseToJSON,
-    GetApiCreatorsModsFileDetail200ResponseFromJSON,
-    GetApiCreatorsModsFileDetail200ResponseToJSON,
-    GetApiCreatorsModsLogs200ResponseFromJSON,
-    GetApiCreatorsModsLogs200ResponseToJSON,
     GetApiCreatorsStripeStatus200ResponseFromJSON,
     GetApiCreatorsStripeStatus200ResponseToJSON,
-    PostApiAdminAccountingManualCreate200ResponseFromJSON,
-    PostApiAdminAccountingManualCreate200ResponseToJSON,
+    GetApiCreatorsToolsMapHeight200ResponseFromJSON,
+    GetApiCreatorsToolsMapHeight200ResponseToJSON,
     PostApiAdminDevelopersAppOauthSecret200ResponseFromJSON,
     PostApiAdminDevelopersAppOauthSecret200ResponseToJSON,
     PostApiCreatorsActionsToggleVerification200ResponseFromJSON,
@@ -70,34 +48,20 @@ import {
     PostApiCreatorsInviteRedeem200ResponseToJSON,
     PostApiCreatorsInviteRedeemRequestFromJSON,
     PostApiCreatorsInviteRedeemRequestToJSON,
-    PostApiCreatorsModsConfigCreateRequestFromJSON,
-    PostApiCreatorsModsConfigCreateRequestToJSON,
     PostApiCreatorsModsCreate201ResponseFromJSON,
     PostApiCreatorsModsCreate201ResponseToJSON,
     PostApiCreatorsModsCreateRequestFromJSON,
     PostApiCreatorsModsCreateRequestToJSON,
-    PostApiCreatorsModsDuplicate200ResponseFromJSON,
-    PostApiCreatorsModsDuplicate200ResponseToJSON,
-    PostApiCreatorsModsFilePreview200ResponseFromJSON,
-    PostApiCreatorsModsFilePreview200ResponseToJSON,
     PostApiCreatorsModsInviteCreate201ResponseFromJSON,
     PostApiCreatorsModsInviteCreate201ResponseToJSON,
-    PostApiCreatorsModsNewVersion200ResponseFromJSON,
-    PostApiCreatorsModsNewVersion200ResponseToJSON,
-    PostApiCreatorsModsNewVersion400ResponseFromJSON,
-    PostApiCreatorsModsNewVersion400ResponseToJSON,
-    PostApiCreatorsModsServerGrant200ResponseFromJSON,
-    PostApiCreatorsModsServerGrant200ResponseToJSON,
-    PostApiCreatorsModsServerGrantRequestFromJSON,
-    PostApiCreatorsModsServerGrantRequestToJSON,
+    PostApiCreatorsModsOrganizationGrant200ResponseFromJSON,
+    PostApiCreatorsModsOrganizationGrant200ResponseToJSON,
+    PostApiCreatorsModsOrganizationGrantRequestFromJSON,
+    PostApiCreatorsModsOrganizationGrantRequestToJSON,
     PostApiCreatorsStripeLink200ResponseFromJSON,
     PostApiCreatorsStripeLink200ResponseToJSON,
     PutApiCreatorsModsAccessUpdateRequestFromJSON,
     PutApiCreatorsModsAccessUpdateRequestToJSON,
-    PutApiCreatorsModsFileUpdateRequestFromJSON,
-    PutApiCreatorsModsFileUpdateRequestToJSON,
-    PutApiCreatorsModsFilesReorder200ResponseFromJSON,
-    PutApiCreatorsModsFilesReorder200ResponseToJSON,
 } from '../models/index';
 
 export interface DeleteApiCreatorsActionsAccessRemoveRequest {
@@ -118,18 +82,9 @@ export interface DeleteApiCreatorsModsAccessRemoveRequest {
     collaborator: number;
 }
 
-export interface DeleteApiCreatorsModsConfigDeleteRequest {
-    mod: number;
-    _configuration: number;
-}
-
-export interface DeleteApiCreatorsModsDeleteRequest {
-    mod: number;
-}
-
-export interface DeleteApiCreatorsModsFileDeleteRequest {
-    mod: number;
-    file: number;
+export interface DeleteApiCreatorsModsOrganizationRevokeRequest {
+    mod: string;
+    access: string;
 }
 
 export interface GetApiCreatorSearchRequest {
@@ -169,21 +124,10 @@ export interface GetApiCreatorsModsAccessRequest {
     mod: number;
 }
 
-export interface GetApiCreatorsModsDetailRequest {
-    mod: number;
-}
-
-export interface GetApiCreatorsModsFileDetailRequest {
-    mod: number;
-    file: number;
-}
-
-export interface GetApiCreatorsModsLogsRequest {
-    mod: number;
-}
-
-export interface GetApiCreatorsModsPathSuggestionsRequest {
-    mod: number;
+export interface GetApiCreatorsToolsMapHeightRequest {
+    map: string;
+    x: number;
+    z: number;
 }
 
 export interface PostApiCreatorsActionsCreateRequest {
@@ -204,47 +148,8 @@ export interface PostApiCreatorsInviteRedeemOperationRequest {
     postApiCreatorsInviteRedeemRequest?: PostApiCreatorsInviteRedeemRequest;
 }
 
-export interface PostApiCreatorsModsConfigCreateOperationRequest {
-    mod: number;
-    postApiCreatorsModsConfigCreateRequest: PostApiCreatorsModsConfigCreateRequest;
-}
-
-export interface PostApiCreatorsModsConfigMoveDownRequest {
-    mod: number;
-    _configuration: number;
-}
-
-export interface PostApiCreatorsModsConfigMoveUpRequest {
-    mod: number;
-    _configuration: number;
-}
-
 export interface PostApiCreatorsModsCreateOperationRequest {
     postApiCreatorsModsCreateRequest: PostApiCreatorsModsCreateRequest;
-}
-
-export interface PostApiCreatorsModsDuplicateRequest {
-    mod: number;
-}
-
-export interface PostApiCreatorsModsFileCreateRequest {
-    mod: number;
-    putApiCreatorsModsFileUpdateRequest: PutApiCreatorsModsFileUpdateRequest;
-}
-
-export interface PostApiCreatorsModsFileMoveDownRequest {
-    mod: number;
-    file: number;
-}
-
-export interface PostApiCreatorsModsFileMoveUpRequest {
-    mod: number;
-    file: number;
-}
-
-export interface PostApiCreatorsModsFilePreviewRequest {
-    mod: number;
-    file: number;
 }
 
 export interface PostApiCreatorsModsInviteCreateRequest {
@@ -252,24 +157,12 @@ export interface PostApiCreatorsModsInviteCreateRequest {
     putApiCreatorsModsAccessUpdateRequest: PutApiCreatorsModsAccessUpdateRequest;
 }
 
-export interface PostApiCreatorsModsNewVersionRequest {
+export interface PostApiCreatorsModsOrganizationGrantOperationRequest {
     mod: number;
-}
-
-export interface PostApiCreatorsModsPublishRequest {
-    mod: number;
-}
-
-export interface PostApiCreatorsModsServerGrantOperationRequest {
-    mod: number;
-    postApiCreatorsModsServerGrantRequest: PostApiCreatorsModsServerGrantRequest;
+    postApiCreatorsModsOrganizationGrantRequest: PostApiCreatorsModsOrganizationGrantRequest;
 }
 
 export interface PostApiCreatorsModsServerInviteCreateRequest {
-    mod: number;
-}
-
-export interface PostApiCreatorsModsToggleVerificationRequest {
     mod: number;
 }
 
@@ -288,30 +181,6 @@ export interface PutApiCreatorsModsAccessUpdateOperationRequest {
     mod: number;
     collaborator: number;
     putApiCreatorsModsAccessUpdateRequest: PutApiCreatorsModsAccessUpdateRequest;
-}
-
-export interface PutApiCreatorsModsConfigReorderRequest {
-    mod: number;
-}
-
-export interface PutApiCreatorsModsConfigUpdateRequest {
-    mod: number;
-    _configuration: number;
-}
-
-export interface PutApiCreatorsModsFileUpdateOperationRequest {
-    mod: number;
-    file: number;
-    putApiCreatorsModsFileUpdateRequest: PutApiCreatorsModsFileUpdateRequest;
-}
-
-export interface PutApiCreatorsModsFilesReorderRequest {
-    mod: number;
-}
-
-export interface PutApiCreatorsModsUpdateRequest {
-    mod: number;
-    postApiCreatorsModsCreateRequest: PostApiCreatorsModsCreateRequest;
 }
 
 /**
@@ -498,20 +367,20 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a mod configuration
+     * Take a private mod back from an organization; its running installations stay
      */
-    async deleteApiCreatorsModsConfigDeleteRaw(requestParameters: DeleteApiCreatorsModsConfigDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async deleteApiCreatorsModsOrganizationRevokeRaw(requestParameters: DeleteApiCreatorsModsOrganizationRevokeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['mod'] == null) {
             throw new runtime.RequiredError(
                 'mod',
-                'Required parameter "mod" was null or undefined when calling deleteApiCreatorsModsConfigDelete().'
+                'Required parameter "mod" was null or undefined when calling deleteApiCreatorsModsOrganizationRevoke().'
             );
         }
 
-        if (requestParameters['_configuration'] == null) {
+        if (requestParameters['access'] == null) {
             throw new runtime.RequiredError(
-                '_configuration',
-                'Required parameter "_configuration" was null or undefined when calling deleteApiCreatorsModsConfigDelete().'
+                'access',
+                'Required parameter "access" was null or undefined when calling deleteApiCreatorsModsOrganizationRevoke().'
             );
         }
 
@@ -528,109 +397,20 @@ export class CreatorsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations/{configuration}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"configuration"}}`, encodeURIComponent(String(requestParameters['_configuration']))),
+            path: `/api/creators/mods/{mod}/organizations/{access}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"access"}}`, encodeURIComponent(String(requestParameters['access']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
-     * Delete a mod configuration
+     * Take a private mod back from an organization; its running installations stay
      */
-    async deleteApiCreatorsModsConfigDelete(requestParameters: DeleteApiCreatorsModsConfigDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiCreatorsModsConfigDeleteRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Delete a mod
-     */
-    async deleteApiCreatorsModsDeleteRaw(requestParameters: DeleteApiCreatorsModsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling deleteApiCreatorsModsDelete().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/delete`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Delete a mod
-     */
-    async deleteApiCreatorsModsDelete(requestParameters: DeleteApiCreatorsModsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiCreatorsModsDeleteRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Delete a mod file
-     */
-    async deleteApiCreatorsModsFileDeleteRaw(requestParameters: DeleteApiCreatorsModsFileDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling deleteApiCreatorsModsFileDelete().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling deleteApiCreatorsModsFileDelete().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Delete a mod file
-     */
-    async deleteApiCreatorsModsFileDelete(requestParameters: DeleteApiCreatorsModsFileDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiCreatorsModsFileDeleteRaw(requestParameters, initOverrides);
+    async deleteApiCreatorsModsOrganizationRevoke(requestParameters: DeleteApiCreatorsModsOrganizationRevokeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.deleteApiCreatorsModsOrganizationRevokeRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1030,177 +810,6 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get mod version detail
-     */
-    async getApiCreatorsModsDetailRaw(requestParameters: GetApiCreatorsModsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiCreatorsModsDetail200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiCreatorsModsDetail().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiCreatorsModsDetail200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get mod version detail
-     */
-    async getApiCreatorsModsDetail(requestParameters: GetApiCreatorsModsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiCreatorsModsDetail200Response> {
-        const response = await this.getApiCreatorsModsDetailRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get a mod file
-     */
-    async getApiCreatorsModsFileDetailRaw(requestParameters: GetApiCreatorsModsFileDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiCreatorsModsFileDetail200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiCreatorsModsFileDetail().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling getApiCreatorsModsFileDetail().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiCreatorsModsFileDetail200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get a mod file
-     */
-    async getApiCreatorsModsFileDetail(requestParameters: GetApiCreatorsModsFileDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiCreatorsModsFileDetail200Response> {
-        const response = await this.getApiCreatorsModsFileDetailRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * List recent error logs across all installations of a mod
-     */
-    async getApiCreatorsModsLogsRaw(requestParameters: GetApiCreatorsModsLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiCreatorsModsLogs200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiCreatorsModsLogs().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/logs`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiCreatorsModsLogs200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * List recent error logs across all installations of a mod
-     */
-    async getApiCreatorsModsLogs(requestParameters: GetApiCreatorsModsLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiCreatorsModsLogs200Response> {
-        const response = await this.getApiCreatorsModsLogsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Mission-relative file paths to suggest in the mod file editor
-     */
-    async getApiCreatorsModsPathSuggestionsRaw(requestParameters: GetApiCreatorsModsPathSuggestionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminCustomModsPathSuggestions200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiCreatorsModsPathSuggestions().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/path-suggestions`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminCustomModsPathSuggestions200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Mission-relative file paths to suggest in the mod file editor
-     */
-    async getApiCreatorsModsPathSuggestions(requestParameters: GetApiCreatorsModsPathSuggestionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminCustomModsPathSuggestions200Response> {
-        const response = await this.getApiCreatorsModsPathSuggestionsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Get Stripe account status
      */
     async getApiCreatorsStripeStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiCreatorsStripeStatus200Response>> {
@@ -1231,6 +840,75 @@ export class CreatorsApi extends runtime.BaseAPI {
      */
     async getApiCreatorsStripeStatus(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiCreatorsStripeStatus200Response> {
         const response = await this.getApiCreatorsStripeStatusRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * The ground, or the first walkable surface above it (piers, bridges, building ground floors), from the 1 m height map.
+     * Height of a spot on a vanilla map
+     */
+    async getApiCreatorsToolsMapHeightRaw(requestParameters: GetApiCreatorsToolsMapHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiCreatorsToolsMapHeight200Response>> {
+        if (requestParameters['map'] == null) {
+            throw new runtime.RequiredError(
+                'map',
+                'Required parameter "map" was null or undefined when calling getApiCreatorsToolsMapHeight().'
+            );
+        }
+
+        if (requestParameters['x'] == null) {
+            throw new runtime.RequiredError(
+                'x',
+                'Required parameter "x" was null or undefined when calling getApiCreatorsToolsMapHeight().'
+            );
+        }
+
+        if (requestParameters['z'] == null) {
+            throw new runtime.RequiredError(
+                'z',
+                'Required parameter "z" was null or undefined when calling getApiCreatorsToolsMapHeight().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['map'] != null) {
+            queryParameters['map'] = requestParameters['map'];
+        }
+
+        if (requestParameters['x'] != null) {
+            queryParameters['x'] = requestParameters['x'];
+        }
+
+        if (requestParameters['z'] != null) {
+            queryParameters['z'] = requestParameters['z'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/creators/tools/map-height`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiCreatorsToolsMapHeight200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The ground, or the first walkable surface above it (piers, bridges, building ground floors), from the 1 m height map.
+     * Height of a spot on a vanilla map
+     */
+    async getApiCreatorsToolsMapHeight(requestParameters: GetApiCreatorsToolsMapHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiCreatorsToolsMapHeight200Response> {
+        const response = await this.getApiCreatorsToolsMapHeightRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1408,154 +1086,7 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a mod configuration
-     */
-    async postApiCreatorsModsConfigCreateRaw(requestParameters: PostApiCreatorsModsConfigCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAdminAccountingManualCreate200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsConfigCreate().'
-            );
-        }
-
-        if (requestParameters['postApiCreatorsModsConfigCreateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'postApiCreatorsModsConfigCreateRequest',
-                'Required parameter "postApiCreatorsModsConfigCreateRequest" was null or undefined when calling postApiCreatorsModsConfigCreate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PostApiCreatorsModsConfigCreateRequestToJSON(requestParameters['postApiCreatorsModsConfigCreateRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAdminAccountingManualCreate200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Create a mod configuration
-     */
-    async postApiCreatorsModsConfigCreate(requestParameters: PostApiCreatorsModsConfigCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminAccountingManualCreate200Response> {
-        const response = await this.postApiCreatorsModsConfigCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move configuration down
-     */
-    async postApiCreatorsModsConfigMoveDownRaw(requestParameters: PostApiCreatorsModsConfigMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsConfigMoveDown().'
-            );
-        }
-
-        if (requestParameters['_configuration'] == null) {
-            throw new runtime.RequiredError(
-                '_configuration',
-                'Required parameter "_configuration" was null or undefined when calling postApiCreatorsModsConfigMoveDown().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations/{configuration}/move-down`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"configuration"}}`, encodeURIComponent(String(requestParameters['_configuration']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move configuration down
-     */
-    async postApiCreatorsModsConfigMoveDown(requestParameters: PostApiCreatorsModsConfigMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiCreatorsModsConfigMoveDownRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move configuration up
-     */
-    async postApiCreatorsModsConfigMoveUpRaw(requestParameters: PostApiCreatorsModsConfigMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsConfigMoveUp().'
-            );
-        }
-
-        if (requestParameters['_configuration'] == null) {
-            throw new runtime.RequiredError(
-                '_configuration',
-                'Required parameter "_configuration" was null or undefined when calling postApiCreatorsModsConfigMoveUp().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations/{configuration}/move-up`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"configuration"}}`, encodeURIComponent(String(requestParameters['_configuration']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move configuration up
-     */
-    async postApiCreatorsModsConfigMoveUp(requestParameters: PostApiCreatorsModsConfigMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiCreatorsModsConfigMoveUpRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Create a new mod
+     * Create a mod owned by the current user, private until it is published and made public
      */
     async postApiCreatorsModsCreateRaw(requestParameters: PostApiCreatorsModsCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsCreate201Response>> {
         if (requestParameters['postApiCreatorsModsCreateRequest'] == null) {
@@ -1591,246 +1122,10 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new mod
+     * Create a mod owned by the current user, private until it is published and made public
      */
     async postApiCreatorsModsCreate(requestParameters: PostApiCreatorsModsCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsCreate201Response> {
         const response = await this.postApiCreatorsModsCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Duplicate a mod (admin only)
-     */
-    async postApiCreatorsModsDuplicateRaw(requestParameters: PostApiCreatorsModsDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsDuplicate200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsDuplicate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/duplicate`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsDuplicate200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Duplicate a mod (admin only)
-     */
-    async postApiCreatorsModsDuplicate(requestParameters: PostApiCreatorsModsDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsDuplicate200Response> {
-        const response = await this.postApiCreatorsModsDuplicateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Create a mod file
-     */
-    async postApiCreatorsModsFileCreateRaw(requestParameters: PostApiCreatorsModsFileCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAdminAccountingManualCreate200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsFileCreate().'
-            );
-        }
-
-        if (requestParameters['putApiCreatorsModsFileUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'putApiCreatorsModsFileUpdateRequest',
-                'Required parameter "putApiCreatorsModsFileUpdateRequest" was null or undefined when calling postApiCreatorsModsFileCreate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PutApiCreatorsModsFileUpdateRequestToJSON(requestParameters['putApiCreatorsModsFileUpdateRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAdminAccountingManualCreate200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Create a mod file
-     */
-    async postApiCreatorsModsFileCreate(requestParameters: PostApiCreatorsModsFileCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminAccountingManualCreate200Response> {
-        const response = await this.postApiCreatorsModsFileCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move file down
-     */
-    async postApiCreatorsModsFileMoveDownRaw(requestParameters: PostApiCreatorsModsFileMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsFileMoveDown().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling postApiCreatorsModsFileMoveDown().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}/move-down`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move file down
-     */
-    async postApiCreatorsModsFileMoveDown(requestParameters: PostApiCreatorsModsFileMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiCreatorsModsFileMoveDownRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move file up
-     */
-    async postApiCreatorsModsFileMoveUpRaw(requestParameters: PostApiCreatorsModsFileMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsFileMoveUp().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling postApiCreatorsModsFileMoveUp().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}/move-up`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move file up
-     */
-    async postApiCreatorsModsFileMoveUp(requestParameters: PostApiCreatorsModsFileMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiCreatorsModsFileMoveUpRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Preview file diff
-     */
-    async postApiCreatorsModsFilePreviewRaw(requestParameters: PostApiCreatorsModsFilePreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsFilePreview200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsFilePreview().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling postApiCreatorsModsFilePreview().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}/preview`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsFilePreview200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Preview file diff
-     */
-    async postApiCreatorsModsFilePreview(requestParameters: PostApiCreatorsModsFilePreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsFilePreview200Response> {
-        const response = await this.postApiCreatorsModsFilePreviewRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1886,102 +1181,20 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new version from current
+     * Make a private mod available to an organization where the creator may install mods
      */
-    async postApiCreatorsModsNewVersionRaw(requestParameters: PostApiCreatorsModsNewVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsNewVersion200Response>> {
+    async postApiCreatorsModsOrganizationGrantRaw(requestParameters: PostApiCreatorsModsOrganizationGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsOrganizationGrant200Response>> {
         if (requestParameters['mod'] == null) {
             throw new runtime.RequiredError(
                 'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsNewVersion().'
+                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsOrganizationGrant().'
             );
         }
 
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/versions/new`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsNewVersion200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Create a new version from current
-     */
-    async postApiCreatorsModsNewVersion(requestParameters: PostApiCreatorsModsNewVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsNewVersion200Response> {
-        const response = await this.postApiCreatorsModsNewVersionRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Publish a mod version
-     */
-    async postApiCreatorsModsPublishRaw(requestParameters: PostApiCreatorsModsPublishRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
+        if (requestParameters['postApiCreatorsModsOrganizationGrantRequest'] == null) {
             throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsPublish().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/publish`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Publish a mod version
-     */
-    async postApiCreatorsModsPublish(requestParameters: PostApiCreatorsModsPublishRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiCreatorsModsPublishRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Make a mod available on a server where the creator may install mods
-     */
-    async postApiCreatorsModsServerGrantRaw(requestParameters: PostApiCreatorsModsServerGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsServerGrant200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsServerGrant().'
-            );
-        }
-
-        if (requestParameters['postApiCreatorsModsServerGrantRequest'] == null) {
-            throw new runtime.RequiredError(
-                'postApiCreatorsModsServerGrantRequest',
-                'Required parameter "postApiCreatorsModsServerGrantRequest" was null or undefined when calling postApiCreatorsModsServerGrant().'
+                'postApiCreatorsModsOrganizationGrantRequest',
+                'Required parameter "postApiCreatorsModsOrganizationGrantRequest" was null or undefined when calling postApiCreatorsModsOrganizationGrant().'
             );
         }
 
@@ -2000,26 +1213,26 @@ export class CreatorsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/creators/mods/{mod}/servers`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
+            path: `/api/creators/mods/{mod}/organizations`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PostApiCreatorsModsServerGrantRequestToJSON(requestParameters['postApiCreatorsModsServerGrantRequest']),
+            body: PostApiCreatorsModsOrganizationGrantRequestToJSON(requestParameters['postApiCreatorsModsOrganizationGrantRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsServerGrant200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsOrganizationGrant200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Make a mod available on a server where the creator may install mods
+     * Make a private mod available to an organization where the creator may install mods
      */
-    async postApiCreatorsModsServerGrant(requestParameters: PostApiCreatorsModsServerGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsServerGrant200Response> {
-        const response = await this.postApiCreatorsModsServerGrantRaw(requestParameters, initOverrides);
+    async postApiCreatorsModsOrganizationGrant(requestParameters: PostApiCreatorsModsOrganizationGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsOrganizationGrant200Response> {
+        const response = await this.postApiCreatorsModsOrganizationGrantRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Create a single-use link that gives one server access to a private mod
+     * Create a single-use link that gives one organization access to a private mod
      */
     async postApiCreatorsModsServerInviteCreateRaw(requestParameters: PostApiCreatorsModsServerInviteCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsInviteCreate201Response>> {
         if (requestParameters['mod'] == null) {
@@ -2052,51 +1265,10 @@ export class CreatorsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a single-use link that gives one server access to a private mod
+     * Create a single-use link that gives one organization access to a private mod
      */
     async postApiCreatorsModsServerInviteCreate(requestParameters: PostApiCreatorsModsServerInviteCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsInviteCreate201Response> {
         const response = await this.postApiCreatorsModsServerInviteCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Toggle mod verification (admin only)
-     */
-    async postApiCreatorsModsToggleVerificationRaw(requestParameters: PostApiCreatorsModsToggleVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsActionsToggleVerification200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiCreatorsModsToggleVerification().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/toggle-verification`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsActionsToggleVerification200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Toggle mod verification (admin only)
-     */
-    async postApiCreatorsModsToggleVerification(requestParameters: PostApiCreatorsModsToggleVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsActionsToggleVerification200Response> {
-        const response = await this.postApiCreatorsModsToggleVerificationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -2325,245 +1497,6 @@ export class CreatorsApi extends runtime.BaseAPI {
      */
     async putApiCreatorsModsAccessUpdate(requestParameters: PutApiCreatorsModsAccessUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.putApiCreatorsModsAccessUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reorder mod configurations by supplying the full ordered list of IDs
-     */
-    async putApiCreatorsModsConfigReorderRaw(requestParameters: PutApiCreatorsModsConfigReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling putApiCreatorsModsConfigReorder().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations/reorder`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Reorder mod configurations by supplying the full ordered list of IDs
-     */
-    async putApiCreatorsModsConfigReorder(requestParameters: PutApiCreatorsModsConfigReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.putApiCreatorsModsConfigReorderRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Update a mod configuration
-     */
-    async putApiCreatorsModsConfigUpdateRaw(requestParameters: PutApiCreatorsModsConfigUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling putApiCreatorsModsConfigUpdate().'
-            );
-        }
-
-        if (requestParameters['_configuration'] == null) {
-            throw new runtime.RequiredError(
-                '_configuration',
-                'Required parameter "_configuration" was null or undefined when calling putApiCreatorsModsConfigUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/configurations/{configuration}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"configuration"}}`, encodeURIComponent(String(requestParameters['_configuration']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Update a mod configuration
-     */
-    async putApiCreatorsModsConfigUpdate(requestParameters: PutApiCreatorsModsConfigUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.putApiCreatorsModsConfigUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Update a mod file
-     */
-    async putApiCreatorsModsFileUpdateRaw(requestParameters: PutApiCreatorsModsFileUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling putApiCreatorsModsFileUpdate().'
-            );
-        }
-
-        if (requestParameters['file'] == null) {
-            throw new runtime.RequiredError(
-                'file',
-                'Required parameter "file" was null or undefined when calling putApiCreatorsModsFileUpdate().'
-            );
-        }
-
-        if (requestParameters['putApiCreatorsModsFileUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'putApiCreatorsModsFileUpdateRequest',
-                'Required parameter "putApiCreatorsModsFileUpdateRequest" was null or undefined when calling putApiCreatorsModsFileUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/{file}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PutApiCreatorsModsFileUpdateRequestToJSON(requestParameters['putApiCreatorsModsFileUpdateRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Update a mod file
-     */
-    async putApiCreatorsModsFileUpdate(requestParameters: PutApiCreatorsModsFileUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.putApiCreatorsModsFileUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reorder mod files by supplying the full ordered list of IDs
-     */
-    async putApiCreatorsModsFilesReorderRaw(requestParameters: PutApiCreatorsModsFilesReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling putApiCreatorsModsFilesReorder().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}/files/reorder`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Reorder mod files by supplying the full ordered list of IDs
-     */
-    async putApiCreatorsModsFilesReorder(requestParameters: PutApiCreatorsModsFilesReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.putApiCreatorsModsFilesReorderRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Update mod
-     */
-    async putApiCreatorsModsUpdateRaw(requestParameters: PutApiCreatorsModsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling putApiCreatorsModsUpdate().'
-            );
-        }
-
-        if (requestParameters['postApiCreatorsModsCreateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'postApiCreatorsModsCreateRequest',
-                'Required parameter "postApiCreatorsModsCreateRequest" was null or undefined when calling putApiCreatorsModsUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/creators/mods/{mod}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PostApiCreatorsModsCreateRequestToJSON(requestParameters['postApiCreatorsModsCreateRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Update mod
-     */
-    async putApiCreatorsModsUpdate(requestParameters: PutApiCreatorsModsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.putApiCreatorsModsUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

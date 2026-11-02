@@ -24,7 +24,7 @@ export interface GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntri
      * @type {number}
      * @memberof GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntriesInner
      */
-    serverModId?: number;
+    installationId?: number;
     /**
      * 
      * @type {number}
@@ -67,6 +67,12 @@ export interface GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntri
      * @memberof GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntriesInner
      */
     autoUpdateEnabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntriesInner
+     */
+    instances?: number;
 }
 
 /**
@@ -86,7 +92,7 @@ export function GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntrie
     }
     return {
         
-        'serverModId': json['serverModId'] == null ? undefined : json['serverModId'],
+        'installationId': json['installationId'] == null ? undefined : json['installationId'],
         'serverId': json['serverId'] == null ? undefined : json['serverId'],
         'serverName': json['serverName'] == null ? undefined : json['serverName'],
         'modId': json['modId'] == null ? undefined : json['modId'],
@@ -94,6 +100,7 @@ export function GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntrie
         'installedVersion': json['installedVersion'] == null ? undefined : json['installedVersion'],
         'latestReleasedVersion': json['latestReleasedVersion'] == null ? undefined : json['latestReleasedVersion'],
         'autoUpdateEnabled': json['autoUpdateEnabled'] == null ? undefined : json['autoUpdateEnabled'],
+        'instances': json['instances'] == null ? undefined : json['instances'],
     };
 }
 
@@ -108,7 +115,7 @@ export function GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntrie
 
     return {
         
-        'serverModId': value['serverModId'],
+        'installationId': value['installationId'],
         'serverId': value['serverId'],
         'serverName': value['serverName'],
         'modId': value['modId'],
@@ -116,6 +123,7 @@ export function GetApiPlatformAdminObservabilityModVersionDrift200ResponseEntrie
         'installedVersion': value['installedVersion'],
         'latestReleasedVersion': value['latestReleasedVersion'],
         'autoUpdateEnabled': value['autoUpdateEnabled'],
+        'instances': value['instances'],
     };
 }
 

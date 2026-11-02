@@ -41,6 +41,13 @@ import {
     GetApiPlatformAdminAccounting200ResponseServerBreakdownInnerToJSON,
     GetApiPlatformAdminAccounting200ResponseServerBreakdownInnerToJSONTyped,
 } from './GetApiPlatformAdminAccounting200ResponseServerBreakdownInner';
+import type { GetApiPlatformAdminAccounting200ResponseSourcesInner } from './GetApiPlatformAdminAccounting200ResponseSourcesInner';
+import {
+    GetApiPlatformAdminAccounting200ResponseSourcesInnerFromJSON,
+    GetApiPlatformAdminAccounting200ResponseSourcesInnerFromJSONTyped,
+    GetApiPlatformAdminAccounting200ResponseSourcesInnerToJSON,
+    GetApiPlatformAdminAccounting200ResponseSourcesInnerToJSONTyped,
+} from './GetApiPlatformAdminAccounting200ResponseSourcesInner';
 
 /**
  * 
@@ -72,6 +79,18 @@ export interface GetApiPlatformAdminAccounting200Response {
      * @memberof GetApiPlatformAdminAccounting200Response
      */
     serverBreakdown?: Array<GetApiPlatformAdminAccounting200ResponseServerBreakdownInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetApiPlatformAdminAccounting200Response
+     */
+    source?: string;
+    /**
+     * What the overview can show; only `platform` while the platform runs no organization itself
+     * @type {Array<GetApiPlatformAdminAccounting200ResponseSourcesInner>}
+     * @memberof GetApiPlatformAdminAccounting200Response
+     */
+    sources?: Array<GetApiPlatformAdminAccounting200ResponseSourcesInner>;
 }
 
 /**
@@ -95,6 +114,8 @@ export function GetApiPlatformAdminAccounting200ResponseFromJSONTyped(json: any,
         'monthlyBreakdown': json['monthlyBreakdown'] == null ? undefined : ((json['monthlyBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseMonthlyBreakdownInnerFromJSON)),
         'categoryBreakdown': json['categoryBreakdown'] == null ? undefined : ((json['categoryBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseCategoryBreakdownInnerFromJSON)),
         'serverBreakdown': json['serverBreakdown'] == null ? undefined : ((json['serverBreakdown'] as Array<any>).map(GetApiPlatformAdminAccounting200ResponseServerBreakdownInnerFromJSON)),
+        'source': json['source'] == null ? undefined : json['source'],
+        'sources': json['sources'] == null ? undefined : ((json['sources'] as Array<any>).map(GetApiPlatformAdminAccounting200ResponseSourcesInnerFromJSON)),
     };
 }
 
@@ -113,6 +134,8 @@ export function GetApiPlatformAdminAccounting200ResponseToJSONTyped(value?: GetA
         'monthlyBreakdown': value['monthlyBreakdown'] == null ? undefined : ((value['monthlyBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseMonthlyBreakdownInnerToJSON)),
         'categoryBreakdown': value['categoryBreakdown'] == null ? undefined : ((value['categoryBreakdown'] as Array<any>).map(GetApiAdminAccounting200ResponseCategoryBreakdownInnerToJSON)),
         'serverBreakdown': value['serverBreakdown'] == null ? undefined : ((value['serverBreakdown'] as Array<any>).map(GetApiPlatformAdminAccounting200ResponseServerBreakdownInnerToJSON)),
+        'source': value['source'],
+        'sources': value['sources'] == null ? undefined : ((value['sources'] as Array<any>).map(GetApiPlatformAdminAccounting200ResponseSourcesInnerToJSON)),
     };
 }
 

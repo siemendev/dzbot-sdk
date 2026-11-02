@@ -83,6 +83,39 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * nginx asks this before serving a server-site page: a 301 to the server\'s main address when the visitor came through another of its addresses, 421 for a foreign host no server answers to, else 404 and the shell. Never cached, so a later change of the main address cannot leave browsers bouncing between two cached redirects.
+     */
+    async getApiPublicSeoHostRedirectRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/public/seo/host-redirect`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * nginx asks this before serving a server-site page: a 301 to the server\'s main address when the visitor came through another of its addresses, 421 for a foreign host no server answers to, else 404 and the shell. Never cached, so a later change of the main address cannot leave browsers bouncing between two cached redirects.
+     */
+    async getApiPublicSeoHostRedirect(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getApiPublicSeoHostRedirectRaw(initOverrides);
+    }
+
+    /**
      */
     async getApiPublicSeoRobotsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};

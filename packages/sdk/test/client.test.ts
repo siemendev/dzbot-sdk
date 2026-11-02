@@ -38,6 +38,36 @@ describe('Dzbot requests', () => {
     expect(headers['user-agent']).toMatch(/^dzbot-sdk-js\//)
   })
 
+  it('picks the server per call for an org-wide sign-in', async () => {
+    const store = new MemoryTokenStore()
+    store.set('dzbot:app1:*', JSON.stringify({ accessToken: 'at', refreshToken: 'rt', expiresAt: Date.now() + 3_600_000, scope: [] }))
+    const { fetch, calls } = fakeFetch([json({ servers: [{ id: 1, subdomain: 'cherno', player: null }] }), json({ balance: 12450 })])
+    const dzbot = new Dzbot({ oauth: new OAuthClient({ clientId: 'app1', redirectUri: 'https://dzde.example/cb', store }), fetch })
+
+    expect(await dzbot.myServers()).toHaveLength(1)
+    expect((calls[0].init.headers as Record<string, string>)['x-server-subdomain']).toBeUndefined()
+    expect(await dzbot.forServer('cherno').profile()).toEqual({ balance: 12450 })
+    expect(calls[1].url).toBe('https://api.dzbot.de/api/shop/profile')
+    expect((calls[1].init.headers as Record<string, string>)['x-server-subdomain']).toBe('cherno')
+    expect((calls[1].init.headers as Record<string, string>).authorization).toBe('Bearer at')
+  })
+
+  it('reads public data without any credential', async () => {
+    const { fetch, calls } = fakeFetch([json({ players: 38, slots: 100, queue: null, asOf: null })])
+    expect(await new Dzbot({ server: 'cherno', fetch }).population()).toMatchObject({ players: 38 })
+    expect((calls[0].init.headers as Record<string, string>).authorization).toBeUndefined()
+  })
+
+  it('reads the whitelist state from the public endpoint', async () => {
+    const { fetch, calls } = fakeFetch([json({ enabled: true, changesAt: '2026-10-29T11:45:00+01:00' })])
+    expect(await new Dzbot({ server: 'cherno', fetch }).whitelist()).toEqual({ enabled: true, changesAt: '2026-10-29T11:45:00+01:00' })
+    expect(calls[0].url).toContain('/api/public/whitelist')
+  })
+
+  it('needs a server unless an org-wide sign-in picks it per call', () => {
+    expect(() => new Dzbot({ apiKey: 'dzk_x' })).toThrow(/server/)
+  })
+
   it('retries a GET on 503 and after Retry-After on 429', async () => {
     const waits: number[] = []
     const { fetch, calls } = fakeFetch([json({ error: 'down' }, 503), json({ error: 'slow_down' }, 429, { 'retry-after': '3' }), json({ ok: true })])
@@ -137,5 +167,40 @@ describe('with Sign in with dzbot', () => {
     const oauth = new OAuthClient({ clientId: 'app', redirectUri: 'https://bot.example/cb', server: 's', store, fetch })
     await new Dzbot({ server: 's', oauth, fetch }).searchPage('order')
     expect(calls[0].url).toBe('https://api.dzbot.de/api/search/order')
+  })
+})
+
+describe('Public server reads', () => {
+  const hit = (type: string, id: string, fields: Record<string, unknown>, extra: Record<string, unknown> = {}) => ({
+    type, id, code: null, label: id, subtitle: null, snippet: null, image: null, path: null, matchLevel: 'primary', exact: false, fields, ...extra,
+  })
+  const list = (type: string, items: unknown[]) => ({ type, view: 'guest', items, page: { kind: 'cursor', perPage: 20, nextCursor: null }, sort: 'time', filters: {}, facets: {}, meta: {} })
+
+  it('reads a leaderboard without its profile flag', async () => {
+    const { fetch, calls } = fakeFetch([json({ period: 'week', currency: 'DM', entries: [{ player: 'Sandmann', playerId: 7, value: 12, hasProfile: false }], minimumKills: 0, wipeDate: '2026-10-13T09:52:34+00:00', profiles: false })])
+    const board = await new Dzbot({ server: 'cherno', fetch }).leaderboard('pvp-kills', { period: 'week' })
+    expect(calls[0].url).toBe('https://api.dzbot.de/api/public/leaderboard/pvp-kills?period=week')
+    expect(board).toEqual({ period: 'week', currency: 'DM', entries: [{ player: 'Sandmann', playerId: 7, value: 12, hasProfile: false }], minimumKills: 0, wipeDate: '2026-10-13T09:52:34+00:00' })
+  })
+
+  it('turns the guest kill feed into kills', async () => {
+    const victim = { id: 2, name: 'Jxstin01', avatarUrl: null, faction: null }
+    const { fetch, calls } = fakeFetch([json(list('combat_event', [hit('combat_event', '10144874', { kind: 'kill', time: '2026-10-28T15:51:28+00:00', attacker: { ...victim, id: 1, name: 'FloScrim' }, victim, weapon: 'M4-A1', distance: 212, damage: null, bodyPart: null, cause: null, flags: [] })]))])
+    const [kill] = await new Dzbot({ server: 'nasdara', fetch }).killfeed({ limit: 5 })
+    expect(calls[0].url).toBe('https://api.dzbot.de/api/public/search/combat_event?limit=5')
+    expect(kill).toMatchObject({ id: '10144874', kind: 'kill', weapon: 'M4-A1', distance: 212, victim: { name: 'Jxstin01' } })
+  })
+
+  it('asks for upcoming events soonest first', async () => {
+    const { fetch, calls } = fakeFetch([json(list('event', [hit('event', '14', { name: 'CQB Event', status: 'registration_open', scheduledStartAt: '2026-11-02T18:00:00+00:00' }, { code: 'JDF5', path: '/events/14' })]))])
+    const [event] = await new Dzbot({ server: 'cherno', fetch }).upcomingEvents()
+    expect(calls[0].url).toBe('https://api.dzbot.de/api/public/search/event?status=registration_open&status=registration_closed&status=running&sort=start&limit=10')
+    expect(event).toMatchObject({ id: 14, code: 'JDF5', path: '/events/14', name: 'CQB Event' })
+  })
+
+  it('reads the activity of its own server from the server list', async () => {
+    const { fetch, calls } = fakeFetch([json({ id: 'cherno', resolution: '1h', from: 'a', to: 'b', points: [] })])
+    expect(await new Dzbot({ server: 'cherno', fetch }).activity({ resolution: '1h', days: 7 })).toEqual({ resolution: '1h', from: 'a', to: 'b', points: [] })
+    expect(calls[0].url).toBe('https://api.dzbot.de/api/public/server-list/cherno/activity?resolution=1h&days=7')
   })
 })

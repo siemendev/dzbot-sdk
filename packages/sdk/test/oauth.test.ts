@@ -35,6 +35,18 @@ describe('OAuthClient', () => {
     expect(await oauth.accessToken()).toBe('at')
   })
 
+  it('signs in on dzbot.de for every server of the app when no server is given', async () => {
+    const fetch = async () => new Response(JSON.stringify({ access_token: 'at', refresh_token: 'rt', expires_in: 3600, scope: 'player.profile.access org:4' }), { status: 200 })
+    const store = new MemoryTokenStore()
+    const oauth = new OAuthClient({ clientId: 'app1', redirectUri: 'https://dzde.example/cb', store, fetch })
+
+    const url = new URL(await oauth.authorizeUrl({ state: 'xyz' }))
+    expect(url.origin + url.pathname).toBe('https://dzbot.de/oauth/authorize/app')
+    const tokens = await oauth.handleCallback('https://dzde.example/cb?code=c&state=xyz')
+    expect(tokens.scope).toEqual(['player.profile.access'])
+    expect(store.get('dzbot:app1:*')).not.toBeNull()
+  })
+
   it('passes a refused consent on as an error', async () => {
     const oauth = new OAuthClient({ clientId: 'app1', redirectUri: 'https://bot.example/cb', server: 's' })
     await expect(oauth.handleCallback('https://bot.example/cb?error=access_denied')).rejects.toMatchObject({ code: 'access_denied' })

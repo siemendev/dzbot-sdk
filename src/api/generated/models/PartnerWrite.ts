@@ -30,6 +30,66 @@ export interface PartnerWrite {
      * @type {string}
      * @memberof PartnerWrite
      */
+    legalName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    addressLine1?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    addressLine2?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    postalCode?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    city?: string | null;
+    /**
+     * ISO 3166-1 alpha-2
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    country?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    vatId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    taxNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    email?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
+    phone?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerWrite
+     */
     website?: string | null;
     /**
      * 
@@ -57,6 +117,16 @@ export function PartnerWriteFromJSONTyped(json: any, ignoreDiscriminator: boolea
     return {
         
         'name': json['name'] == null ? undefined : json['name'],
+        'legalName': json['legalName'] == null ? undefined : json['legalName'],
+        'addressLine1': json['addressLine1'] == null ? undefined : json['addressLine1'],
+        'addressLine2': json['addressLine2'] == null ? undefined : json['addressLine2'],
+        'postalCode': json['postalCode'] == null ? undefined : json['postalCode'],
+        'city': json['city'] == null ? undefined : json['city'],
+        'country': json['country'] == null ? undefined : json['country'],
+        'vatId': json['vatId'] == null ? undefined : json['vatId'],
+        'taxNumber': json['taxNumber'] == null ? undefined : json['taxNumber'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'phone': json['phone'] == null ? undefined : json['phone'],
         'website': json['website'] == null ? undefined : json['website'],
         'notes': json['notes'] == null ? undefined : json['notes'],
     };
@@ -74,6 +144,16 @@ export function PartnerWriteToJSONTyped(value?: PartnerWrite | null, ignoreDiscr
     return {
         
         'name': value['name'],
+        'legalName': value['legalName'],
+        'addressLine1': value['addressLine1'],
+        'addressLine2': value['addressLine2'],
+        'postalCode': value['postalCode'],
+        'city': value['city'],
+        'country': value['country'],
+        'vatId': value['vatId'],
+        'taxNumber': value['taxNumber'],
+        'email': value['email'],
+        'phone': value['phone'],
         'website': value['website'],
         'notes': value['notes'],
     };

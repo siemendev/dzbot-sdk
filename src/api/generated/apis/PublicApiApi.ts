@@ -43,14 +43,10 @@ import type {
   GetApiAdminItemCategoriesList200Response,
   GetApiAdminItemSetsFormData200Response,
   GetApiAdminItemSetsSales200Response,
-  GetApiAdminModsBuy200Response,
-  GetApiAdminModsDiff200Response,
-  GetApiAdminModsInstalled200Response,
   GetApiAdminPlayersFreeCartItemFormData200Response,
   GetApiAdminPlayersMainAccountSwitchPreview200Response,
   GetApiAdminPlayersSummary200Response,
   GetApiAdminRestrictionsBanListCoverage200Response,
-  GetApiAdminServerModLogs200Response,
   GetApiAdminSettingsGet200Response,
   GetApiAdminSetupCfggameplay200Response,
   GetApiAdminSetupDayzppImportShow200Response,
@@ -61,24 +57,18 @@ import type {
   GetApiAdminSubscriptionsAvailableDetail200Response,
   GetApiAdminSubscriptionsAvailableFormData200Response,
   GetApiAdminTicketEmbedFormData200Response,
-  GetApiAdminZonesFormData200Response,
   GetApiCoordinatesHeight200Response,
   GetApiCoordinatesPlacements200Response,
   GetApiCoordinatesPlaces200Response,
+  GetApiDeveloperMeServers200Response,
   GetApiLogEventTypes200Response,
   GetApiMapPlaceNames200Response,
   PatchApiAdminBookmakerReassignRequest,
-  PatchApiAdminModsAutoUpdate200Response,
-  PatchApiAdminModsAutoUpdateRequest,
-  PatchApiAdminModsMapHidden200Response,
-  PatchApiAdminModsMapHiddenRequest,
   PatchApiAdminReceiptIntakeUpdateRequest,
-  PatchApiAdminServerModDescription200Response,
-  PatchApiAdminServerModDescriptionRequest,
   PatchApiAdminTicketEditMessageRequest,
   PatchApiAdminTicketSubjectRequest,
-  PostApiAdminActionsInstallRequest,
   PostApiAdminAiCreditTopUp200Response,
+  PostApiAdminAutomationsApproveUpdateRequest,
   PostApiAdminBasesCalibrate200Response,
   PostApiAdminBasesReviewRequest,
   PostApiAdminDevelopersAppCreateRequest,
@@ -106,8 +96,6 @@ import type {
   PostApiAdminLogRequestsCreateRequest,
   PostApiAdminLogRequestsRejectRequest,
   PostApiAdminLogsLeaderboardExclusionCreateRequest,
-  PostApiAdminModsConfigNew201Response,
-  PostApiAdminModsInstall200Response,
   PostApiAdminOrderRedeliverRequest,
   PostApiAdminOrderRefundRequest,
   PostApiAdminPlayersAddDevice200Response,
@@ -130,7 +118,6 @@ import type {
   PostApiAdminRestrictionsEndRequest,
   PostApiAdminRestrictionsNotesCreateRequest,
   PostApiAdminRestrictionsTicketsLinkRequest,
-  PostApiAdminServerModConfigRequest,
   PostApiAdminSettingsDiscordDefaultChannels200Response,
   PostApiAdminSettingsVehicleWipe200Response,
   PostApiAdminSettingsVehicleWipeRequest,
@@ -146,6 +133,8 @@ import type {
   PostApiAdminTicketChangeFolderRequest,
   PostApiAdminTicketChangeLevelRequest,
   PostApiAdminTicketCreateRequest,
+  PostApiAdminTicketDecide200Response,
+  PostApiAdminTicketDecideRequest,
   PostApiAdminTicketLinkReviewRequest,
   PostApiAdminTicketReplyRequest,
   PostApiAdminTicketResponseWaitingRequest,
@@ -178,12 +167,12 @@ import type {
   PutApiAdminItemCategoriesReorder200Response,
   PutApiAdminOrderItemQuantityRequest,
   PutApiAdminPlayersUpdateRequest,
+  PutApiAdminSettingsUpdate200Response,
   PutApiAdminSetupAdminPlayerRequest,
   PutApiAdminSetupPlayerListsRequest,
   PutApiAdminSubscriptionsActiveUpdateRequest,
   PutApiAdminSubscriptionsAvailableUpdate200Response,
   PutApiAdminSubscriptionsAvailableUpdateRequest,
-  PutApiCreatorsModsFilesReorder200Response,
   ServerListActivity,
   ServerListCriteria,
   ServerListDetail,
@@ -247,12 +236,6 @@ import {
     GetApiAdminItemSetsFormData200ResponseToJSON,
     GetApiAdminItemSetsSales200ResponseFromJSON,
     GetApiAdminItemSetsSales200ResponseToJSON,
-    GetApiAdminModsBuy200ResponseFromJSON,
-    GetApiAdminModsBuy200ResponseToJSON,
-    GetApiAdminModsDiff200ResponseFromJSON,
-    GetApiAdminModsDiff200ResponseToJSON,
-    GetApiAdminModsInstalled200ResponseFromJSON,
-    GetApiAdminModsInstalled200ResponseToJSON,
     GetApiAdminPlayersFreeCartItemFormData200ResponseFromJSON,
     GetApiAdminPlayersFreeCartItemFormData200ResponseToJSON,
     GetApiAdminPlayersMainAccountSwitchPreview200ResponseFromJSON,
@@ -261,8 +244,6 @@ import {
     GetApiAdminPlayersSummary200ResponseToJSON,
     GetApiAdminRestrictionsBanListCoverage200ResponseFromJSON,
     GetApiAdminRestrictionsBanListCoverage200ResponseToJSON,
-    GetApiAdminServerModLogs200ResponseFromJSON,
-    GetApiAdminServerModLogs200ResponseToJSON,
     GetApiAdminSettingsGet200ResponseFromJSON,
     GetApiAdminSettingsGet200ResponseToJSON,
     GetApiAdminSetupCfggameplay200ResponseFromJSON,
@@ -283,42 +264,30 @@ import {
     GetApiAdminSubscriptionsAvailableFormData200ResponseToJSON,
     GetApiAdminTicketEmbedFormData200ResponseFromJSON,
     GetApiAdminTicketEmbedFormData200ResponseToJSON,
-    GetApiAdminZonesFormData200ResponseFromJSON,
-    GetApiAdminZonesFormData200ResponseToJSON,
     GetApiCoordinatesHeight200ResponseFromJSON,
     GetApiCoordinatesHeight200ResponseToJSON,
     GetApiCoordinatesPlacements200ResponseFromJSON,
     GetApiCoordinatesPlacements200ResponseToJSON,
     GetApiCoordinatesPlaces200ResponseFromJSON,
     GetApiCoordinatesPlaces200ResponseToJSON,
+    GetApiDeveloperMeServers200ResponseFromJSON,
+    GetApiDeveloperMeServers200ResponseToJSON,
     GetApiLogEventTypes200ResponseFromJSON,
     GetApiLogEventTypes200ResponseToJSON,
     GetApiMapPlaceNames200ResponseFromJSON,
     GetApiMapPlaceNames200ResponseToJSON,
     PatchApiAdminBookmakerReassignRequestFromJSON,
     PatchApiAdminBookmakerReassignRequestToJSON,
-    PatchApiAdminModsAutoUpdate200ResponseFromJSON,
-    PatchApiAdminModsAutoUpdate200ResponseToJSON,
-    PatchApiAdminModsAutoUpdateRequestFromJSON,
-    PatchApiAdminModsAutoUpdateRequestToJSON,
-    PatchApiAdminModsMapHidden200ResponseFromJSON,
-    PatchApiAdminModsMapHidden200ResponseToJSON,
-    PatchApiAdminModsMapHiddenRequestFromJSON,
-    PatchApiAdminModsMapHiddenRequestToJSON,
     PatchApiAdminReceiptIntakeUpdateRequestFromJSON,
     PatchApiAdminReceiptIntakeUpdateRequestToJSON,
-    PatchApiAdminServerModDescription200ResponseFromJSON,
-    PatchApiAdminServerModDescription200ResponseToJSON,
-    PatchApiAdminServerModDescriptionRequestFromJSON,
-    PatchApiAdminServerModDescriptionRequestToJSON,
     PatchApiAdminTicketEditMessageRequestFromJSON,
     PatchApiAdminTicketEditMessageRequestToJSON,
     PatchApiAdminTicketSubjectRequestFromJSON,
     PatchApiAdminTicketSubjectRequestToJSON,
-    PostApiAdminActionsInstallRequestFromJSON,
-    PostApiAdminActionsInstallRequestToJSON,
     PostApiAdminAiCreditTopUp200ResponseFromJSON,
     PostApiAdminAiCreditTopUp200ResponseToJSON,
+    PostApiAdminAutomationsApproveUpdateRequestFromJSON,
+    PostApiAdminAutomationsApproveUpdateRequestToJSON,
     PostApiAdminBasesCalibrate200ResponseFromJSON,
     PostApiAdminBasesCalibrate200ResponseToJSON,
     PostApiAdminBasesReviewRequestFromJSON,
@@ -373,10 +342,6 @@ import {
     PostApiAdminLogRequestsRejectRequestToJSON,
     PostApiAdminLogsLeaderboardExclusionCreateRequestFromJSON,
     PostApiAdminLogsLeaderboardExclusionCreateRequestToJSON,
-    PostApiAdminModsConfigNew201ResponseFromJSON,
-    PostApiAdminModsConfigNew201ResponseToJSON,
-    PostApiAdminModsInstall200ResponseFromJSON,
-    PostApiAdminModsInstall200ResponseToJSON,
     PostApiAdminOrderRedeliverRequestFromJSON,
     PostApiAdminOrderRedeliverRequestToJSON,
     PostApiAdminOrderRefundRequestFromJSON,
@@ -421,8 +386,6 @@ import {
     PostApiAdminRestrictionsNotesCreateRequestToJSON,
     PostApiAdminRestrictionsTicketsLinkRequestFromJSON,
     PostApiAdminRestrictionsTicketsLinkRequestToJSON,
-    PostApiAdminServerModConfigRequestFromJSON,
-    PostApiAdminServerModConfigRequestToJSON,
     PostApiAdminSettingsDiscordDefaultChannels200ResponseFromJSON,
     PostApiAdminSettingsDiscordDefaultChannels200ResponseToJSON,
     PostApiAdminSettingsVehicleWipe200ResponseFromJSON,
@@ -453,6 +416,10 @@ import {
     PostApiAdminTicketChangeLevelRequestToJSON,
     PostApiAdminTicketCreateRequestFromJSON,
     PostApiAdminTicketCreateRequestToJSON,
+    PostApiAdminTicketDecide200ResponseFromJSON,
+    PostApiAdminTicketDecide200ResponseToJSON,
+    PostApiAdminTicketDecideRequestFromJSON,
+    PostApiAdminTicketDecideRequestToJSON,
     PostApiAdminTicketLinkReviewRequestFromJSON,
     PostApiAdminTicketLinkReviewRequestToJSON,
     PostApiAdminTicketReplyRequestFromJSON,
@@ -517,6 +484,8 @@ import {
     PutApiAdminOrderItemQuantityRequestToJSON,
     PutApiAdminPlayersUpdateRequestFromJSON,
     PutApiAdminPlayersUpdateRequestToJSON,
+    PutApiAdminSettingsUpdate200ResponseFromJSON,
+    PutApiAdminSettingsUpdate200ResponseToJSON,
     PutApiAdminSetupAdminPlayerRequestFromJSON,
     PutApiAdminSetupAdminPlayerRequestToJSON,
     PutApiAdminSetupPlayerListsRequestFromJSON,
@@ -527,8 +496,6 @@ import {
     PutApiAdminSubscriptionsAvailableUpdate200ResponseToJSON,
     PutApiAdminSubscriptionsAvailableUpdateRequestFromJSON,
     PutApiAdminSubscriptionsAvailableUpdateRequestToJSON,
-    PutApiCreatorsModsFilesReorder200ResponseFromJSON,
-    PutApiCreatorsModsFilesReorder200ResponseToJSON,
     ServerListActivityFromJSON,
     ServerListActivityToJSON,
     ServerListCriteriaFromJSON,
@@ -541,14 +508,9 @@ import {
     ServerListVisitorToJSON,
 } from '../models/index';
 
-export interface DeleteApiAdminActionDeleteRequest {
+export interface DeleteApiAdminAutomationsDeleteRequest {
     xServerSubdomain: string;
-    action: number;
-}
-
-export interface DeleteApiAdminActionsUninstallRequest {
-    xServerSubdomain: string;
-    action: number;
+    automation: number;
 }
 
 export interface DeleteApiAdminBaseAlarmsDeleteRequest {
@@ -627,11 +589,6 @@ export interface DeleteApiAdminLogsLeaderboardExclusionDeleteRequest {
     logEventId: string;
 }
 
-export interface DeleteApiAdminModsUninstallRequest {
-    xServerSubdomain: string;
-    mod: number;
-}
-
 export interface DeleteApiAdminOrderDeleteRequest {
     xServerSubdomain: string;
     order: number;
@@ -695,21 +652,6 @@ export interface DeleteApiAdminRestrictionsZoneDeleteRequest {
     id: number;
 }
 
-export interface DeleteApiAdminSchedulerDeleteRequest {
-    xServerSubdomain: string;
-    task: number;
-}
-
-export interface DeleteApiAdminServerModRemoveRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-}
-
-export interface DeleteApiAdminServerModUninstallRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-}
-
 export interface DeleteApiAdminSetupNitradoTaskDeleteRequest {
     xServerSubdomain: string;
     taskId: number;
@@ -766,18 +708,19 @@ export interface DeleteApiShopTicketDeleteMessageRequest {
     messageId: number;
 }
 
-export interface GetApiAdminActionDetailRequest {
+export interface GetApiAdminAutomationsBlueprintRequest {
     xServerSubdomain: string;
-    action: number;
+    blueprint: number;
 }
 
-export interface GetApiAdminActionsFormDataRequest {
+export interface GetApiAdminAutomationsDetailRequest {
     xServerSubdomain: string;
+    automation: number;
+    page?: number;
 }
 
-export interface GetApiAdminActionsPreviewRequest {
+export interface GetApiAdminAutomationsFormDataRequest {
     xServerSubdomain: string;
-    action: number;
 }
 
 export interface GetApiAdminBaseAlarmsDetailRequest {
@@ -933,25 +876,6 @@ export interface GetApiAdminLogRequestsFormDataRequest {
     xServerSubdomain: string;
 }
 
-export interface GetApiAdminModsBuyRequest {
-    xServerSubdomain: string;
-    mod: number;
-}
-
-export interface GetApiAdminModsDetailRequest {
-    xServerSubdomain: string;
-    mod: number;
-}
-
-export interface GetApiAdminModsDiffRequest {
-    xServerSubdomain: string;
-    mod: number;
-}
-
-export interface GetApiAdminModsInstalledRequest {
-    xServerSubdomain: string;
-}
-
 export interface GetApiAdminOrderDetailRequest {
     xServerSubdomain: string;
     order: number;
@@ -1037,15 +961,6 @@ export interface GetApiAdminRestrictionsFormDataRequest {
     xServerSubdomain: string;
 }
 
-export interface GetApiAdminSchedulerDetailRequest {
-    xServerSubdomain: string;
-    task: number;
-}
-
-export interface GetApiAdminSchedulerFormDataRequest {
-    xServerSubdomain: string;
-}
-
 export interface GetApiAdminSearchRequest {
     xServerSubdomain: string;
     q: string;
@@ -1065,11 +980,6 @@ export interface GetApiAdminSearchListRequest {
 
 export interface GetApiAdminSearchSchemaRequest {
     xServerSubdomain: string;
-}
-
-export interface GetApiAdminServerModLogsRequest {
-    xServerSubdomain: string;
-    serverModId: number;
 }
 
 export interface GetApiAdminSettingsGetRequest {
@@ -1130,10 +1040,6 @@ export interface GetApiAdminTicketEmbedFormDataRequest {
 export interface GetApiAdminZonesDetailRequest {
     xServerSubdomain: string;
     zone: number;
-}
-
-export interface GetApiAdminZonesFormDataRequest {
-    xServerSubdomain: string;
 }
 
 export interface GetApiCoordinatesHeightRequest {
@@ -1263,27 +1169,9 @@ export interface GetServerListDetailRequest {
     id: string;
 }
 
-export interface PatchApiAdminActionToggleRequest {
+export interface PatchApiAdminAutomationsToggleRequest {
     xServerSubdomain: string;
-    action: number;
-}
-
-export interface PatchApiAdminModsAutoUpdateOperationRequest {
-    xServerSubdomain: string;
-    mod: number;
-    patchApiAdminModsAutoUpdateRequest?: PatchApiAdminModsAutoUpdateRequest;
-}
-
-export interface PatchApiAdminModsMapHiddenOperationRequest {
-    xServerSubdomain: string;
-    mod: number;
-    patchApiAdminModsMapHiddenRequest?: PatchApiAdminModsMapHiddenRequest;
-}
-
-export interface PatchApiAdminServerModDescriptionOperationRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-    patchApiAdminServerModDescriptionRequest?: PatchApiAdminServerModDescriptionRequest;
+    automation: number;
 }
 
 export interface PatchApiAdminTicketEditMessageOperationRequest {
@@ -1312,20 +1200,25 @@ export interface PatchApiShopTicketSubjectRequest {
     patchApiAdminTicketSubjectRequest?: PatchApiAdminTicketSubjectRequest;
 }
 
-export interface PostApiAdminActionCreateRequest {
+export interface PostApiAdminAutomationsApproveUpdateOperationRequest {
+    xServerSubdomain: string;
+    automation: number;
+    postApiAdminAutomationsApproveUpdateRequest?: PostApiAdminAutomationsApproveUpdateRequest;
+}
+
+export interface PostApiAdminAutomationsCreateRequest {
     xServerSubdomain: string;
     body?: object;
 }
 
-export interface PostApiAdminActionDuplicateRequest {
+export interface PostApiAdminAutomationsDuplicateRequest {
     xServerSubdomain: string;
-    action: number;
+    automation: number;
 }
 
-export interface PostApiAdminActionsInstallOperationRequest {
+export interface PostApiAdminAutomationsRunRequest {
     xServerSubdomain: string;
-    action: number;
-    postApiAdminActionsInstallRequest?: PostApiAdminActionsInstallRequest;
+    automation: number;
 }
 
 export interface PostApiAdminBaseAlarmsCreateRequest {
@@ -1475,30 +1368,6 @@ export interface PostApiAdminLogRequestsRejectOperationRequest {
 export interface PostApiAdminLogsLeaderboardExclusionCreateOperationRequest {
     xServerSubdomain: string;
     postApiAdminLogsLeaderboardExclusionCreateRequest: PostApiAdminLogsLeaderboardExclusionCreateRequest;
-}
-
-export interface PostApiAdminModsConfigNewRequest {
-    xServerSubdomain: string;
-    mod: number;
-    postApiAdminServerModConfigRequest?: PostApiAdminServerModConfigRequest;
-}
-
-export interface PostApiAdminModsInstallRequest {
-    xServerSubdomain: string;
-    mod: number;
-}
-
-export interface PostApiAdminModsInstalledReorderRequest {
-    xServerSubdomain: string;
-}
-
-export interface PostApiAdminModsTransferRequest {
-    xServerSubdomain: string;
-}
-
-export interface PostApiAdminModsUpdateRequest {
-    xServerSubdomain: string;
-    mod: number;
 }
 
 export interface PostApiAdminOrderCancelRequest {
@@ -1669,48 +1538,6 @@ export interface PostApiAdminRestrictionsTicketsLinkOperationRequest {
     postApiAdminRestrictionsTicketsLinkRequest: PostApiAdminRestrictionsTicketsLinkRequest;
 }
 
-export interface PostApiAdminSchedulerCreateRequest {
-    xServerSubdomain: string;
-    body?: object;
-}
-
-export interface PostApiAdminSchedulerDuplicateRequest {
-    xServerSubdomain: string;
-    task: number;
-}
-
-export interface PostApiAdminSchedulerRescheduleRequest {
-    xServerSubdomain: string;
-    task: number;
-    body?: object;
-}
-
-export interface PostApiAdminSchedulerRunRequest {
-    xServerSubdomain: string;
-    task: number;
-}
-
-export interface PostApiAdminServerModConfigOperationRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-    postApiAdminServerModConfigRequest?: PostApiAdminServerModConfigRequest;
-}
-
-export interface PostApiAdminServerModInstallRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-}
-
-export interface PostApiAdminServerModMoveDownRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-}
-
-export interface PostApiAdminServerModMoveUpRequest {
-    xServerSubdomain: string;
-    serverModId: number;
-}
-
 export interface PostApiAdminSettingsCheckDiscordRequest {
     xServerSubdomain: string;
 }
@@ -1726,6 +1553,10 @@ export interface PostApiAdminSettingsRestartRequest {
 export interface PostApiAdminSettingsVehicleWipeOperationRequest {
     xServerSubdomain: string;
     postApiAdminSettingsVehicleWipeRequest?: PostApiAdminSettingsVehicleWipeRequest;
+}
+
+export interface PostApiAdminSetupBypassingRestartsAcknowledgeRequest {
+    xServerSubdomain: string;
 }
 
 export interface PostApiAdminSetupCfggameplayMigrateRequest {
@@ -1807,6 +1638,13 @@ export interface PostApiAdminTicketChangeLevelOperationRequest {
 export interface PostApiAdminTicketCreateOperationRequest {
     xServerSubdomain: string;
     postApiAdminTicketCreateRequest?: PostApiAdminTicketCreateRequest;
+}
+
+export interface PostApiAdminTicketDecideOperationRequest {
+    xServerSubdomain: string;
+    id: number;
+    decisionId: number;
+    postApiAdminTicketDecideRequest: PostApiAdminTicketDecideRequest;
 }
 
 export interface PostApiAdminTicketLinkReviewOperationRequest {
@@ -1910,9 +1748,9 @@ export interface PostApiShopTicketUploadAttachmentRequest {
     id: number;
 }
 
-export interface PutApiAdminActionUpdateRequest {
+export interface PutApiAdminAutomationsUpdateRequest {
     xServerSubdomain: string;
-    action: number;
+    automation: number;
     body?: object;
 }
 
@@ -2069,12 +1907,6 @@ export interface PutApiAdminRestrictionsZoneSetRequest {
     id: number;
 }
 
-export interface PutApiAdminSchedulerUpdateRequest {
-    xServerSubdomain: string;
-    task: number;
-    body?: object;
-}
-
 export interface PutApiAdminSettingsUpdateRequest {
     xServerSubdomain: string;
     body: object;
@@ -2120,20 +1952,20 @@ export interface PutApiAdminZonesUpdateRequest {
 export class PublicApiApi extends runtime.BaseAPI {
 
     /**
-     * Delete a custom action
+     * Delete an automation; own code goes with it
      */
-    async deleteApiAdminActionDeleteRaw(requestParameters: DeleteApiAdminActionDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteApiAdminAutomationsDeleteRaw(requestParameters: DeleteApiAdminAutomationsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminActionDelete().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminAutomationsDelete().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['automation'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling deleteApiAdminActionDelete().'
+                'automation',
+                'Required parameter "automation" was null or undefined when calling deleteApiAdminAutomationsDelete().'
             );
         }
 
@@ -2154,7 +1986,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/{automation}`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2164,61 +1996,10 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a custom action
+     * Delete an automation; own code goes with it
      */
-    async deleteApiAdminActionDelete(requestParameters: DeleteApiAdminActionDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteApiAdminActionDeleteRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Uninstall a marketplace action from this server
-     */
-    async deleteApiAdminActionsUninstallRaw(requestParameters: DeleteApiAdminActionsUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminActionsUninstall().'
-            );
-        }
-
-        if (requestParameters['action'] == null) {
-            throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling deleteApiAdminActionsUninstall().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/actions/{action}/uninstall`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Uninstall a marketplace action from this server
-     */
-    async deleteApiAdminActionsUninstall(requestParameters: DeleteApiAdminActionsUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteApiAdminActionsUninstallRaw(requestParameters, initOverrides);
+    async deleteApiAdminAutomationsDelete(requestParameters: DeleteApiAdminAutomationsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteApiAdminAutomationsDeleteRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -2978,58 +2759,6 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Uninstall all configs of a mod
-     */
-    async deleteApiAdminModsUninstallRaw(requestParameters: DeleteApiAdminModsUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminModsUninstall().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling deleteApiAdminModsUninstall().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/uninstall`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Uninstall all configs of a mod
-     */
-    async deleteApiAdminModsUninstall(requestParameters: DeleteApiAdminModsUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiAdminModsUninstallRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Delete order
      */
     async deleteApiAdminOrderDeleteRaw(requestParameters: DeleteApiAdminOrderDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
@@ -3633,161 +3362,6 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete scheduler task
-     */
-    async deleteApiAdminSchedulerDeleteRaw(requestParameters: DeleteApiAdminSchedulerDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminSchedulerDelete().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling deleteApiAdminSchedulerDelete().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Delete scheduler task
-     */
-    async deleteApiAdminSchedulerDelete(requestParameters: DeleteApiAdminSchedulerDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteApiAdminSchedulerDeleteRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Remove a server mod config (must be uninstalled first)
-     */
-    async deleteApiAdminServerModRemoveRaw(requestParameters: DeleteApiAdminServerModRemoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminServerModRemove().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling deleteApiAdminServerModRemove().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/remove`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Remove a server mod config (must be uninstalled first)
-     */
-    async deleteApiAdminServerModRemove(requestParameters: DeleteApiAdminServerModRemoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiAdminServerModRemoveRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Uninstall a specific server mod config
-     */
-    async deleteApiAdminServerModUninstallRaw(requestParameters: DeleteApiAdminServerModUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling deleteApiAdminServerModUninstall().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling deleteApiAdminServerModUninstall().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/uninstall`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Uninstall a specific server mod config
-     */
-    async deleteApiAdminServerModUninstall(requestParameters: DeleteApiAdminServerModUninstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.deleteApiAdminServerModUninstallRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Delete a restart, stop or start task from the server\'s Nitrado scheduler
      */
     async deleteApiAdminSetupNitradoTaskDeleteRaw(requestParameters: DeleteApiAdminSetupNitradoTaskDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteApiAdminSetupNitradoTaskDelete200Response>> {
@@ -4335,20 +3909,20 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Action detail with logs
+     * A marketplace action before it is installed: description, settings, what it may do, where it already runs here
      */
-    async getApiAdminActionDetailRaw(requestParameters: GetApiAdminActionDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getApiAdminAutomationsBlueprintRaw(requestParameters: GetApiAdminAutomationsBlueprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminActionDetail().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminAutomationsBlueprint().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['blueprint'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling getApiAdminActionDetail().'
+                'blueprint',
+                'Required parameter "blueprint" was null or undefined when calling getApiAdminAutomationsBlueprint().'
             );
         }
 
@@ -4369,7 +3943,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/blueprints/{blueprint}`.replace(`{${"blueprint"}}`, encodeURIComponent(String(requestParameters['blueprint']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -4379,25 +3953,36 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Action detail with logs
+     * A marketplace action before it is installed: description, settings, what it may do, where it already runs here
      */
-    async getApiAdminActionDetail(requestParameters: GetApiAdminActionDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminActionDetailRaw(requestParameters, initOverrides);
+    async getApiAdminAutomationsBlueprint(requestParameters: GetApiAdminAutomationsBlueprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiAdminAutomationsBlueprintRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Form data for action create/edit (event types, schemas, config field types)
+     * One automation with its runs
      */
-    async getApiAdminActionsFormDataRaw(requestParameters: GetApiAdminActionsFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getApiAdminAutomationsDetailRaw(requestParameters: GetApiAdminAutomationsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminActionsFormData().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminAutomationsDetail().'
+            );
+        }
+
+        if (requestParameters['automation'] == null) {
+            throw new runtime.RequiredError(
+                'automation',
+                'Required parameter "automation" was null or undefined when calling getApiAdminAutomationsDetail().'
             );
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -4414,7 +3999,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/form-data`,
+            path: `/api/admin/automations/{automation}`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -4424,28 +4009,21 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Form data for action create/edit (event types, schemas, config field types)
+     * One automation with its runs
      */
-    async getApiAdminActionsFormData(requestParameters: GetApiAdminActionsFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminActionsFormDataRaw(requestParameters, initOverrides);
+    async getApiAdminAutomationsDetail(requestParameters: GetApiAdminAutomationsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiAdminAutomationsDetailRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Preview a marketplace action (description + resolved config schema)
+     * What an automation can do and react to: operations with their forms, log events, the code editor\'s reference
      */
-    async getApiAdminActionsPreviewRaw(requestParameters: GetApiAdminActionsPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getApiAdminAutomationsFormDataRaw(requestParameters: GetApiAdminAutomationsFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminActionsPreview().'
-            );
-        }
-
-        if (requestParameters['action'] == null) {
-            throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling getApiAdminActionsPreview().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminAutomationsFormData().'
             );
         }
 
@@ -4466,7 +4044,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}/preview`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/form-data`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -4476,10 +4054,10 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Preview a marketplace action (description + resolved config schema)
+     * What an automation can do and react to: operations with their forms, log events, the code editor\'s reference
      */
-    async getApiAdminActionsPreview(requestParameters: GetApiAdminActionsPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminActionsPreviewRaw(requestParameters, initOverrides);
+    async getApiAdminAutomationsFormData(requestParameters: GetApiAdminAutomationsFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiAdminAutomationsFormDataRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -4746,7 +4324,7 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get players, queue and slots of the server over the last day or week, measured every 5 minutes
+     * Get players, queue and slots of the server over the last day, week or month, measured every 5 minutes
      */
     async getApiAdminDashboardPopulationRaw(requestParameters: GetApiAdminDashboardPopulationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminDashboardPopulation200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
@@ -4787,7 +4365,7 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get players, queue and slots of the server over the last day or week, measured every 5 minutes
+     * Get players, queue and slots of the server over the last day, week or month, measured every 5 minutes
      */
     async getApiAdminDashboardPopulation(requestParameters: GetApiAdminDashboardPopulationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminDashboardPopulation200Response> {
         const response = await this.getApiAdminDashboardPopulationRaw(requestParameters, initOverrides);
@@ -6042,207 +5620,6 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get Stripe checkout URL for purchasing a mod
-     */
-    async getApiAdminModsBuyRaw(requestParameters: GetApiAdminModsBuyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminModsBuy200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminModsBuy().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiAdminModsBuy().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/buy`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminModsBuy200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get Stripe checkout URL for purchasing a mod
-     */
-    async getApiAdminModsBuy(requestParameters: GetApiAdminModsBuyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminModsBuy200Response> {
-        const response = await this.getApiAdminModsBuyRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Mod marketplace detail
-     */
-    async getApiAdminModsDetailRaw(requestParameters: GetApiAdminModsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminModsDetail().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiAdminModsDetail().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Mod marketplace detail
-     */
-    async getApiAdminModsDetail(requestParameters: GetApiAdminModsDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminModsDetailRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get mod file diff
-     */
-    async getApiAdminModsDiffRaw(requestParameters: GetApiAdminModsDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminModsDiff200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminModsDiff().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling getApiAdminModsDiff().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/diff`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminModsDiff200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get mod file diff
-     */
-    async getApiAdminModsDiff(requestParameters: GetApiAdminModsDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminModsDiff200Response> {
-        const response = await this.getApiAdminModsDiffRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * List installed server mods
-     */
-    async getApiAdminModsInstalledRaw(requestParameters: GetApiAdminModsInstalledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminModsInstalled200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminModsInstalled().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/installed`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminModsInstalled200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * List installed server mods
-     */
-    async getApiAdminModsInstalled(requestParameters: GetApiAdminModsInstalledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminModsInstalled200Response> {
-        const response = await this.getApiAdminModsInstalledRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Order detail
      */
     async getApiAdminOrderDetailRaw(requestParameters: GetApiAdminOrderDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
@@ -7064,103 +6441,6 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Scheduler task detail
-     */
-    async getApiAdminSchedulerDetailRaw(requestParameters: GetApiAdminSchedulerDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminSchedulerDetail().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling getApiAdminSchedulerDetail().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Scheduler task detail
-     */
-    async getApiAdminSchedulerDetail(requestParameters: GetApiAdminSchedulerDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminSchedulerDetailRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Form data for scheduler task create/edit
-     */
-    async getApiAdminSchedulerFormDataRaw(requestParameters: GetApiAdminSchedulerFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminSchedulerFormData().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/form-data`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Form data for scheduler task create/edit
-     */
-    async getApiAdminSchedulerFormData(requestParameters: GetApiAdminSchedulerFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getApiAdminSchedulerFormDataRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Header search: hits of every searchable type, grouped by type
      */
     async getApiAdminSearchRaw(requestParameters: GetApiAdminSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
@@ -7338,58 +6618,6 @@ export class PublicApiApi extends runtime.BaseAPI {
      */
     async getApiAdminSearchSchema(requestParameters: GetApiAdminSearchSchemaRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getApiAdminSearchSchemaRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * List recent error logs for an installed server mod
-     */
-    async getApiAdminServerModLogsRaw(requestParameters: GetApiAdminServerModLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminServerModLogs200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminServerModLogs().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling getApiAdminServerModLogs().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/logs`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminServerModLogs200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * List recent error logs for an installed server mod
-     */
-    async getApiAdminServerModLogs(requestParameters: GetApiAdminServerModLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminServerModLogs200Response> {
-        const response = await this.getApiAdminServerModLogsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -8038,51 +7266,6 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Form data for zone create/edit
-     */
-    async getApiAdminZonesFormDataRaw(requestParameters: GetApiAdminZonesFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiAdminZonesFormData200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiAdminZonesFormData().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/zones/form-data`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiAdminZonesFormData200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Form data for zone create/edit
-     */
-    async getApiAdminZonesFormData(requestParameters: GetApiAdminZonesFormDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiAdminZonesFormData200Response> {
-        const response = await this.getApiAdminZonesFormDataRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Height of the ground, or of the first walkable surface above it (piers, bridges, building ground floors). Upper floors and spots under another structure are not covered.
      * Get the spawn height at coordinates
      */
@@ -8469,6 +7652,40 @@ export class PublicApiApi extends runtime.BaseAPI {
      */
     async getApiDeveloperMe(requestParameters: GetApiDeveloperMeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getApiDeveloperMeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * The servers a sign-in reaches — every server of the app for an org-wide sign-in, the one server otherwise — and the signed-in user\'s player on each (null where they have not linked one)
+     */
+    async getApiDeveloperMeServersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiDeveloperMeServers200Response>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/developer/me/servers`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiDeveloperMeServers200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The servers a sign-in reaches — every server of the app for an org-wide sign-in, the one server otherwise — and the signed-in user\'s player on each (null where they have not linked one)
+     */
+    async getApiDeveloperMeServers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiDeveloperMeServers200Response> {
+        const response = await this.getApiDeveloperMeServersRaw(initOverrides);
         return await response.value();
     }
 
@@ -9408,20 +8625,20 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Toggle the active state of an action
+     * Pause or resume an automation
      */
-    async patchApiAdminActionToggleRaw(requestParameters: PatchApiAdminActionToggleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async patchApiAdminAutomationsToggleRaw(requestParameters: PatchApiAdminAutomationsToggleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling patchApiAdminActionToggle().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling patchApiAdminAutomationsToggle().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['automation'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling patchApiAdminActionToggle().'
+                'automation',
+                'Required parameter "automation" was null or undefined when calling patchApiAdminAutomationsToggle().'
             );
         }
 
@@ -9442,7 +8659,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}/toggle`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/{automation}/toggle`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -9452,175 +8669,10 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Toggle the active state of an action
+     * Pause or resume an automation
      */
-    async patchApiAdminActionToggle(requestParameters: PatchApiAdminActionToggleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.patchApiAdminActionToggleRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Enable or disable automatic updates for all configs of a mod on this server
-     */
-    async patchApiAdminModsAutoUpdateRaw(requestParameters: PatchApiAdminModsAutoUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PatchApiAdminModsAutoUpdate200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling patchApiAdminModsAutoUpdate().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling patchApiAdminModsAutoUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/auto-update`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'PATCH',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PatchApiAdminModsAutoUpdateRequestToJSON(requestParameters['patchApiAdminModsAutoUpdateRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PatchApiAdminModsAutoUpdate200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Enable or disable automatic updates for all configs of a mod on this server
-     */
-    async patchApiAdminModsAutoUpdate(requestParameters: PatchApiAdminModsAutoUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PatchApiAdminModsAutoUpdate200Response> {
-        const response = await this.patchApiAdminModsAutoUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Hide or show the buildings of all configs of a mod on the server\'s maps (dzbot and iZurvive)
-     */
-    async patchApiAdminModsMapHiddenRaw(requestParameters: PatchApiAdminModsMapHiddenOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PatchApiAdminModsMapHidden200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling patchApiAdminModsMapHidden().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling patchApiAdminModsMapHidden().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/map-hidden`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'PATCH',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PatchApiAdminModsMapHiddenRequestToJSON(requestParameters['patchApiAdminModsMapHiddenRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PatchApiAdminModsMapHidden200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Hide or show the buildings of all configs of a mod on the server\'s maps (dzbot and iZurvive)
-     */
-    async patchApiAdminModsMapHidden(requestParameters: PatchApiAdminModsMapHiddenOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PatchApiAdminModsMapHidden200Response> {
-        const response = await this.patchApiAdminModsMapHiddenRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Update server mod description
-     */
-    async patchApiAdminServerModDescriptionRaw(requestParameters: PatchApiAdminServerModDescriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PatchApiAdminServerModDescription200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling patchApiAdminServerModDescription().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling patchApiAdminServerModDescription().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/description`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'PATCH',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PatchApiAdminServerModDescriptionRequestToJSON(requestParameters['patchApiAdminServerModDescriptionRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PatchApiAdminServerModDescription200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Update server mod description
-     */
-    async patchApiAdminServerModDescription(requestParameters: PatchApiAdminServerModDescriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PatchApiAdminServerModDescription200Response> {
-        const response = await this.patchApiAdminServerModDescriptionRaw(requestParameters, initOverrides);
+    async patchApiAdminAutomationsToggle(requestParameters: PatchApiAdminAutomationsToggleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.patchApiAdminAutomationsToggleRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -9855,13 +8907,20 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a custom action
+     * Consent to the current version of a marketplace action that asks for more than the running one
      */
-    async postApiAdminActionCreateRaw(requestParameters: PostApiAdminActionCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async postApiAdminAutomationsApproveUpdateRaw(requestParameters: PostApiAdminAutomationsApproveUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminActionCreate().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminAutomationsApproveUpdate().'
+            );
+        }
+
+        if (requestParameters['automation'] == null) {
+            throw new runtime.RequiredError(
+                'automation',
+                'Required parameter "automation" was null or undefined when calling postApiAdminAutomationsApproveUpdate().'
             );
         }
 
@@ -9884,7 +8943,55 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions`,
+            path: `/api/admin/automations/{automation}/approve-update`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminAutomationsApproveUpdateRequestToJSON(requestParameters['postApiAdminAutomationsApproveUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Consent to the current version of a marketplace action that asks for more than the running one
+     */
+    async postApiAdminAutomationsApproveUpdate(requestParameters: PostApiAdminAutomationsApproveUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiAdminAutomationsApproveUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create an automation: blueprint {systemKey|id|custom}, trigger {kind, events|schedule, durationMinutes}, configValues, label, notify
+     */
+    async postApiAdminAutomationsCreateRaw(requestParameters: PostApiAdminAutomationsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminAutomationsCreate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/admin/automations`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -9895,28 +9002,28 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a custom action
+     * Create an automation: blueprint {systemKey|id|custom}, trigger {kind, events|schedule, durationMinutes}, configValues, label, notify
      */
-    async postApiAdminActionCreate(requestParameters: PostApiAdminActionCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminActionCreateRaw(requestParameters, initOverrides);
+    async postApiAdminAutomationsCreate(requestParameters: PostApiAdminAutomationsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiAdminAutomationsCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Duplicate a custom action (inactive by default)
+     * Copy an automation, paused; own code gets its own copy of the code
      */
-    async postApiAdminActionDuplicateRaw(requestParameters: PostApiAdminActionDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async postApiAdminAutomationsDuplicateRaw(requestParameters: PostApiAdminAutomationsDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminActionDuplicate().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminAutomationsDuplicate().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['automation'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling postApiAdminActionDuplicate().'
+                'automation',
+                'Required parameter "automation" was null or undefined when calling postApiAdminAutomationsDuplicate().'
             );
         }
 
@@ -9937,7 +9044,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}/duplicate`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/{automation}/duplicate`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -9947,36 +9054,34 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Duplicate a custom action (inactive by default)
+     * Copy an automation, paused; own code gets its own copy of the code
      */
-    async postApiAdminActionDuplicate(requestParameters: PostApiAdminActionDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminActionDuplicateRaw(requestParameters, initOverrides);
+    async postApiAdminAutomationsDuplicate(requestParameters: PostApiAdminAutomationsDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiAdminAutomationsDuplicateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Install a marketplace action on this server
+     * Run an automation now, outside its trigger
      */
-    async postApiAdminActionsInstallRaw(requestParameters: PostApiAdminActionsInstallOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async postApiAdminAutomationsRunRaw(requestParameters: PostApiAdminAutomationsRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminActionsInstall().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminAutomationsRun().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['automation'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling postApiAdminActionsInstall().'
+                'automation',
+                'Required parameter "automation" was null or undefined when calling postApiAdminAutomationsRun().'
             );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
 
         if (requestParameters['xServerSubdomain'] != null) {
             headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
@@ -9991,21 +9096,20 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}/install`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/{automation}/run`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PostApiAdminActionsInstallRequestToJSON(requestParameters['postApiAdminActionsInstallRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
-     * Install a marketplace action on this server
+     * Run an automation now, outside its trigger
      */
-    async postApiAdminActionsInstall(requestParameters: PostApiAdminActionsInstallOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminActionsInstallRaw(requestParameters, initOverrides);
+    async postApiAdminAutomationsRun(requestParameters: PostApiAdminAutomationsRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiAdminAutomationsRunRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -11507,255 +10611,6 @@ export class PublicApiApi extends runtime.BaseAPI {
      */
     async postApiAdminLogsLeaderboardExclusionCreate(requestParameters: PostApiAdminLogsLeaderboardExclusionCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.postApiAdminLogsLeaderboardExclusionCreateRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Create a new server mod configuration
-     */
-    async postApiAdminModsConfigNewRaw(requestParameters: PostApiAdminModsConfigNewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAdminModsConfigNew201Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminModsConfigNew().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiAdminModsConfigNew().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/config/new`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PostApiAdminServerModConfigRequestToJSON(requestParameters['postApiAdminServerModConfigRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAdminModsConfigNew201ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Create a new server mod configuration
-     */
-    async postApiAdminModsConfigNew(requestParameters: PostApiAdminModsConfigNewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminModsConfigNew201Response> {
-        const response = await this.postApiAdminModsConfigNewRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Quick install a mod (no config)
-     */
-    async postApiAdminModsInstallRaw(requestParameters: PostApiAdminModsInstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAdminModsInstall200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminModsInstall().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiAdminModsInstall().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/install`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAdminModsInstall200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Quick install a mod (no config)
-     */
-    async postApiAdminModsInstall(requestParameters: PostApiAdminModsInstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminModsInstall200Response> {
-        const response = await this.postApiAdminModsInstallRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reorder installed server mods
-     */
-    async postApiAdminModsInstalledReorderRaw(requestParameters: PostApiAdminModsInstalledReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminModsInstalledReorder().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/installed/reorder`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Reorder installed server mods
-     */
-    async postApiAdminModsInstalledReorder(requestParameters: PostApiAdminModsInstalledReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminModsInstalledReorderRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Transfer all installed mods to the server
-     */
-    async postApiAdminModsTransferRaw(requestParameters: PostApiAdminModsTransferRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminModsTransfer().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/transfer`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Transfer all installed mods to the server
-     */
-    async postApiAdminModsTransfer(requestParameters: PostApiAdminModsTransferRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminModsTransferRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Update mod to latest version
-     */
-    async postApiAdminModsUpdateRaw(requestParameters: PostApiAdminModsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminModsUpdate().'
-            );
-        }
-
-        if (requestParameters['mod'] == null) {
-            throw new runtime.RequiredError(
-                'mod',
-                'Required parameter "mod" was null or undefined when calling postApiAdminModsUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/{mod}/update`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Update mod to latest version
-     */
-    async postApiAdminModsUpdate(requestParameters: PostApiAdminModsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminModsUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
     }
 
     /**
@@ -13410,427 +12265,9 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create scheduler task
-     */
-    async postApiAdminSchedulerCreateRaw(requestParameters: PostApiAdminSchedulerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminSchedulerCreate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['body'] as any,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Create scheduler task
-     */
-    async postApiAdminSchedulerCreate(requestParameters: PostApiAdminSchedulerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminSchedulerCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Duplicate scheduler task
-     */
-    async postApiAdminSchedulerDuplicateRaw(requestParameters: PostApiAdminSchedulerDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminSchedulerDuplicate().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling postApiAdminSchedulerDuplicate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}/duplicate`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Duplicate scheduler task
-     */
-    async postApiAdminSchedulerDuplicate(requestParameters: PostApiAdminSchedulerDuplicateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminSchedulerDuplicateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Manually set the next run time for a task
-     */
-    async postApiAdminSchedulerRescheduleRaw(requestParameters: PostApiAdminSchedulerRescheduleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminSchedulerReschedule().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling postApiAdminSchedulerReschedule().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}/reschedule`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['body'] as any,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Manually set the next run time for a task
-     */
-    async postApiAdminSchedulerReschedule(requestParameters: PostApiAdminSchedulerRescheduleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminSchedulerRescheduleRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Queue task for immediate execution
-     */
-    async postApiAdminSchedulerRunRaw(requestParameters: PostApiAdminSchedulerRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminSchedulerRun().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling postApiAdminSchedulerRun().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}/run`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Queue task for immediate execution
-     */
-    async postApiAdminSchedulerRun(requestParameters: PostApiAdminSchedulerRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.postApiAdminSchedulerRunRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Save server mod configuration
-     */
-    async postApiAdminServerModConfigRaw(requestParameters: PostApiAdminServerModConfigOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminServerModConfig().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling postApiAdminServerModConfig().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/config`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PostApiAdminServerModConfigRequestToJSON(requestParameters['postApiAdminServerModConfigRequest']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Save server mod configuration
-     */
-    async postApiAdminServerModConfig(requestParameters: PostApiAdminServerModConfigOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminServerModConfigRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Install a specific server mod config
-     */
-    async postApiAdminServerModInstallRaw(requestParameters: PostApiAdminServerModInstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminServerModInstall().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling postApiAdminServerModInstall().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/server-mod/{serverModId}/install`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Install a specific server mod config
-     */
-    async postApiAdminServerModInstall(requestParameters: PostApiAdminServerModInstallRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminServerModInstallRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move installed server mod down in the list
-     */
-    async postApiAdminServerModMoveDownRaw(requestParameters: PostApiAdminServerModMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminServerModMoveDown().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling postApiAdminServerModMoveDown().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/installed/{serverModId}/move-down`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move installed server mod down in the list
-     */
-    async postApiAdminServerModMoveDown(requestParameters: PostApiAdminServerModMoveDownRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminServerModMoveDownRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Move installed server mod up in the list
-     */
-    async postApiAdminServerModMoveUpRaw(requestParameters: PostApiAdminServerModMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminServerModMoveUp().'
-            );
-        }
-
-        if (requestParameters['serverModId'] == null) {
-            throw new runtime.RequiredError(
-                'serverModId',
-                'Required parameter "serverModId" was null or undefined when calling postApiAdminServerModMoveUp().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/mods/installed/{serverModId}/move-up`.replace(`{${"serverModId"}}`, encodeURIComponent(String(requestParameters['serverModId']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Move installed server mod up in the list
-     */
-    async postApiAdminServerModMoveUp(requestParameters: PostApiAdminServerModMoveUpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
-        const response = await this.postApiAdminServerModMoveUpRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Trigger Discord bot installation check for this server
      */
-    async postApiAdminSettingsCheckDiscordRaw(requestParameters: PostApiAdminSettingsCheckDiscordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiAdminSettingsCheckDiscordRaw(requestParameters: PostApiAdminSettingsCheckDiscordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -13861,13 +12298,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Trigger Discord bot installation check for this server
      */
-    async postApiAdminSettingsCheckDiscord(requestParameters: PostApiAdminSettingsCheckDiscordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiAdminSettingsCheckDiscord(requestParameters: PostApiAdminSettingsCheckDiscordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiAdminSettingsCheckDiscordRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -13920,7 +12357,7 @@ export class PublicApiApi extends runtime.BaseAPI {
     /**
      * Trigger an immediate server restart
      */
-    async postApiAdminSettingsRestartRaw(requestParameters: PostApiAdminSettingsRestartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiAdminSettingsRestartRaw(requestParameters: PostApiAdminSettingsRestartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -13951,13 +12388,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Trigger an immediate server restart
      */
-    async postApiAdminSettingsRestart(requestParameters: PostApiAdminSettingsRestartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiAdminSettingsRestart(requestParameters: PostApiAdminSettingsRestartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiAdminSettingsRestartRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -14011,9 +12448,54 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
+     * Mark the restarts that went around dzbot so far as done
+     */
+    async postApiAdminSetupBypassingRestartsAcknowledgeRaw(requestParameters: PostApiAdminSetupBypassingRestartsAcknowledgeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteApiAdminSetupNitradoTaskDelete200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminSetupBypassingRestartsAcknowledge().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/admin/setup/bypassing-restarts/acknowledge`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeleteApiAdminSetupNitradoTaskDelete200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Mark the restarts that went around dzbot so far as done
+     */
+    async postApiAdminSetupBypassingRestartsAcknowledge(requestParameters: PostApiAdminSetupBypassingRestartsAcknowledgeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeleteApiAdminSetupNitradoTaskDelete200Response> {
+        const response = await this.postApiAdminSetupBypassingRestartsAcknowledgeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Move the game server onto cfggameplay.json, carrying the Nitrado gameplay settings over; applies on the next restart
      */
-    async postApiAdminSetupCfggameplayMigrateRaw(requestParameters: PostApiAdminSetupCfggameplayMigrateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiAdminSetupCfggameplayMigrateRaw(requestParameters: PostApiAdminSetupCfggameplayMigrateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -14044,13 +12526,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Move the game server onto cfggameplay.json, carrying the Nitrado gameplay settings over; applies on the next restart
      */
-    async postApiAdminSetupCfggameplayMigrate(requestParameters: PostApiAdminSetupCfggameplayMigrateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiAdminSetupCfggameplayMigrate(requestParameters: PostApiAdminSetupCfggameplayMigrateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiAdminSetupCfggameplayMigrateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -14168,7 +12650,7 @@ export class PublicApiApi extends runtime.BaseAPI {
     /**
      * Mark the DayZ++ import setup step as handled
      */
-    async postApiAdminSetupDayzppImportSkipRaw(requestParameters: PostApiAdminSetupDayzppImportSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiAdminSetupDayzppImportSkipRaw(requestParameters: PostApiAdminSetupDayzppImportSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -14199,13 +12681,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Mark the DayZ++ import setup step as handled
      */
-    async postApiAdminSetupDayzppImportSkip(requestParameters: PostApiAdminSetupDayzppImportSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiAdminSetupDayzppImportSkip(requestParameters: PostApiAdminSetupDayzppImportSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiAdminSetupDayzppImportSkipRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -14816,6 +13298,75 @@ export class PublicApiApi extends runtime.BaseAPI {
      */
     async postApiAdminTicketCreate(requestParameters: PostApiAdminTicketCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.postApiAdminTicketCreateRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Answer a decision card in the ticket. The right it needs depends on its kind; a rejection needs a note.
+     */
+    async postApiAdminTicketDecideRaw(requestParameters: PostApiAdminTicketDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiAdminTicketDecide200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiAdminTicketDecide().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiAdminTicketDecide().'
+            );
+        }
+
+        if (requestParameters['decisionId'] == null) {
+            throw new runtime.RequiredError(
+                'decisionId',
+                'Required parameter "decisionId" was null or undefined when calling postApiAdminTicketDecide().'
+            );
+        }
+
+        if (requestParameters['postApiAdminTicketDecideRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiAdminTicketDecideRequest',
+                'Required parameter "postApiAdminTicketDecideRequest" was null or undefined when calling postApiAdminTicketDecide().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/admin/tickets/{id}/decisions/{decisionId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"decisionId"}}`, encodeURIComponent(String(requestParameters['decisionId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminTicketDecideRequestToJSON(requestParameters['postApiAdminTicketDecideRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiAdminTicketDecide200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Answer a decision card in the ticket. The right it needs depends on its kind; a rejection needs a note.
+     */
+    async postApiAdminTicketDecide(requestParameters: PostApiAdminTicketDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminTicketDecide200Response> {
+        const response = await this.postApiAdminTicketDecideRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -15833,20 +14384,20 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a server action
+     * Change an automation; only the given keys change
      */
-    async putApiAdminActionUpdateRaw(requestParameters: PutApiAdminActionUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async putApiAdminAutomationsUpdateRaw(requestParameters: PutApiAdminAutomationsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling putApiAdminActionUpdate().'
+                'Required parameter "xServerSubdomain" was null or undefined when calling putApiAdminAutomationsUpdate().'
             );
         }
 
-        if (requestParameters['action'] == null) {
+        if (requestParameters['automation'] == null) {
             throw new runtime.RequiredError(
-                'action',
-                'Required parameter "action" was null or undefined when calling putApiAdminActionUpdate().'
+                'automation',
+                'Required parameter "automation" was null or undefined when calling putApiAdminAutomationsUpdate().'
             );
         }
 
@@ -15869,7 +14420,7 @@ export class PublicApiApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/admin/actions/{action}`.replace(`{${"action"}}`, encodeURIComponent(String(requestParameters['action']))),
+            path: `/api/admin/automations/{automation}`.replace(`{${"automation"}}`, encodeURIComponent(String(requestParameters['automation']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -15880,10 +14431,10 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a server action
+     * Change an automation; only the given keys change
      */
-    async putApiAdminActionUpdate(requestParameters: PutApiAdminActionUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.putApiAdminActionUpdateRaw(requestParameters, initOverrides);
+    async putApiAdminAutomationsUpdate(requestParameters: PutApiAdminAutomationsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.putApiAdminAutomationsUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -17319,64 +15870,9 @@ export class PublicApiApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update scheduler task
-     */
-    async putApiAdminSchedulerUpdateRaw(requestParameters: PutApiAdminSchedulerUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling putApiAdminSchedulerUpdate().'
-            );
-        }
-
-        if (requestParameters['task'] == null) {
-            throw new runtime.RequiredError(
-                'task',
-                'Required parameter "task" was null or undefined when calling putApiAdminSchedulerUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters['xServerSubdomain'] != null) {
-            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/admin/scheduler/{task}`.replace(`{${"task"}}`, encodeURIComponent(String(requestParameters['task']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['body'] as any,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Update scheduler task
-     */
-    async putApiAdminSchedulerUpdate(requestParameters: PutApiAdminSchedulerUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.putApiAdminSchedulerUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Update server settings
      */
-    async putApiAdminSettingsUpdateRaw(requestParameters: PutApiAdminSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async putApiAdminSettingsUpdateRaw(requestParameters: PutApiAdminSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -17417,13 +15913,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             body: requestParameters['body'] as any,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Update server settings
      */
-    async putApiAdminSettingsUpdate(requestParameters: PutApiAdminSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async putApiAdminSettingsUpdate(requestParameters: PutApiAdminSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.putApiAdminSettingsUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -17486,7 +15982,7 @@ export class PublicApiApi extends runtime.BaseAPI {
     /**
      * Answer whether dzbot manages the Nitrado ban, whitelist and priority lists
      */
-    async putApiAdminSetupPlayerListsRaw(requestParameters: PutApiAdminSetupPlayerListsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async putApiAdminSetupPlayerListsRaw(requestParameters: PutApiAdminSetupPlayerListsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -17527,13 +16023,13 @@ export class PublicApiApi extends runtime.BaseAPI {
             body: PutApiAdminSetupPlayerListsRequestToJSON(requestParameters['putApiAdminSetupPlayerListsRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Answer whether dzbot manages the Nitrado ban, whitelist and priority lists
      */
-    async putApiAdminSetupPlayerLists(requestParameters: PutApiAdminSetupPlayerListsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async putApiAdminSetupPlayerLists(requestParameters: PutApiAdminSetupPlayerListsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.putApiAdminSetupPlayerListsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -17793,7 +16289,8 @@ export type GetApiAdminDashboardCasinoStatsPeriodEnum = typeof GetApiAdminDashbo
  */
 export const GetApiAdminDashboardPopulationPeriodEnum = {
     _24h: '24h',
-    _7d: '7d'
+    _7d: '7d',
+    _30d: '30d'
 } as const;
 export type GetApiAdminDashboardPopulationPeriodEnum = typeof GetApiAdminDashboardPopulationPeriodEnum[keyof typeof GetApiAdminDashboardPopulationPeriodEnum];
 /**

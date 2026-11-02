@@ -25,16 +25,20 @@ import type {
   GetApiOrganizationPlatformTicketsAttention200Response,
   GetApiOrganizationPlatformTicketsForm200Response,
   GetApiOrganizationSettingsGet200Response,
+  PatchApiAdminTicketEditMessageRequest,
+  PatchApiOrganizationAgentMemoryUpdateRequest,
   PostApiAdminGroupsAddPlayer200Response,
   PostApiAdminPlayersMergeContacts200Response,
   PostApiAdminTicketStatusRequest,
+  PostApiCreatorsModsCreate201Response,
+  PostApiCreatorsModsCreateRequest,
   PostApiOrganizationAccountingCurrencyChooseRequest,
   PostApiOrganizationAdoptServerRequest,
   PostApiOrganizationGroupsAddMemberRequest,
   PostApiOrganizationPlayersAddGroupRequest,
   PostApiOrganizationPlayersMergeRequest,
   PutApiAdminGroupsSaveAccessRightsRequest,
-  PutApiCreatorsModsFilesReorder200Response,
+  PutApiAdminSettingsUpdate200Response,
   PutApiOrganizationGroupsUpdateRequest,
   PutApiOrganizationUpdateRequest,
 } from '../models/index';
@@ -59,12 +63,20 @@ import {
     GetApiOrganizationPlatformTicketsForm200ResponseToJSON,
     GetApiOrganizationSettingsGet200ResponseFromJSON,
     GetApiOrganizationSettingsGet200ResponseToJSON,
+    PatchApiAdminTicketEditMessageRequestFromJSON,
+    PatchApiAdminTicketEditMessageRequestToJSON,
+    PatchApiOrganizationAgentMemoryUpdateRequestFromJSON,
+    PatchApiOrganizationAgentMemoryUpdateRequestToJSON,
     PostApiAdminGroupsAddPlayer200ResponseFromJSON,
     PostApiAdminGroupsAddPlayer200ResponseToJSON,
     PostApiAdminPlayersMergeContacts200ResponseFromJSON,
     PostApiAdminPlayersMergeContacts200ResponseToJSON,
     PostApiAdminTicketStatusRequestFromJSON,
     PostApiAdminTicketStatusRequestToJSON,
+    PostApiCreatorsModsCreate201ResponseFromJSON,
+    PostApiCreatorsModsCreate201ResponseToJSON,
+    PostApiCreatorsModsCreateRequestFromJSON,
+    PostApiCreatorsModsCreateRequestToJSON,
     PostApiOrganizationAccountingCurrencyChooseRequestFromJSON,
     PostApiOrganizationAccountingCurrencyChooseRequestToJSON,
     PostApiOrganizationAdoptServerRequestFromJSON,
@@ -77,13 +89,17 @@ import {
     PostApiOrganizationPlayersMergeRequestToJSON,
     PutApiAdminGroupsSaveAccessRightsRequestFromJSON,
     PutApiAdminGroupsSaveAccessRightsRequestToJSON,
-    PutApiCreatorsModsFilesReorder200ResponseFromJSON,
-    PutApiCreatorsModsFilesReorder200ResponseToJSON,
+    PutApiAdminSettingsUpdate200ResponseFromJSON,
+    PutApiAdminSettingsUpdate200ResponseToJSON,
     PutApiOrganizationGroupsUpdateRequestFromJSON,
     PutApiOrganizationGroupsUpdateRequestToJSON,
     PutApiOrganizationUpdateRequestFromJSON,
     PutApiOrganizationUpdateRequestToJSON,
 } from '../models/index';
+
+export interface DeleteApiOrganizationAgentMemoryDeleteRequest {
+    id: string;
+}
 
 export interface DeleteApiOrganizationGroupsDeleteRequest {
     id: string;
@@ -120,12 +136,33 @@ export interface GetApiOrganizationPlayersDetailRequest {
     id: string;
 }
 
+export interface PatchApiOrganizationAgentMemoryUpdateOperationRequest {
+    id: string;
+    patchApiOrganizationAgentMemoryUpdateRequest: PatchApiOrganizationAgentMemoryUpdateRequest;
+}
+
 export interface PostApiOrganizationAccountingCurrencyChooseOperationRequest {
     postApiOrganizationAccountingCurrencyChooseRequest: PostApiOrganizationAccountingCurrencyChooseRequest;
 }
 
 export interface PostApiOrganizationAdoptServerOperationRequest {
     postApiOrganizationAdoptServerRequest: PostApiOrganizationAdoptServerRequest;
+}
+
+export interface PostApiOrganizationAgentMemoryAcceptRequest {
+    id: string;
+}
+
+export interface PostApiOrganizationAgentMemoryAddInstructionRequest {
+    patchApiAdminTicketEditMessageRequest: PatchApiAdminTicketEditMessageRequest;
+}
+
+export interface PostApiOrganizationAgentMemoryDeclineRequest {
+    id: string;
+}
+
+export interface PostApiOrganizationAgentMemoryRestoreRequest {
+    id: string;
 }
 
 export interface PostApiOrganizationGroupsAddMemberOperationRequest {
@@ -135,6 +172,10 @@ export interface PostApiOrganizationGroupsAddMemberOperationRequest {
 
 export interface PostApiOrganizationGroupsCreateRequest {
     putApiOrganizationUpdateRequest: PutApiOrganizationUpdateRequest;
+}
+
+export interface PostApiOrganizationModsCreateRequest {
+    postApiCreatorsModsCreateRequest?: PostApiCreatorsModsCreateRequest;
 }
 
 export interface PostApiOrganizationPlatformTicketsCloseRequest {
@@ -196,6 +237,46 @@ export interface PutApiOrganizationUpdateOperationRequest {
  * 
  */
 export class OrganizationApi extends runtime.BaseAPI {
+
+    /**
+     * Delete a note or an instruction (it can be restored)
+     */
+    async deleteApiOrganizationAgentMemoryDeleteRaw(requestParameters: DeleteApiOrganizationAgentMemoryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteApiOrganizationAgentMemoryDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a note or an instruction (it can be restored)
+     */
+    async deleteApiOrganizationAgentMemoryDelete(requestParameters: DeleteApiOrganizationAgentMemoryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteApiOrganizationAgentMemoryDeleteRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Delete an organization group, detaching every member first. Gated on org.groups.delete; player-free.
@@ -779,6 +860,56 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
+     * Edit a note (description, content) or an instruction (content)
+     */
+    async patchApiOrganizationAgentMemoryUpdateRaw(requestParameters: PatchApiOrganizationAgentMemoryUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling patchApiOrganizationAgentMemoryUpdate().'
+            );
+        }
+
+        if (requestParameters['patchApiOrganizationAgentMemoryUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiOrganizationAgentMemoryUpdateRequest',
+                'Required parameter "patchApiOrganizationAgentMemoryUpdateRequest" was null or undefined when calling patchApiOrganizationAgentMemoryUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiOrganizationAgentMemoryUpdateRequestToJSON(requestParameters['patchApiOrganizationAgentMemoryUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Edit a note (description, content) or an instruction (content)
+     */
+    async patchApiOrganizationAgentMemoryUpdate(requestParameters: PatchApiOrganizationAgentMemoryUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.patchApiOrganizationAgentMemoryUpdateRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Choose the organization\'s accounting currency once; it cannot be changed afterwards
      */
     async postApiOrganizationAccountingCurrencyChooseRaw(requestParameters: PostApiOrganizationAccountingCurrencyChooseOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -863,6 +994,169 @@ export class OrganizationApi extends runtime.BaseAPI {
     async postApiOrganizationAdoptServer(requestParameters: PostApiOrganizationAdoptServerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiAdminTicketStatusRequest> {
         const response = await this.postApiOrganizationAdoptServerRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Accept an instruction the companion proposed
+     */
+    async postApiOrganizationAgentMemoryAcceptRaw(requestParameters: PostApiOrganizationAgentMemoryAcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiOrganizationAgentMemoryAccept().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/{id}/accept`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Accept an instruction the companion proposed
+     */
+    async postApiOrganizationAgentMemoryAccept(requestParameters: PostApiOrganizationAgentMemoryAcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiOrganizationAgentMemoryAcceptRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Add an instruction to the AI Companion memory
+     */
+    async postApiOrganizationAgentMemoryAddInstructionRaw(requestParameters: PostApiOrganizationAgentMemoryAddInstructionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['patchApiAdminTicketEditMessageRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiAdminTicketEditMessageRequest',
+                'Required parameter "patchApiAdminTicketEditMessageRequest" was null or undefined when calling postApiOrganizationAgentMemoryAddInstruction().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/instructions`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiAdminTicketEditMessageRequestToJSON(requestParameters['patchApiAdminTicketEditMessageRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Add an instruction to the AI Companion memory
+     */
+    async postApiOrganizationAgentMemoryAddInstruction(requestParameters: PostApiOrganizationAgentMemoryAddInstructionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiOrganizationAgentMemoryAddInstructionRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Decline an instruction the companion proposed
+     */
+    async postApiOrganizationAgentMemoryDeclineRaw(requestParameters: PostApiOrganizationAgentMemoryDeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiOrganizationAgentMemoryDecline().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/{id}/decline`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Decline an instruction the companion proposed
+     */
+    async postApiOrganizationAgentMemoryDecline(requestParameters: PostApiOrganizationAgentMemoryDeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiOrganizationAgentMemoryDeclineRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Restore a deleted note or instruction
+     */
+    async postApiOrganizationAgentMemoryRestoreRaw(requestParameters: PostApiOrganizationAgentMemoryRestoreRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiOrganizationAgentMemoryRestore().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/agent-memory/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Restore a deleted note or instruction
+     */
+    async postApiOrganizationAgentMemoryRestore(requestParameters: PostApiOrganizationAgentMemoryRestoreRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiOrganizationAgentMemoryRestoreRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -957,6 +1251,43 @@ export class OrganizationApi extends runtime.BaseAPI {
      */
     async postApiOrganizationGroupsCreate(requestParameters: PostApiOrganizationGroupsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiOrganizationGroupsList200ResponseGroupsInner> {
         const response = await this.postApiOrganizationGroupsCreateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Start a mod owned by the organization; every server of the organization may install it
+     */
+    async postApiOrganizationModsCreateRaw(requestParameters: PostApiOrganizationModsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiCreatorsModsCreate201Response>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/organization/mods`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiCreatorsModsCreateRequestToJSON(requestParameters['postApiCreatorsModsCreateRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiCreatorsModsCreate201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Start a mod owned by the organization; every server of the organization may install it
+     */
+    async postApiOrganizationModsCreate(requestParameters: PostApiOrganizationModsCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiCreatorsModsCreate201Response> {
+        const response = await this.postApiOrganizationModsCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1452,7 +1783,7 @@ export class OrganizationApi extends runtime.BaseAPI {
     /**
      * Update organization settings. Gated on org.settings.edit; player-free.
      */
-    async putApiOrganizationSettingsUpdateRaw(requestParameters: PutApiOrganizationSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async putApiOrganizationSettingsUpdateRaw(requestParameters: PutApiOrganizationSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -1482,13 +1813,13 @@ export class OrganizationApi extends runtime.BaseAPI {
             body: requestParameters['body'] as any,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Update organization settings. Gated on org.settings.edit; player-free.
      */
-    async putApiOrganizationSettingsUpdate(requestParameters: PutApiOrganizationSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async putApiOrganizationSettingsUpdate(requestParameters: PutApiOrganizationSettingsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.putApiOrganizationSettingsUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

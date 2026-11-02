@@ -65,6 +65,12 @@ export interface GetApiShopMap200Response {
      */
     tileTypes?: Array<string>;
     /**
+     * The tile type the map opens with: the server's default map when that type exists for the mission, otherwise the first one.
+     * @type {string}
+     * @memberof GetApiShopMap200Response
+     */
+    defaultTileType?: string;
+    /**
      * 
      * @type {string}
      * @memberof GetApiShopMap200Response
@@ -106,6 +112,7 @@ export function GetApiShopMap200ResponseFromJSONTyped(json: any, ignoreDiscrimin
         'maxSize': json['maxSize'] == null ? undefined : json['maxSize'],
         'maxZoom': json['maxZoom'] == null ? undefined : json['maxZoom'],
         'tileTypes': json['tileTypes'] == null ? undefined : json['tileTypes'],
+        'defaultTileType': json['defaultTileType'] == null ? undefined : json['defaultTileType'],
         'izurviveBaseUrl': json['izurviveBaseUrl'] == null ? undefined : json['izurviveBaseUrl'],
         'overlay': json['overlay'] == null ? undefined : GetApiShopMap200ResponseOverlayFromJSON(json['overlay']),
         'missionLayers': json['missionLayers'] == null ? undefined : MapMissionLayersFromJSON(json['missionLayers']),
@@ -128,6 +135,7 @@ export function GetApiShopMap200ResponseToJSONTyped(value?: GetApiShopMap200Resp
         'maxSize': value['maxSize'],
         'maxZoom': value['maxZoom'],
         'tileTypes': value['tileTypes'],
+        'defaultTileType': value['defaultTileType'],
         'izurviveBaseUrl': value['izurviveBaseUrl'],
         'overlay': GetApiShopMap200ResponseOverlayToJSON(value['overlay']),
         'missionLayers': MapMissionLayersToJSON(value['missionLayers']),

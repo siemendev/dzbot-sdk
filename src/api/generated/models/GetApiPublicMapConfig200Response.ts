@@ -65,6 +65,12 @@ export interface GetApiPublicMapConfig200Response {
      */
     tileTypes: Array<string>;
     /**
+     * The tile type the map opens with: the server's default map when that type exists for the mission, otherwise the first one.
+     * @type {string}
+     * @memberof GetApiPublicMapConfig200Response
+     */
+    defaultTileType: string;
+    /**
      * 
      * @type {string}
      * @memberof GetApiPublicMapConfig200Response
@@ -93,6 +99,7 @@ export function instanceOfGetApiPublicMapConfig200Response(value: object): value
     if (!('maxSize' in value) || value['maxSize'] === undefined) return false;
     if (!('maxZoom' in value) || value['maxZoom'] === undefined) return false;
     if (!('tileTypes' in value) || value['tileTypes'] === undefined) return false;
+    if (!('defaultTileType' in value) || value['defaultTileType'] === undefined) return false;
     if (!('izurviveBaseUrl' in value) || value['izurviveBaseUrl'] === undefined) return false;
     if (!('overlay' in value) || value['overlay'] === undefined) return false;
     if (!('missionLayers' in value) || value['missionLayers'] === undefined) return false;
@@ -114,6 +121,7 @@ export function GetApiPublicMapConfig200ResponseFromJSONTyped(json: any, ignoreD
         'maxSize': json['maxSize'],
         'maxZoom': json['maxZoom'],
         'tileTypes': json['tileTypes'],
+        'defaultTileType': json['defaultTileType'],
         'izurviveBaseUrl': json['izurviveBaseUrl'],
         'overlay': GetApiShopMap200ResponseOverlayFromJSON(json['overlay']),
         'missionLayers': MapMissionLayersFromJSON(json['missionLayers']),
@@ -136,6 +144,7 @@ export function GetApiPublicMapConfig200ResponseToJSONTyped(value?: GetApiPublic
         'maxSize': value['maxSize'],
         'maxZoom': value['maxZoom'],
         'tileTypes': value['tileTypes'],
+        'defaultTileType': value['defaultTileType'],
         'izurviveBaseUrl': value['izurviveBaseUrl'],
         'overlay': GetApiShopMap200ResponseOverlayToJSON(value['overlay']),
         'missionLayers': MapMissionLayersToJSON(value['missionLayers']),

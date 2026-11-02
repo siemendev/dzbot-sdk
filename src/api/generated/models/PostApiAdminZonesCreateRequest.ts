@@ -41,36 +41,6 @@ export interface PostApiAdminZonesCreateRequest {
     active?: boolean;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof PostApiAdminZonesCreateRequest
-     */
-    policies?: Array<string>;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof PostApiAdminZonesCreateRequest
-     */
-    whitelistedPlayerIds?: Array<number>;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof PostApiAdminZonesCreateRequest
-     */
-    ignoredGroupIds?: Array<number>;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof PostApiAdminZonesCreateRequest
-     */
-    whitelistedFactionIds?: Array<number>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PostApiAdminZonesCreateRequest
-     */
-    whitelistAlliesOfFactions?: boolean;
-    /**
-     * 
      * @type {Array<Array<number>>}
      * @memberof PostApiAdminZonesCreateRequest
      */
@@ -180,11 +150,6 @@ export function PostApiAdminZonesCreateRequestFromJSONTyped(json: any, ignoreDis
         
         'name': json['name'] == null ? undefined : LocalizedStringFromJSON(json['name']),
         'active': json['active'] == null ? undefined : json['active'],
-        'policies': json['policies'] == null ? undefined : json['policies'],
-        'whitelistedPlayerIds': json['whitelistedPlayerIds'] == null ? undefined : json['whitelistedPlayerIds'],
-        'ignoredGroupIds': json['ignoredGroupIds'] == null ? undefined : json['ignoredGroupIds'],
-        'whitelistedFactionIds': json['whitelistedFactionIds'] == null ? undefined : json['whitelistedFactionIds'],
-        'whitelistAlliesOfFactions': json['whitelistAlliesOfFactions'] == null ? undefined : json['whitelistAlliesOfFactions'],
         'waypoints': json['waypoints'] == null ? undefined : json['waypoints'],
         'spawnItem': json['spawnItem'] == null ? undefined : json['spawnItem'],
         'spawnYOffset': json['spawnYOffset'] == null ? undefined : json['spawnYOffset'],
@@ -216,11 +181,6 @@ export function PostApiAdminZonesCreateRequestToJSONTyped(value?: PostApiAdminZo
         
         'name': LocalizedStringToJSON(value['name']),
         'active': value['active'],
-        'policies': value['policies'],
-        'whitelistedPlayerIds': value['whitelistedPlayerIds'],
-        'ignoredGroupIds': value['ignoredGroupIds'],
-        'whitelistedFactionIds': value['whitelistedFactionIds'],
-        'whitelistAlliesOfFactions': value['whitelistAlliesOfFactions'],
         'waypoints': value['waypoints'],
         'spawnItem': value['spawnItem'],
         'spawnYOffset': value['spawnYOffset'],

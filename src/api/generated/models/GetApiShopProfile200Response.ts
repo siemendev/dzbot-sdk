@@ -59,6 +59,12 @@ export interface GetApiShopProfile200Response {
     balance?: number;
     /**
      * 
+     * @type {string}
+     * @memberof GetApiShopProfile200Response
+     */
+    currency?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof GetApiShopProfile200Response
      */
@@ -123,6 +129,7 @@ export function GetApiShopProfile200ResponseFromJSONTyped(json: any, ignoreDiscr
         'displayName': json['displayName'] == null ? undefined : json['displayName'],
         'avatarUrl': json['avatarUrl'] == null ? undefined : json['avatarUrl'],
         'balance': json['balance'] == null ? undefined : json['balance'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
         'canChangeName': json['canChangeName'] == null ? undefined : json['canChangeName'],
         'statistics': json['statistics'] == null ? undefined : json['statistics'],
         'baseAlarmCoupons': json['baseAlarmCoupons'] == null ? undefined : json['baseAlarmCoupons'],
@@ -149,6 +156,7 @@ export function GetApiShopProfile200ResponseToJSONTyped(value?: GetApiShopProfil
         'displayName': value['displayName'],
         'avatarUrl': value['avatarUrl'],
         'balance': value['balance'],
+        'currency': value['currency'],
         'canChangeName': value['canChangeName'],
         'statistics': value['statistics'],
         'baseAlarmCoupons': value['baseAlarmCoupons'],

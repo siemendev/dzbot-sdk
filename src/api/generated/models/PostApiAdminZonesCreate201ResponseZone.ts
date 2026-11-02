@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GetApiAdminBaseAlarmsFormData200ResponseFactionsInner } from './GetApiAdminBaseAlarmsFormData200ResponseFactionsInner';
-import {
-    GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON,
-    GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSONTyped,
-    GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON,
-    GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSONTyped,
-} from './GetApiAdminBaseAlarmsFormData200ResponseFactionsInner';
 import type { LocalizedString } from './LocalizedString';
 import {
     LocalizedStringFromJSON,
@@ -52,36 +45,6 @@ export interface PostApiAdminZonesCreate201ResponseZone {
      * @memberof PostApiAdminZonesCreate201ResponseZone
      */
     active?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof PostApiAdminZonesCreate201ResponseZone
-     */
-    policies?: Array<string>;
-    /**
-     * 
-     * @type {Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>}
-     * @memberof PostApiAdminZonesCreate201ResponseZone
-     */
-    whitelistedPlayers?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
-    /**
-     * 
-     * @type {Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>}
-     * @memberof PostApiAdminZonesCreate201ResponseZone
-     */
-    ignoredGroups?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
-    /**
-     * 
-     * @type {Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>}
-     * @memberof PostApiAdminZonesCreate201ResponseZone
-     */
-    whitelistedFactions?: Array<GetApiAdminBaseAlarmsFormData200ResponseFactionsInner>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PostApiAdminZonesCreate201ResponseZone
-     */
-    whitelistAlliesOfFactions?: boolean;
     /**
      * 
      * @type {Array<Array<number>>}
@@ -194,11 +157,6 @@ export function PostApiAdminZonesCreate201ResponseZoneFromJSONTyped(json: any, i
         'id': json['id'] == null ? undefined : json['id'],
         'name': json['name'] == null ? undefined : LocalizedStringFromJSON(json['name']),
         'active': json['active'] == null ? undefined : json['active'],
-        'policies': json['policies'] == null ? undefined : json['policies'],
-        'whitelistedPlayers': json['whitelistedPlayers'] == null ? undefined : ((json['whitelistedPlayers'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
-        'ignoredGroups': json['ignoredGroups'] == null ? undefined : ((json['ignoredGroups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
-        'whitelistedFactions': json['whitelistedFactions'] == null ? undefined : ((json['whitelistedFactions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerFromJSON)),
-        'whitelistAlliesOfFactions': json['whitelistAlliesOfFactions'] == null ? undefined : json['whitelistAlliesOfFactions'],
         'waypoints': json['waypoints'] == null ? undefined : json['waypoints'],
         'spawnItem': json['spawnItem'] == null ? undefined : json['spawnItem'],
         'spawnYOffset': json['spawnYOffset'] == null ? undefined : json['spawnYOffset'],
@@ -231,11 +189,6 @@ export function PostApiAdminZonesCreate201ResponseZoneToJSONTyped(value?: PostAp
         'id': value['id'],
         'name': LocalizedStringToJSON(value['name']),
         'active': value['active'],
-        'policies': value['policies'],
-        'whitelistedPlayers': value['whitelistedPlayers'] == null ? undefined : ((value['whitelistedPlayers'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
-        'ignoredGroups': value['ignoredGroups'] == null ? undefined : ((value['ignoredGroups'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
-        'whitelistedFactions': value['whitelistedFactions'] == null ? undefined : ((value['whitelistedFactions'] as Array<any>).map(GetApiAdminBaseAlarmsFormData200ResponseFactionsInnerToJSON)),
-        'whitelistAlliesOfFactions': value['whitelistAlliesOfFactions'],
         'waypoints': value['waypoints'],
         'spawnItem': value['spawnItem'],
         'spawnYOffset': value['spawnYOffset'],

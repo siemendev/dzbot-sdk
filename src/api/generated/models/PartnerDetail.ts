@@ -36,6 +36,66 @@ export interface PartnerDetail {
      * @type {string}
      * @memberof PartnerDetail
      */
+    legalName: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    addressLine1: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    addressLine2: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    postalCode: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    city: string | null;
+    /**
+     * ISO 3166-1 alpha-2
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    country: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    vatId: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    taxNumber: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    email: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
+    phone: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerDetail
+     */
     website?: string | null;
     /**
      * 
@@ -63,6 +123,16 @@ export interface PartnerDetail {
 export function instanceOfPartnerDetail(value: object): value is PartnerDetail {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('legalName' in value) || value['legalName'] === undefined) return false;
+    if (!('addressLine1' in value) || value['addressLine1'] === undefined) return false;
+    if (!('addressLine2' in value) || value['addressLine2'] === undefined) return false;
+    if (!('postalCode' in value) || value['postalCode'] === undefined) return false;
+    if (!('city' in value) || value['city'] === undefined) return false;
+    if (!('country' in value) || value['country'] === undefined) return false;
+    if (!('vatId' in value) || value['vatId'] === undefined) return false;
+    if (!('taxNumber' in value) || value['taxNumber'] === undefined) return false;
+    if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('phone' in value) || value['phone'] === undefined) return false;
     return true;
 }
 
@@ -78,6 +148,16 @@ export function PartnerDetailFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'id': json['id'],
         'name': json['name'],
+        'legalName': json['legalName'],
+        'addressLine1': json['addressLine1'],
+        'addressLine2': json['addressLine2'],
+        'postalCode': json['postalCode'],
+        'city': json['city'],
+        'country': json['country'],
+        'vatId': json['vatId'],
+        'taxNumber': json['taxNumber'],
+        'email': json['email'],
+        'phone': json['phone'],
         'website': json['website'] == null ? undefined : json['website'],
         'notes': json['notes'] == null ? undefined : json['notes'],
         'documentCount': json['documentCount'] == null ? undefined : json['documentCount'],
@@ -98,6 +178,16 @@ export function PartnerDetailToJSONTyped(value?: PartnerDetail | null, ignoreDis
         
         'id': value['id'],
         'name': value['name'],
+        'legalName': value['legalName'],
+        'addressLine1': value['addressLine1'],
+        'addressLine2': value['addressLine2'],
+        'postalCode': value['postalCode'],
+        'city': value['city'],
+        'country': value['country'],
+        'vatId': value['vatId'],
+        'taxNumber': value['taxNumber'],
+        'email': value['email'],
+        'phone': value['phone'],
         'website': value['website'],
         'notes': value['notes'],
         'documentCount': value['documentCount'],

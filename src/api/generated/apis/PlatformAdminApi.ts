@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  CustomDomainGrants,
   GetApiAdminDevelopersWebhookDeliveries200Response,
   GetApiAdminInventoryCategories200Response,
   GetApiPlatformAdminAccessOverview200Response,
@@ -35,6 +36,8 @@ import type {
   GetApiPlatformAdminObservabilitySchedulerHealth200Response,
   GetApiPlatformAdminOrganizationsDetail200Response,
   GetApiPlatformAdminServersDetail200Response,
+  GetApiPlatformAdminVatReturn200Response,
+  GetApiPlatformAdminVatReturnTreatmentSuggestion200Response,
   InventoryItemDetail,
   InventoryItemWrite,
   ManualLedgerEntry,
@@ -42,7 +45,10 @@ import type {
   PartnerWrite,
   PatchApiAdminBookmakerReassignRequest,
   PatchApiAdminReceiptIntakeUpdateRequest,
+  PatchApiAdminTicketEditMessageRequest,
+  PatchApiOrganizationAgentMemoryUpdateRequest,
   PatchApiPlatformAdminManualLedgerUpdateRequest,
+  PatchApiPlatformAdminOrganizationsUpdateRequest,
   PlatformAccessUser,
   PlatformDocumentArchiveWrite,
   PlatformDocumentDetail,
@@ -59,14 +65,20 @@ import type {
   PostApiAdminPlayersAddPlace201Response,
   PostApiAdminReceiptIntakeCommitRequest,
   PostApiAdminSiteAlertsCreateRequest,
+  PostApiAdminSupportPaymentReverseRequest,
   PostApiPlatformAdminAiCreditGrantRequest,
+  PostApiPlatformAdminCompanionReviewCaseFixRequest,
+  PostApiPlatformAdminCustomDomainGrantsCreateRequest,
   PostApiPlatformAdminInvoiceIssueRequest,
   PostApiPlatformAdminItemDataMapCreate201Response,
   PostApiPlatformAdminItemDataMapCreateRequest,
   PostApiPlatformAdminItemGroupsCreateRequest,
   PostApiPlatformAdminManualLedgerCreateRequest,
   PostApiPlatformAdminMapPlacesCreateRequest,
+  PostApiPlatformAdminModsVerificationDecideRequest,
   PostApiPlatformAdminUsersMagicLink200Response,
+  PostApiPlatformAdminVatReturnFile201Response,
+  PostApiPlatformAdminVatReturnFileRequest,
   PutApiPlatformAdminAccessUserUpdateRequest,
   PutApiPlatformAdminAiCreditSettingsRequest,
   PutApiPlatformAdminAiCreditUnlimitedRequest,
@@ -75,12 +87,16 @@ import type {
   PutApiPlatformAdminMapPlacesMissionConfigUpdate200Response,
   PutApiPlatformAdminMapPlacesMissionConfigUpdateRequest,
   PutApiPlatformAdminMapPlacesUpdateRequest,
+  PutApiPlatformAdminServersTestServerUpdateRequest,
   PutApiPlatformAdminServersTrialUpdateRequest,
+  PutApiPlatformAdminVatReturnTreatmentRequest,
   ReceiptIntake,
   ReceiptIntakeCommitResult,
   VanillaFilesSyncStatus,
 } from '../models/index';
 import {
+    CustomDomainGrantsFromJSON,
+    CustomDomainGrantsToJSON,
     GetApiAdminDevelopersWebhookDeliveries200ResponseFromJSON,
     GetApiAdminDevelopersWebhookDeliveries200ResponseToJSON,
     GetApiAdminInventoryCategories200ResponseFromJSON,
@@ -121,6 +137,10 @@ import {
     GetApiPlatformAdminOrganizationsDetail200ResponseToJSON,
     GetApiPlatformAdminServersDetail200ResponseFromJSON,
     GetApiPlatformAdminServersDetail200ResponseToJSON,
+    GetApiPlatformAdminVatReturn200ResponseFromJSON,
+    GetApiPlatformAdminVatReturn200ResponseToJSON,
+    GetApiPlatformAdminVatReturnTreatmentSuggestion200ResponseFromJSON,
+    GetApiPlatformAdminVatReturnTreatmentSuggestion200ResponseToJSON,
     InventoryItemDetailFromJSON,
     InventoryItemDetailToJSON,
     InventoryItemWriteFromJSON,
@@ -135,8 +155,14 @@ import {
     PatchApiAdminBookmakerReassignRequestToJSON,
     PatchApiAdminReceiptIntakeUpdateRequestFromJSON,
     PatchApiAdminReceiptIntakeUpdateRequestToJSON,
+    PatchApiAdminTicketEditMessageRequestFromJSON,
+    PatchApiAdminTicketEditMessageRequestToJSON,
+    PatchApiOrganizationAgentMemoryUpdateRequestFromJSON,
+    PatchApiOrganizationAgentMemoryUpdateRequestToJSON,
     PatchApiPlatformAdminManualLedgerUpdateRequestFromJSON,
     PatchApiPlatformAdminManualLedgerUpdateRequestToJSON,
+    PatchApiPlatformAdminOrganizationsUpdateRequestFromJSON,
+    PatchApiPlatformAdminOrganizationsUpdateRequestToJSON,
     PlatformAccessUserFromJSON,
     PlatformAccessUserToJSON,
     PlatformDocumentArchiveWriteFromJSON,
@@ -169,8 +195,14 @@ import {
     PostApiAdminReceiptIntakeCommitRequestToJSON,
     PostApiAdminSiteAlertsCreateRequestFromJSON,
     PostApiAdminSiteAlertsCreateRequestToJSON,
+    PostApiAdminSupportPaymentReverseRequestFromJSON,
+    PostApiAdminSupportPaymentReverseRequestToJSON,
     PostApiPlatformAdminAiCreditGrantRequestFromJSON,
     PostApiPlatformAdminAiCreditGrantRequestToJSON,
+    PostApiPlatformAdminCompanionReviewCaseFixRequestFromJSON,
+    PostApiPlatformAdminCompanionReviewCaseFixRequestToJSON,
+    PostApiPlatformAdminCustomDomainGrantsCreateRequestFromJSON,
+    PostApiPlatformAdminCustomDomainGrantsCreateRequestToJSON,
     PostApiPlatformAdminInvoiceIssueRequestFromJSON,
     PostApiPlatformAdminInvoiceIssueRequestToJSON,
     PostApiPlatformAdminItemDataMapCreate201ResponseFromJSON,
@@ -183,8 +215,14 @@ import {
     PostApiPlatformAdminManualLedgerCreateRequestToJSON,
     PostApiPlatformAdminMapPlacesCreateRequestFromJSON,
     PostApiPlatformAdminMapPlacesCreateRequestToJSON,
+    PostApiPlatformAdminModsVerificationDecideRequestFromJSON,
+    PostApiPlatformAdminModsVerificationDecideRequestToJSON,
     PostApiPlatformAdminUsersMagicLink200ResponseFromJSON,
     PostApiPlatformAdminUsersMagicLink200ResponseToJSON,
+    PostApiPlatformAdminVatReturnFile201ResponseFromJSON,
+    PostApiPlatformAdminVatReturnFile201ResponseToJSON,
+    PostApiPlatformAdminVatReturnFileRequestFromJSON,
+    PostApiPlatformAdminVatReturnFileRequestToJSON,
     PutApiPlatformAdminAccessUserUpdateRequestFromJSON,
     PutApiPlatformAdminAccessUserUpdateRequestToJSON,
     PutApiPlatformAdminAiCreditSettingsRequestFromJSON,
@@ -201,8 +239,12 @@ import {
     PutApiPlatformAdminMapPlacesMissionConfigUpdateRequestToJSON,
     PutApiPlatformAdminMapPlacesUpdateRequestFromJSON,
     PutApiPlatformAdminMapPlacesUpdateRequestToJSON,
+    PutApiPlatformAdminServersTestServerUpdateRequestFromJSON,
+    PutApiPlatformAdminServersTestServerUpdateRequestToJSON,
     PutApiPlatformAdminServersTrialUpdateRequestFromJSON,
     PutApiPlatformAdminServersTrialUpdateRequestToJSON,
+    PutApiPlatformAdminVatReturnTreatmentRequestFromJSON,
+    PutApiPlatformAdminVatReturnTreatmentRequestToJSON,
     ReceiptIntakeFromJSON,
     ReceiptIntakeToJSON,
     ReceiptIntakeCommitResultFromJSON,
@@ -213,6 +255,15 @@ import {
 
 export interface DeleteApiPlatformAdminAccessGroupDeleteRequest {
     id: string;
+}
+
+export interface DeleteApiPlatformAdminAgentMemoryDeleteRequest {
+    id: string;
+}
+
+export interface DeleteApiPlatformAdminCustomDomainGrantsRevokeRequest {
+    id: number;
+    grant: number;
 }
 
 export interface DeleteApiPlatformAdminDemoCategoriesDeleteRequest {
@@ -262,6 +313,10 @@ export interface DeleteApiPlatformAdminMapPlacesDeleteRequest {
     place: number;
 }
 
+export interface DeleteApiPlatformAdminModTagsDeleteRequest {
+    tag: string;
+}
+
 export interface DeleteApiPlatformAdminPartnersDeleteRequest {
     id: number;
 }
@@ -279,12 +334,40 @@ export interface DeleteApiPlatformAdminSiteAlertsDeleteRequest {
     id: number;
 }
 
+export interface GetApiPlatformAdminAccountingRequest {
+    source?: string;
+}
+
 export interface GetApiPlatformAdminAccountingEntryDetailRequest {
     id: number;
 }
 
 export interface GetApiPlatformAdminAiCreditOverviewRequest {
     month?: string;
+}
+
+export interface GetApiPlatformAdminCompanionReviewCaseRequest {
+    id: number;
+}
+
+export interface GetApiPlatformAdminCompanionReviewConversationRequest {
+    id: number;
+}
+
+export interface GetApiPlatformAdminCompanionReviewGetRequest {
+    id: number;
+}
+
+export interface GetApiPlatformAdminCompanionReviewRunRequest {
+    id: number;
+}
+
+export interface GetApiPlatformAdminCompanionReviewStatsRequest {
+    period?: GetApiPlatformAdminCompanionReviewStatsPeriodEnum;
+}
+
+export interface GetApiPlatformAdminCustomDomainGrantsRequest {
+    id: number;
 }
 
 export interface GetApiPlatformAdminDemoCategoriesDetailRequest {
@@ -341,6 +424,10 @@ export interface GetApiPlatformAdminManualLedgerGetRequest {
     id: string;
 }
 
+export interface GetApiPlatformAdminModsVerificationRequest {
+    verification: string;
+}
+
 export interface GetApiPlatformAdminObservabilityActionFailureRatesRequest {
     days?: number;
     threshold?: number;
@@ -376,6 +463,25 @@ export interface GetApiPlatformAdminServersDetailRequest {
     id: number;
 }
 
+export interface GetApiPlatformAdminVatReturnRequest {
+    month?: string;
+}
+
+export interface GetApiPlatformAdminVatReturnCsvRequest {
+    month: string;
+}
+
+export interface GetApiPlatformAdminVatReturnFilingCsvRequest {
+    id: number;
+}
+
+export interface GetApiPlatformAdminVatReturnTreatmentSuggestionRequest {
+    direction: GetApiPlatformAdminVatReturnTreatmentSuggestionDirectionEnum;
+    partnerId?: number;
+    organizationId?: number;
+    vendor?: string;
+}
+
 export interface GetApiPlatformSearchRequest {
     q: string;
     limit?: number;
@@ -390,6 +496,11 @@ export interface GetApiPlatformSearchListRequest {
     page?: number;
     limit?: number;
     tz?: string;
+}
+
+export interface PatchApiPlatformAdminAgentMemoryUpdateRequest {
+    id: string;
+    patchApiOrganizationAgentMemoryUpdateRequest: PatchApiOrganizationAgentMemoryUpdateRequest;
 }
 
 export interface PatchApiPlatformAdminDocumentsFileUpdateRequest {
@@ -413,6 +524,11 @@ export interface PatchApiPlatformAdminManualLedgerUpdateOperationRequest {
     patchApiPlatformAdminManualLedgerUpdateRequest: PatchApiPlatformAdminManualLedgerUpdateRequest;
 }
 
+export interface PatchApiPlatformAdminOrganizationsUpdateOperationRequest {
+    id: number;
+    patchApiPlatformAdminOrganizationsUpdateRequest: PatchApiPlatformAdminOrganizationsUpdateRequest;
+}
+
 export interface PatchApiPlatformAdminPartnersUpdateRequest {
     id: number;
     partnerWrite: PartnerWrite;
@@ -427,9 +543,56 @@ export interface PostApiPlatformAdminAccessGroupCreateRequest {
     platformGroupInput: PlatformGroupInput;
 }
 
+export interface PostApiPlatformAdminAgentMemoryAcceptRequest {
+    id: string;
+}
+
+export interface PostApiPlatformAdminAgentMemoryAddInstructionRequest {
+    patchApiAdminTicketEditMessageRequest: PatchApiAdminTicketEditMessageRequest;
+}
+
+export interface PostApiPlatformAdminAgentMemoryDeclineRequest {
+    id: string;
+}
+
+export interface PostApiPlatformAdminAgentMemoryRestoreRequest {
+    id: string;
+}
+
 export interface PostApiPlatformAdminAiCreditGrantOperationRequest {
     id: string;
     postApiPlatformAdminAiCreditGrantRequest: PostApiPlatformAdminAiCreditGrantRequest;
+}
+
+export interface PostApiPlatformAdminCompanionReviewAnalyzeConversationRequest {
+    id: number;
+}
+
+export interface PostApiPlatformAdminCompanionReviewCaseDismissRequest {
+    id: number;
+    postApiAdminSupportPaymentReverseRequest: PostApiAdminSupportPaymentReverseRequest;
+}
+
+export interface PostApiPlatformAdminCompanionReviewCaseFixOperationRequest {
+    id: number;
+    postApiPlatformAdminCompanionReviewCaseFixRequest: PostApiPlatformAdminCompanionReviewCaseFixRequest;
+}
+
+export interface PostApiPlatformAdminCompanionReviewCaseReopenRequest {
+    id: number;
+}
+
+export interface PostApiPlatformAdminCompanionReviewSkipRequest {
+    id: number;
+}
+
+export interface PostApiPlatformAdminCompanionReviewStartRequest {
+    id: number;
+}
+
+export interface PostApiPlatformAdminCustomDomainGrantsCreateOperationRequest {
+    id: number;
+    postApiPlatformAdminCustomDomainGrantsCreateRequest: PostApiPlatformAdminCustomDomainGrantsCreateRequest;
 }
 
 export interface PostApiPlatformAdminDocumentsArchiveRequest {
@@ -515,6 +678,42 @@ export interface PostApiPlatformAdminMapPlacesCreateOperationRequest {
     postApiPlatformAdminMapPlacesCreateRequest: PostApiPlatformAdminMapPlacesCreateRequest;
 }
 
+export interface PostApiPlatformAdminModTagsCreateRequest {
+    body?: object;
+}
+
+export interface PostApiPlatformAdminModsBlockRequest {
+    version: string;
+    postApiAdminSupportPaymentReverseRequest?: PostApiAdminSupportPaymentReverseRequest;
+}
+
+export interface PostApiPlatformAdminModsDelistRequest {
+    mod: string;
+    postApiAdminSupportPaymentReverseRequest?: PostApiAdminSupportPaymentReverseRequest;
+}
+
+export interface PostApiPlatformAdminModsRelistRequest {
+    mod: string;
+}
+
+export interface PostApiPlatformAdminModsRevokeVerificationRequest {
+    mod: string;
+    postApiAdminSupportPaymentReverseRequest?: PostApiAdminSupportPaymentReverseRequest;
+}
+
+export interface PostApiPlatformAdminModsUnblockRequest {
+    version: string;
+}
+
+export interface PostApiPlatformAdminModsVerificationDecideOperationRequest {
+    verification: string;
+    postApiPlatformAdminModsVerificationDecideRequest?: PostApiPlatformAdminModsVerificationDecideRequest;
+}
+
+export interface PostApiPlatformAdminModsVerificationMessageRequest {
+    verification: string;
+}
+
 export interface PostApiPlatformAdminPartnersCreateRequest {
     partnerWrite: PartnerWrite;
 }
@@ -554,6 +753,10 @@ export interface PostApiPlatformAdminUsersMagicLinkRequest {
     id: number;
 }
 
+export interface PostApiPlatformAdminVatReturnFileOperationRequest {
+    postApiPlatformAdminVatReturnFileRequest: PostApiPlatformAdminVatReturnFileRequest;
+}
+
 export interface PutApiPlatformAdminAccessGroupUpdateRequest {
     id: string;
     platformGroupInput: PlatformGroupInput;
@@ -571,6 +774,11 @@ export interface PutApiPlatformAdminAiCreditSettingsOperationRequest {
 export interface PutApiPlatformAdminAiCreditUnlimitedOperationRequest {
     id: string;
     putApiPlatformAdminAiCreditUnlimitedRequest: PutApiPlatformAdminAiCreditUnlimitedRequest;
+}
+
+export interface PutApiPlatformAdminCompanionReviewNoteRequest {
+    id: number;
+    patchApiAdminReceiptIntakeUpdateRequest: PatchApiAdminReceiptIntakeUpdateRequest;
 }
 
 export interface PutApiPlatformAdminDemoCategoriesUpdateRequest {
@@ -605,9 +813,27 @@ export interface PutApiPlatformAdminMapPlacesUpdateOperationRequest {
     putApiPlatformAdminMapPlacesUpdateRequest: PutApiPlatformAdminMapPlacesUpdateRequest;
 }
 
+export interface PutApiPlatformAdminModTagsReorderRequest {
+    body?: object;
+}
+
+export interface PutApiPlatformAdminModTagsUpdateRequest {
+    tag: string;
+    body?: object;
+}
+
+export interface PutApiPlatformAdminServersTestServerUpdateOperationRequest {
+    id: number;
+    putApiPlatformAdminServersTestServerUpdateRequest: PutApiPlatformAdminServersTestServerUpdateRequest;
+}
+
 export interface PutApiPlatformAdminServersTrialUpdateOperationRequest {
     id: number;
     putApiPlatformAdminServersTrialUpdateRequest: PutApiPlatformAdminServersTrialUpdateRequest;
+}
+
+export interface PutApiPlatformAdminVatReturnTreatmentOperationRequest {
+    putApiPlatformAdminVatReturnTreatmentRequest: PutApiPlatformAdminVatReturnTreatmentRequest;
 }
 
 /**
@@ -653,6 +879,94 @@ export class PlatformAdminApi extends runtime.BaseAPI {
      */
     async deleteApiPlatformAdminAccessGroupDelete(requestParameters: DeleteApiPlatformAdminAccessGroupDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteApiPlatformAdminAccessGroupDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Delete a note or an instruction (it can be restored)
+     */
+    async deleteApiPlatformAdminAgentMemoryDeleteRaw(requestParameters: DeleteApiPlatformAdminAgentMemoryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteApiPlatformAdminAgentMemoryDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a note or an instruction (it can be restored)
+     */
+    async deleteApiPlatformAdminAgentMemoryDelete(requestParameters: DeleteApiPlatformAdminAgentMemoryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteApiPlatformAdminAgentMemoryDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Revoke a grant now: its domains move to another free place, keep a booked subscription, or end
+     */
+    async deleteApiPlatformAdminCustomDomainGrantsRevokeRaw(requestParameters: DeleteApiPlatformAdminCustomDomainGrantsRevokeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomDomainGrants>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteApiPlatformAdminCustomDomainGrantsRevoke().'
+            );
+        }
+
+        if (requestParameters['grant'] == null) {
+            throw new runtime.RequiredError(
+                'grant',
+                'Required parameter "grant" was null or undefined when calling deleteApiPlatformAdminCustomDomainGrantsRevoke().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/organizations/{id}/custom-domain-grants/{grant}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"grant"}}`, encodeURIComponent(String(requestParameters['grant']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomDomainGrantsFromJSON(jsonValue));
+    }
+
+    /**
+     * Revoke a grant now: its domains move to another free place, keep a booked subscription, or end
+     */
+    async deleteApiPlatformAdminCustomDomainGrantsRevoke(requestParameters: DeleteApiPlatformAdminCustomDomainGrantsRevokeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomDomainGrants> {
+        const response = await this.deleteApiPlatformAdminCustomDomainGrantsRevokeRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -1118,6 +1432,47 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Delete a tag; mods lose it
+     */
+    async deleteApiPlatformAdminModTagsDeleteRaw(requestParameters: DeleteApiPlatformAdminModTagsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['tag'] == null) {
+            throw new runtime.RequiredError(
+                'tag',
+                'Required parameter "tag" was null or undefined when calling deleteApiPlatformAdminModTagsDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/tags/{tag}`.replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters['tag']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Delete a tag; mods lose it
+     */
+    async deleteApiPlatformAdminModTagsDelete(requestParameters: DeleteApiPlatformAdminModTagsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.deleteApiPlatformAdminModTagsDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Delete a partner nothing refers to
      */
     async deleteApiPlatformAdminPartnersDeleteRaw(requestParameters: DeleteApiPlatformAdminPartnersDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -1322,8 +1677,12 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     /**
      * Platform accounting overview — KPIs, monthly breakdown, category totals, recent transactions
      */
-    async getApiPlatformAdminAccountingRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminAccounting200Response>> {
+    async getApiPlatformAdminAccountingRaw(requestParameters: GetApiPlatformAdminAccountingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminAccounting200Response>> {
         const queryParameters: any = {};
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1348,8 +1707,8 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     /**
      * Platform accounting overview — KPIs, monthly breakdown, category totals, recent transactions
      */
-    async getApiPlatformAdminAccounting(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPlatformAdminAccounting200Response> {
-        const response = await this.getApiPlatformAdminAccountingRaw(initOverrides);
+    async getApiPlatformAdminAccounting(requestParameters: GetApiPlatformAdminAccountingRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPlatformAdminAccounting200Response> {
+        const response = await this.getApiPlatformAdminAccountingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1429,6 +1788,317 @@ export class PlatformAdminApi extends runtime.BaseAPI {
      */
     async getApiPlatformAdminAiCreditOverview(requestParameters: GetApiPlatformAdminAiCreditOverviewRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getApiPlatformAdminAiCreditOverviewRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * One case with its evidence and history
+     */
+    async getApiPlatformAdminCompanionReviewCaseRaw(requestParameters: GetApiPlatformAdminCompanionReviewCaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminCompanionReviewCase().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/cases/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * One case with its evidence and history
+     */
+    async getApiPlatformAdminCompanionReviewCase(requestParameters: GetApiPlatformAdminCompanionReviewCaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewCaseRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * A conversation not yet in a pass, and its whole transcript
+     */
+    async getApiPlatformAdminCompanionReviewConversationRaw(requestParameters: GetApiPlatformAdminCompanionReviewConversationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminCompanionReviewConversation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/conversations/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * A conversation not yet in a pass, and its whole transcript
+     */
+    async getApiPlatformAdminCompanionReviewConversation(requestParameters: GetApiPlatformAdminCompanionReviewConversationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewConversationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * One pass with its conversation
+     */
+    async getApiPlatformAdminCompanionReviewGetRaw(requestParameters: GetApiPlatformAdminCompanionReviewGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminCompanionReviewGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/reviews/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * One pass with its conversation
+     */
+    async getApiPlatformAdminCompanionReviewGet(requestParameters: GetApiPlatformAdminCompanionReviewGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * The queue board: pending, ready, analyzing and recently finished conversations
+     */
+    async getApiPlatformAdminCompanionReviewQueueRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/queue`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * The queue board: pending, ready, analyzing and recently finished conversations
+     */
+    async getApiPlatformAdminCompanionReviewQueue(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewQueueRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * One run of the review agent with its transcript
+     */
+    async getApiPlatformAdminCompanionReviewRunRaw(requestParameters: GetApiPlatformAdminCompanionReviewRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminCompanionReviewRun().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/runs/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * One run of the review agent with its transcript
+     */
+    async getApiPlatformAdminCompanionReviewRun(requestParameters: GetApiPlatformAdminCompanionReviewRunRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewRunRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * What the review cost and found in a period
+     */
+    async getApiPlatformAdminCompanionReviewStatsRaw(requestParameters: GetApiPlatformAdminCompanionReviewStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['period'] != null) {
+            queryParameters['period'] = requestParameters['period'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/stats`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * What the review cost and found in a period
+     */
+    async getApiPlatformAdminCompanionReviewStats(requestParameters: GetApiPlatformAdminCompanionReviewStatsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewStatsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Counts for the menu badge
+     */
+    async getApiPlatformAdminCompanionReviewSummaryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/summary`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Counts for the menu badge
+     */
+    async getApiPlatformAdminCompanionReviewSummary(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminCompanionReviewSummaryRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * The organization\'s free custom domain grants and the custom domains of its servers
+     */
+    async getApiPlatformAdminCustomDomainGrantsRaw(requestParameters: GetApiPlatformAdminCustomDomainGrantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomDomainGrants>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminCustomDomainGrants().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/organizations/{id}/custom-domain-grants`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomDomainGrantsFromJSON(jsonValue));
+    }
+
+    /**
+     * The organization\'s free custom domain grants and the custom domains of its servers
+     */
+    async getApiPlatformAdminCustomDomainGrants(requestParameters: GetApiPlatformAdminCustomDomainGrantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomDomainGrants> {
+        const response = await this.getApiPlatformAdminCustomDomainGrantsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -2290,6 +2960,81 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * The tag catalog with how many mods use each tag
+     */
+    async getApiPlatformAdminModTagsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/tags`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * The tag catalog with how many mods use each tag
+     */
+    async getApiPlatformAdminModTags(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminModTagsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * A verification request with its conversation, the version\'s changelog and what changed since the last verified version (or everything on a first review)
+     */
+    async getApiPlatformAdminModsVerificationRaw(requestParameters: GetApiPlatformAdminModsVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['verification'] == null) {
+            throw new runtime.RequiredError(
+                'verification',
+                'Required parameter "verification" was null or undefined when calling getApiPlatformAdminModsVerification().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/verification/{verification}`.replace(`{${"verification"}}`, encodeURIComponent(String(requestParameters['verification']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * A verification request with its conversation, the version\'s changelog and what changed since the last verified version (or everything on a first review)
+     */
+    async getApiPlatformAdminModsVerification(requestParameters: GetApiPlatformAdminModsVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getApiPlatformAdminModsVerificationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Actions with high failure rates across all servers
      */
     async getApiPlatformAdminObservabilityActionFailureRatesRaw(requestParameters: GetApiPlatformAdminObservabilityActionFailureRatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminObservabilityActionFailureRates200Response>> {
@@ -2332,7 +3077,7 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
-     * Server mods that are behind the latest released version
+     * Mod installations that are behind the latest released version
      */
     async getApiPlatformAdminObservabilityModVersionDriftRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminObservabilityModVersionDrift200Response>> {
         const queryParameters: any = {};
@@ -2358,7 +3103,7 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
-     * Server mods that are behind the latest released version
+     * Mod installations that are behind the latest released version
      */
     async getApiPlatformAdminObservabilityModVersionDrift(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPlatformAdminObservabilityModVersionDrift200Response> {
         const response = await this.getApiPlatformAdminObservabilityModVersionDriftRaw(initOverrides);
@@ -2692,6 +3437,185 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * The VAT return of one month, with the bookings behind each field and the filed state
+     */
+    async getApiPlatformAdminVatReturnRaw(requestParameters: GetApiPlatformAdminVatReturnRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminVatReturn200Response>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['month'] != null) {
+            queryParameters['month'] = requestParameters['month'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPlatformAdminVatReturn200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The VAT return of one month, with the bookings behind each field and the filed state
+     */
+    async getApiPlatformAdminVatReturn(requestParameters: GetApiPlatformAdminVatReturnRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPlatformAdminVatReturn200Response> {
+        const response = await this.getApiPlatformAdminVatReturnRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * The current VAT return of one month as CSV
+     */
+    async getApiPlatformAdminVatReturnCsvRaw(requestParameters: GetApiPlatformAdminVatReturnCsvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['month'] == null) {
+            throw new runtime.RequiredError(
+                'month',
+                'Required parameter "month" was null or undefined when calling getApiPlatformAdminVatReturnCsv().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['month'] != null) {
+            queryParameters['month'] = requestParameters['month'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return/csv`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * The current VAT return of one month as CSV
+     */
+    async getApiPlatformAdminVatReturnCsv(requestParameters: GetApiPlatformAdminVatReturnCsvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getApiPlatformAdminVatReturnCsvRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * The booking list exactly as it stood when the return was filed
+     */
+    async getApiPlatformAdminVatReturnFilingCsvRaw(requestParameters: GetApiPlatformAdminVatReturnFilingCsvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getApiPlatformAdminVatReturnFilingCsv().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return/filings/{id}/csv`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * The booking list exactly as it stood when the return was filed
+     */
+    async getApiPlatformAdminVatReturnFilingCsv(requestParameters: GetApiPlatformAdminVatReturnFilingCsvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getApiPlatformAdminVatReturnFilingCsvRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * The VAT treatment the latest booking with the same counterparty had
+     */
+    async getApiPlatformAdminVatReturnTreatmentSuggestionRaw(requestParameters: GetApiPlatformAdminVatReturnTreatmentSuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiPlatformAdminVatReturnTreatmentSuggestion200Response>> {
+        if (requestParameters['direction'] == null) {
+            throw new runtime.RequiredError(
+                'direction',
+                'Required parameter "direction" was null or undefined when calling getApiPlatformAdminVatReturnTreatmentSuggestion().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['partnerId'] != null) {
+            queryParameters['partnerId'] = requestParameters['partnerId'];
+        }
+
+        if (requestParameters['organizationId'] != null) {
+            queryParameters['organizationId'] = requestParameters['organizationId'];
+        }
+
+        if (requestParameters['vendor'] != null) {
+            queryParameters['vendor'] = requestParameters['vendor'];
+        }
+
+        if (requestParameters['direction'] != null) {
+            queryParameters['direction'] = requestParameters['direction'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return/treatment-suggestion`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiPlatformAdminVatReturnTreatmentSuggestion200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The VAT treatment the latest booking with the same counterparty had
+     */
+    async getApiPlatformAdminVatReturnTreatmentSuggestion(requestParameters: GetApiPlatformAdminVatReturnTreatmentSuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiPlatformAdminVatReturnTreatmentSuggestion200Response> {
+        const response = await this.getApiPlatformAdminVatReturnTreatmentSuggestionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Header search of the platform admin: hits of every type the caller may search, grouped by type
      */
     async getApiPlatformSearchRaw(requestParameters: GetApiPlatformSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
@@ -2841,6 +3765,56 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     async getApiPlatformSearchSchema(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getApiPlatformSearchSchemaRaw(initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Edit a note (description, content) or an instruction (content)
+     */
+    async patchApiPlatformAdminAgentMemoryUpdateRaw(requestParameters: PatchApiPlatformAdminAgentMemoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling patchApiPlatformAdminAgentMemoryUpdate().'
+            );
+        }
+
+        if (requestParameters['patchApiOrganizationAgentMemoryUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiOrganizationAgentMemoryUpdateRequest',
+                'Required parameter "patchApiOrganizationAgentMemoryUpdateRequest" was null or undefined when calling patchApiPlatformAdminAgentMemoryUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiOrganizationAgentMemoryUpdateRequestToJSON(requestParameters['patchApiOrganizationAgentMemoryUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Edit a note (description, content) or an instruction (content)
+     */
+    async patchApiPlatformAdminAgentMemoryUpdate(requestParameters: PatchApiPlatformAdminAgentMemoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.patchApiPlatformAdminAgentMemoryUpdateRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -3054,6 +4028,56 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Mark an organization as run by the platform operator itself
+     */
+    async patchApiPlatformAdminOrganizationsUpdateRaw(requestParameters: PatchApiPlatformAdminOrganizationsUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling patchApiPlatformAdminOrganizationsUpdate().'
+            );
+        }
+
+        if (requestParameters['patchApiPlatformAdminOrganizationsUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiPlatformAdminOrganizationsUpdateRequest',
+                'Required parameter "patchApiPlatformAdminOrganizationsUpdateRequest" was null or undefined when calling patchApiPlatformAdminOrganizationsUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/organizations/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiPlatformAdminOrganizationsUpdateRequestToJSON(requestParameters['patchApiPlatformAdminOrganizationsUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Mark an organization as run by the platform operator itself
+     */
+    async patchApiPlatformAdminOrganizationsUpdate(requestParameters: PatchApiPlatformAdminOrganizationsUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.patchApiPlatformAdminOrganizationsUpdateRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Change a partner; only the given fields change
      */
     async patchApiPlatformAdminPartnersUpdateRaw(requestParameters: PatchApiPlatformAdminPartnersUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PartnerDetail>> {
@@ -3200,6 +4224,169 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Accept an instruction the platform agent proposed
+     */
+    async postApiPlatformAdminAgentMemoryAcceptRaw(requestParameters: PostApiPlatformAdminAgentMemoryAcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminAgentMemoryAccept().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/{id}/accept`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Accept an instruction the platform agent proposed
+     */
+    async postApiPlatformAdminAgentMemoryAccept(requestParameters: PostApiPlatformAdminAgentMemoryAcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiPlatformAdminAgentMemoryAcceptRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Add an instruction to the platform agent\'s memory
+     */
+    async postApiPlatformAdminAgentMemoryAddInstructionRaw(requestParameters: PostApiPlatformAdminAgentMemoryAddInstructionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['patchApiAdminTicketEditMessageRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiAdminTicketEditMessageRequest',
+                'Required parameter "patchApiAdminTicketEditMessageRequest" was null or undefined when calling postApiPlatformAdminAgentMemoryAddInstruction().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/instructions`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiAdminTicketEditMessageRequestToJSON(requestParameters['patchApiAdminTicketEditMessageRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Add an instruction to the platform agent\'s memory
+     */
+    async postApiPlatformAdminAgentMemoryAddInstruction(requestParameters: PostApiPlatformAdminAgentMemoryAddInstructionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiPlatformAdminAgentMemoryAddInstructionRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Decline an instruction the platform agent proposed
+     */
+    async postApiPlatformAdminAgentMemoryDeclineRaw(requestParameters: PostApiPlatformAdminAgentMemoryDeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminAgentMemoryDecline().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/{id}/decline`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Decline an instruction the platform agent proposed
+     */
+    async postApiPlatformAdminAgentMemoryDecline(requestParameters: PostApiPlatformAdminAgentMemoryDeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiPlatformAdminAgentMemoryDeclineRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Restore a deleted note or instruction
+     */
+    async postApiPlatformAdminAgentMemoryRestoreRaw(requestParameters: PostApiPlatformAdminAgentMemoryRestoreRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminAgentMemoryRestore().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/agent-memory/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Restore a deleted note or instruction
+     */
+    async postApiPlatformAdminAgentMemoryRestore(requestParameters: PostApiPlatformAdminAgentMemoryRestoreRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.postApiPlatformAdminAgentMemoryRestoreRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Grant goodwill AI credit to an organization
      */
     async postApiPlatformAdminAiCreditGrantRaw(requestParameters: PostApiPlatformAdminAiCreditGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
@@ -3247,6 +4434,323 @@ export class PlatformAdminApi extends runtime.BaseAPI {
      */
     async postApiPlatformAdminAiCreditGrant(requestParameters: PostApiPlatformAdminAiCreditGrantOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.postApiPlatformAdminAiCreditGrantRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Analyze a conversation now, before its pre-check is due
+     */
+    async postApiPlatformAdminCompanionReviewAnalyzeConversationRaw(requestParameters: PostApiPlatformAdminCompanionReviewAnalyzeConversationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewAnalyzeConversation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/conversations/{id}/analyze`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Analyze a conversation now, before its pre-check is due
+     */
+    async postApiPlatformAdminCompanionReviewAnalyzeConversation(requestParameters: PostApiPlatformAdminCompanionReviewAnalyzeConversationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewAnalyzeConversationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Dismiss a case
+     */
+    async postApiPlatformAdminCompanionReviewCaseDismissRaw(requestParameters: PostApiPlatformAdminCompanionReviewCaseDismissRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewCaseDismiss().'
+            );
+        }
+
+        if (requestParameters['postApiAdminSupportPaymentReverseRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiAdminSupportPaymentReverseRequest',
+                'Required parameter "postApiAdminSupportPaymentReverseRequest" was null or undefined when calling postApiPlatformAdminCompanionReviewCaseDismiss().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/cases/{id}/dismiss`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminSupportPaymentReverseRequestToJSON(requestParameters['postApiAdminSupportPaymentReverseRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Dismiss a case
+     */
+    async postApiPlatformAdminCompanionReviewCaseDismiss(requestParameters: PostApiPlatformAdminCompanionReviewCaseDismissRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewCaseDismissRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Mark a case fixed, with the commit that fixes it
+     */
+    async postApiPlatformAdminCompanionReviewCaseFixRaw(requestParameters: PostApiPlatformAdminCompanionReviewCaseFixOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewCaseFix().'
+            );
+        }
+
+        if (requestParameters['postApiPlatformAdminCompanionReviewCaseFixRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiPlatformAdminCompanionReviewCaseFixRequest',
+                'Required parameter "postApiPlatformAdminCompanionReviewCaseFixRequest" was null or undefined when calling postApiPlatformAdminCompanionReviewCaseFix().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/cases/{id}/fix`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiPlatformAdminCompanionReviewCaseFixRequestToJSON(requestParameters['postApiPlatformAdminCompanionReviewCaseFixRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Mark a case fixed, with the commit that fixes it
+     */
+    async postApiPlatformAdminCompanionReviewCaseFix(requestParameters: PostApiPlatformAdminCompanionReviewCaseFixOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewCaseFixRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Reopen a fixed, live or dismissed case
+     */
+    async postApiPlatformAdminCompanionReviewCaseReopenRaw(requestParameters: PostApiPlatformAdminCompanionReviewCaseReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewCaseReopen().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/cases/{id}/reopen`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Reopen a fixed, live or dismissed case
+     */
+    async postApiPlatformAdminCompanionReviewCaseReopen(requestParameters: PostApiPlatformAdminCompanionReviewCaseReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewCaseReopenRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Take a waiting pass out of the queue
+     */
+    async postApiPlatformAdminCompanionReviewSkipRaw(requestParameters: PostApiPlatformAdminCompanionReviewSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewSkip().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/reviews/{id}/skip`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Take a waiting pass out of the queue
+     */
+    async postApiPlatformAdminCompanionReviewSkip(requestParameters: PostApiPlatformAdminCompanionReviewSkipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewSkipRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Analyze a pass now — a waiting one, or one the pre-check dropped
+     */
+    async postApiPlatformAdminCompanionReviewStartRaw(requestParameters: PostApiPlatformAdminCompanionReviewStartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCompanionReviewStart().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/reviews/{id}/start`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Analyze a pass now — a waiting one, or one the pre-check dropped
+     */
+    async postApiPlatformAdminCompanionReviewStart(requestParameters: PostApiPlatformAdminCompanionReviewStartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminCompanionReviewStartRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Grant the organization free custom domains; its paid domains move onto the new places
+     */
+    async postApiPlatformAdminCustomDomainGrantsCreateRaw(requestParameters: PostApiPlatformAdminCustomDomainGrantsCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomDomainGrants>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling postApiPlatformAdminCustomDomainGrantsCreate().'
+            );
+        }
+
+        if (requestParameters['postApiPlatformAdminCustomDomainGrantsCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiPlatformAdminCustomDomainGrantsCreateRequest',
+                'Required parameter "postApiPlatformAdminCustomDomainGrantsCreateRequest" was null or undefined when calling postApiPlatformAdminCustomDomainGrantsCreate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/organizations/{id}/custom-domain-grants`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiPlatformAdminCustomDomainGrantsCreateRequestToJSON(requestParameters['postApiPlatformAdminCustomDomainGrantsCreateRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomDomainGrantsFromJSON(jsonValue));
+    }
+
+    /**
+     * Grant the organization free custom domains; its paid domains move onto the new places
+     */
+    async postApiPlatformAdminCustomDomainGrantsCreate(requestParameters: PostApiPlatformAdminCustomDomainGrantsCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomDomainGrants> {
+        const response = await this.postApiPlatformAdminCustomDomainGrantsCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -4227,6 +5731,342 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Add a tag: slug and label (en required, de)
+     */
+    async postApiPlatformAdminModTagsCreateRaw(requestParameters: PostApiPlatformAdminModTagsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/tags`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Add a tag: slug and label (en required, de)
+     */
+    async postApiPlatformAdminModTagsCreate(requestParameters: PostApiPlatformAdminModTagsCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModTagsCreateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Block a published version: no server moves onto it and those on it are warned
+     */
+    async postApiPlatformAdminModsBlockRaw(requestParameters: PostApiPlatformAdminModsBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['version'] == null) {
+            throw new runtime.RequiredError(
+                'version',
+                'Required parameter "version" was null or undefined when calling postApiPlatformAdminModsBlock().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/versions/{version}/block`.replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminSupportPaymentReverseRequestToJSON(requestParameters['postApiAdminSupportPaymentReverseRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Block a published version: no server moves onto it and those on it are warned
+     */
+    async postApiPlatformAdminModsBlock(requestParameters: PostApiPlatformAdminModsBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsBlockRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Take a mod off the marketplace with a reason its team sees; running installations stay
+     */
+    async postApiPlatformAdminModsDelistRaw(requestParameters: PostApiPlatformAdminModsDelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['mod'] == null) {
+            throw new runtime.RequiredError(
+                'mod',
+                'Required parameter "mod" was null or undefined when calling postApiPlatformAdminModsDelist().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/{mod}/delist`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminSupportPaymentReverseRequestToJSON(requestParameters['postApiAdminSupportPaymentReverseRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Take a mod off the marketplace with a reason its team sees; running installations stay
+     */
+    async postApiPlatformAdminModsDelist(requestParameters: PostApiPlatformAdminModsDelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsDelistRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Put a delisted mod back on the marketplace
+     */
+    async postApiPlatformAdminModsRelistRaw(requestParameters: PostApiPlatformAdminModsRelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['mod'] == null) {
+            throw new runtime.RequiredError(
+                'mod',
+                'Required parameter "mod" was null or undefined when calling postApiPlatformAdminModsRelist().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/{mod}/relist`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Put a delisted mod back on the marketplace
+     */
+    async postApiPlatformAdminModsRelist(requestParameters: PostApiPlatformAdminModsRelistRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsRelistRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Revoke a mod\'s verification with a reason
+     */
+    async postApiPlatformAdminModsRevokeVerificationRaw(requestParameters: PostApiPlatformAdminModsRevokeVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['mod'] == null) {
+            throw new runtime.RequiredError(
+                'mod',
+                'Required parameter "mod" was null or undefined when calling postApiPlatformAdminModsRevokeVerification().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/{mod}/revoke-verification`.replace(`{${"mod"}}`, encodeURIComponent(String(requestParameters['mod']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiAdminSupportPaymentReverseRequestToJSON(requestParameters['postApiAdminSupportPaymentReverseRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Revoke a mod\'s verification with a reason
+     */
+    async postApiPlatformAdminModsRevokeVerification(requestParameters: PostApiPlatformAdminModsRevokeVerificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsRevokeVerificationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Lift the block of a version
+     */
+    async postApiPlatformAdminModsUnblockRaw(requestParameters: PostApiPlatformAdminModsUnblockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['version'] == null) {
+            throw new runtime.RequiredError(
+                'version',
+                'Required parameter "version" was null or undefined when calling postApiPlatformAdminModsUnblock().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/versions/{version}/unblock`.replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Lift the block of a version
+     */
+    async postApiPlatformAdminModsUnblock(requestParameters: PostApiPlatformAdminModsUnblockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsUnblockRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * accept, reject (reason required) or request_changes (message required)
+     */
+    async postApiPlatformAdminModsVerificationDecideRaw(requestParameters: PostApiPlatformAdminModsVerificationDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['verification'] == null) {
+            throw new runtime.RequiredError(
+                'verification',
+                'Required parameter "verification" was null or undefined when calling postApiPlatformAdminModsVerificationDecide().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/verification/{verification}/decide`.replace(`{${"verification"}}`, encodeURIComponent(String(requestParameters['verification']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiPlatformAdminModsVerificationDecideRequestToJSON(requestParameters['postApiPlatformAdminModsVerificationDecideRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * accept, reject (reason required) or request_changes (message required)
+     */
+    async postApiPlatformAdminModsVerificationDecide(requestParameters: PostApiPlatformAdminModsVerificationDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsVerificationDecideRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Write to the mod\'s team in the request (multipart: body, files[])
+     */
+    async postApiPlatformAdminModsVerificationMessageRaw(requestParameters: PostApiPlatformAdminModsVerificationMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['verification'] == null) {
+            throw new runtime.RequiredError(
+                'verification',
+                'Required parameter "verification" was null or undefined when calling postApiPlatformAdminModsVerificationMessage().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/verification/{verification}/messages`.replace(`{${"verification"}}`, encodeURIComponent(String(requestParameters['verification']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Write to the mod\'s team in the request (multipart: body, files[])
+     */
+    async postApiPlatformAdminModsVerificationMessage(requestParameters: PostApiPlatformAdminModsVerificationMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.postApiPlatformAdminModsVerificationMessageRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Add a partner
      */
     async postApiPlatformAdminPartnersCreateRaw(requestParameters: PostApiPlatformAdminPartnersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PartnerDetail>> {
@@ -4723,6 +6563,50 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Record that the month\'s return was reported, freezing its field values and booking list
+     */
+    async postApiPlatformAdminVatReturnFileRaw(requestParameters: PostApiPlatformAdminVatReturnFileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiPlatformAdminVatReturnFile201Response>> {
+        if (requestParameters['postApiPlatformAdminVatReturnFileRequest'] == null) {
+            throw new runtime.RequiredError(
+                'postApiPlatformAdminVatReturnFileRequest',
+                'Required parameter "postApiPlatformAdminVatReturnFileRequest" was null or undefined when calling postApiPlatformAdminVatReturnFile().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return/file`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PostApiPlatformAdminVatReturnFileRequestToJSON(requestParameters['postApiPlatformAdminVatReturnFileRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiPlatformAdminVatReturnFile201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Record that the month\'s return was reported, freezing its field values and booking list
+     */
+    async postApiPlatformAdminVatReturnFile(requestParameters: PostApiPlatformAdminVatReturnFileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiPlatformAdminVatReturnFile201Response> {
+        const response = await this.postApiPlatformAdminVatReturnFileRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Update a platform group
      */
     async putApiPlatformAdminAccessGroupUpdateRaw(requestParameters: PutApiPlatformAdminAccessGroupUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PlatformGroup>> {
@@ -4916,6 +6800,57 @@ export class PlatformAdminApi extends runtime.BaseAPI {
      */
     async putApiPlatformAdminAiCreditUnlimited(requestParameters: PutApiPlatformAdminAiCreditUnlimitedOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.putApiPlatformAdminAiCreditUnlimitedRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Set what the review agent should know about this pass
+     */
+    async putApiPlatformAdminCompanionReviewNoteRaw(requestParameters: PutApiPlatformAdminCompanionReviewNoteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling putApiPlatformAdminCompanionReviewNote().'
+            );
+        }
+
+        if (requestParameters['patchApiAdminReceiptIntakeUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'patchApiAdminReceiptIntakeUpdateRequest',
+                'Required parameter "patchApiAdminReceiptIntakeUpdateRequest" was null or undefined when calling putApiPlatformAdminCompanionReviewNote().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/companion-review/reviews/{id}/note`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchApiAdminReceiptIntakeUpdateRequestToJSON(requestParameters['patchApiAdminReceiptIntakeUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Set what the review agent should know about this pass
+     */
+    async putApiPlatformAdminCompanionReviewNote(requestParameters: PutApiPlatformAdminCompanionReviewNoteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.putApiPlatformAdminCompanionReviewNoteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -5280,6 +7215,138 @@ export class PlatformAdminApi extends runtime.BaseAPI {
     }
 
     /**
+     * Order of the tag catalog
+     */
+    async putApiPlatformAdminModTagsReorderRaw(requestParameters: PutApiPlatformAdminModTagsReorderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/tags/order`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Order of the tag catalog
+     */
+    async putApiPlatformAdminModTagsReorder(requestParameters: PutApiPlatformAdminModTagsReorderRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.putApiPlatformAdminModTagsReorderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Change a tag
+     */
+    async putApiPlatformAdminModTagsUpdateRaw(requestParameters: PutApiPlatformAdminModTagsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters['tag'] == null) {
+            throw new runtime.RequiredError(
+                'tag',
+                'Required parameter "tag" was null or undefined when calling putApiPlatformAdminModTagsUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/mods/tags/{tag}`.replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters['tag']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Change a tag
+     */
+    async putApiPlatformAdminModTagsUpdate(requestParameters: PutApiPlatformAdminModTagsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.putApiPlatformAdminModTagsUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Mark the server as its organization\'s test server, Pro free of charge while another of its servers is paid
+     */
+    async putApiPlatformAdminServersTestServerUpdateRaw(requestParameters: PutApiPlatformAdminServersTestServerUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiPlatformAdminServersTestServerUpdateRequest>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling putApiPlatformAdminServersTestServerUpdate().'
+            );
+        }
+
+        if (requestParameters['putApiPlatformAdminServersTestServerUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'putApiPlatformAdminServersTestServerUpdateRequest',
+                'Required parameter "putApiPlatformAdminServersTestServerUpdateRequest" was null or undefined when calling putApiPlatformAdminServersTestServerUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/servers/{id}/test-server`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PutApiPlatformAdminServersTestServerUpdateRequestToJSON(requestParameters['putApiPlatformAdminServersTestServerUpdateRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiPlatformAdminServersTestServerUpdateRequestFromJSON(jsonValue));
+    }
+
+    /**
+     * Mark the server as its organization\'s test server, Pro free of charge while another of its servers is paid
+     */
+    async putApiPlatformAdminServersTestServerUpdate(requestParameters: PutApiPlatformAdminServersTestServerUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiPlatformAdminServersTestServerUpdateRequest> {
+        const response = await this.putApiPlatformAdminServersTestServerUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Run the server\'s organization trial until a date, or stop it there; null resets it to an unused trial of 14 days
      */
     async putApiPlatformAdminServersTrialUpdateRaw(requestParameters: PutApiPlatformAdminServersTrialUpdateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiPlatformAdminServersTrialUpdateRequest>> {
@@ -5330,4 +7397,65 @@ export class PlatformAdminApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     * Say why a manual booking carries no German VAT — also on booked entries, the treatment is not part of the locked record
+     */
+    async putApiPlatformAdminVatReturnTreatmentRaw(requestParameters: PutApiPlatformAdminVatReturnTreatmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['putApiPlatformAdminVatReturnTreatmentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'putApiPlatformAdminVatReturnTreatmentRequest',
+                'Required parameter "putApiPlatformAdminVatReturnTreatmentRequest" was null or undefined when calling putApiPlatformAdminVatReturnTreatment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/platform-admin/accounting/vat-return/treatment`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PutApiPlatformAdminVatReturnTreatmentRequestToJSON(requestParameters['putApiPlatformAdminVatReturnTreatmentRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Say why a manual booking carries no German VAT — also on booked entries, the treatment is not part of the locked record
+     */
+    async putApiPlatformAdminVatReturnTreatment(requestParameters: PutApiPlatformAdminVatReturnTreatmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.putApiPlatformAdminVatReturnTreatmentRaw(requestParameters, initOverrides);
+    }
+
 }
+
+/**
+ * @export
+ */
+export const GetApiPlatformAdminCompanionReviewStatsPeriodEnum = {
+    _7d: '7d',
+    _30d: '30d',
+    All: 'all'
+} as const;
+export type GetApiPlatformAdminCompanionReviewStatsPeriodEnum = typeof GetApiPlatformAdminCompanionReviewStatsPeriodEnum[keyof typeof GetApiPlatformAdminCompanionReviewStatsPeriodEnum];
+/**
+ * @export
+ */
+export const GetApiPlatformAdminVatReturnTreatmentSuggestionDirectionEnum = {
+    Credit: 'credit',
+    Debit: 'debit'
+} as const;
+export type GetApiPlatformAdminVatReturnTreatmentSuggestionDirectionEnum = typeof GetApiPlatformAdminVatReturnTreatmentSuggestionDirectionEnum[keyof typeof GetApiPlatformAdminVatReturnTreatmentSuggestionDirectionEnum];

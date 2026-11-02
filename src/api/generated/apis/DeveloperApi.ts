@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  GetApiDeveloperMeServers200Response,
   GetApiDeveloperOauthAuthorizeInfo200Response,
   PostApiDeveloperLive200Response,
   PostApiDeveloperLiveRequest,
@@ -22,6 +23,8 @@ import type {
   PostApiDeveloperOauthAuthorizeDecideRequest,
 } from '../models/index';
 import {
+    GetApiDeveloperMeServers200ResponseFromJSON,
+    GetApiDeveloperMeServers200ResponseToJSON,
     GetApiDeveloperOauthAuthorizeInfo200ResponseFromJSON,
     GetApiDeveloperOauthAuthorizeInfo200ResponseToJSON,
     PostApiDeveloperLive200ResponseFromJSON,
@@ -39,7 +42,7 @@ export interface GetApiDeveloperMeRequest {
 }
 
 export interface GetApiDeveloperOauthAuthorizeInfoRequest {
-    xServerSubdomain: string;
+    xServerSubdomain?: string;
 }
 
 export interface PostApiDeveloperLiveOperationRequest {
@@ -48,8 +51,8 @@ export interface PostApiDeveloperLiveOperationRequest {
 }
 
 export interface PostApiDeveloperOauthAuthorizeDecideOperationRequest {
-    xServerSubdomain: string;
     postApiDeveloperOauthAuthorizeDecideRequest: PostApiDeveloperOauthAuthorizeDecideRequest;
+    xServerSubdomain?: string;
 }
 
 /**
@@ -129,16 +132,43 @@ export class DeveloperApi extends runtime.BaseAPI {
     }
 
     /**
-     * What a developer app asks for on this server. Pass the authorization request\'s query string.
+     * The servers a sign-in reaches — every server of the app for an org-wide sign-in, the one server otherwise — and the signed-in user\'s player on each (null where they have not linked one)
+     */
+    async getApiDeveloperMeServersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiDeveloperMeServers200Response>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/developer/me/servers`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiDeveloperMeServers200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The servers a sign-in reaches — every server of the app for an org-wide sign-in, the one server otherwise — and the signed-in user\'s player on each (null where they have not linked one)
+     */
+    async getApiDeveloperMeServers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiDeveloperMeServers200Response> {
+        const response = await this.getApiDeveloperMeServersRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * What a developer app asks for — on this server, or without a server header on every server of the app. Pass the authorization request\'s query string.
      */
     async getApiDeveloperOauthAuthorizeInfoRaw(requestParameters: GetApiDeveloperOauthAuthorizeInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiDeveloperOauthAuthorizeInfo200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling getApiDeveloperOauthAuthorizeInfo().'
-            );
-        }
-
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -166,9 +196,9 @@ export class DeveloperApi extends runtime.BaseAPI {
     }
 
     /**
-     * What a developer app asks for on this server. Pass the authorization request\'s query string.
+     * What a developer app asks for — on this server, or without a server header on every server of the app. Pass the authorization request\'s query string.
      */
-    async getApiDeveloperOauthAuthorizeInfo(requestParameters: GetApiDeveloperOauthAuthorizeInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiDeveloperOauthAuthorizeInfo200Response> {
+    async getApiDeveloperOauthAuthorizeInfo(requestParameters: GetApiDeveloperOauthAuthorizeInfoRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiDeveloperOauthAuthorizeInfo200Response> {
         const response = await this.getApiDeveloperOauthAuthorizeInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -229,16 +259,9 @@ export class DeveloperApi extends runtime.BaseAPI {
     }
 
     /**
-     * Answer a developer app\'s request as the signed-in player; returns where to send the browser back to
+     * Answer a developer app\'s request as the signed-in user; returns where to send the browser back to. Without a server header the grant covers every server of the app.
      */
     async postApiDeveloperOauthAuthorizeDecideRaw(requestParameters: PostApiDeveloperOauthAuthorizeDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiDeveloperOauthAuthorizeDecide200Response>> {
-        if (requestParameters['xServerSubdomain'] == null) {
-            throw new runtime.RequiredError(
-                'xServerSubdomain',
-                'Required parameter "xServerSubdomain" was null or undefined when calling postApiDeveloperOauthAuthorizeDecide().'
-            );
-        }
-
         if (requestParameters['postApiDeveloperOauthAuthorizeDecideRequest'] == null) {
             throw new runtime.RequiredError(
                 'postApiDeveloperOauthAuthorizeDecideRequest',
@@ -276,7 +299,7 @@ export class DeveloperApi extends runtime.BaseAPI {
     }
 
     /**
-     * Answer a developer app\'s request as the signed-in player; returns where to send the browser back to
+     * Answer a developer app\'s request as the signed-in user; returns where to send the browser back to. Without a server header the grant covers every server of the app.
      */
     async postApiDeveloperOauthAuthorizeDecide(requestParameters: PostApiDeveloperOauthAuthorizeDecideOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiDeveloperOauthAuthorizeDecide200Response> {
         const response = await this.postApiDeveloperOauthAuthorizeDecideRaw(requestParameters, initOverrides);

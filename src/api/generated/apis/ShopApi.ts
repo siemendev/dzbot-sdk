@@ -15,8 +15,10 @@
 
 import * as runtime from '../runtime';
 import type {
+  FactionApplicationInput,
   FactionRankInput,
   FactionSubscriptionCheckoutRequest,
+  GetApiShopBalance200Response,
   GetApiShopBaseAlarmDetail200Response,
   GetApiShopBaseAlarmPurchase200Response,
   GetApiShopBaseAlarmPurchaseLocations200Response,
@@ -26,6 +28,7 @@ import type {
   GetApiShopCasinoPokerMySeat200Response,
   GetApiShopCasinoWins200Response,
   GetApiShopDonationRecent200Response,
+  GetApiShopFactionApplicationOwn200Response,
   GetApiShopFactionSubscriptionCycles200Response,
   GetApiShopFactionsAvailableFlags200Response,
   GetApiShopFactionsEligibleForOrder200Response,
@@ -37,7 +40,6 @@ import type {
   GetApiShopRestartsResolve200Response,
   GetApiShopSubscriptions200Response,
   LeaderboardCategoryResponse,
-  PatchApiAdminModsAutoUpdateRequest,
   PatchApiAdminTicketEditMessageRequest,
   PatchApiAdminTicketSubjectRequest,
   PlayerOrderDetail,
@@ -72,6 +74,7 @@ import type {
   PostApiShopFactionAllianceFoundRequest,
   PostApiShopFactionAllianceInviteRequest,
   PostApiShopFactionAllianceProposalApprove200Response,
+  PostApiShopFactionApplicationSubmit201Response,
   PostApiShopFactionInviteAnswer200Response,
   PostApiShopFactionInviteRequest,
   PostApiShopFactionLeave200Response,
@@ -84,8 +87,9 @@ import type {
   PostApiShopTicketCreateRequest,
   PostApiShopTransactionsTransferRequest,
   PutApiAdminGroupsRenamePlaceRequest,
+  PutApiAdminModsEnabledRequest,
   PutApiAdminOrderItemQuantityRequest,
-  PutApiCreatorsModsFilesReorder200Response,
+  PutApiAdminSettingsUpdate200Response,
   PutApiShopBaseAlarmUpdateRequest,
   PutApiShopFactionAllianceRenameRequest,
   PutApiShopFactionAllianceViolationDmRequest,
@@ -101,10 +105,14 @@ import type {
   PutApiShopSubscriptionUpdateRequest,
 } from '../models/index';
 import {
+    FactionApplicationInputFromJSON,
+    FactionApplicationInputToJSON,
     FactionRankInputFromJSON,
     FactionRankInputToJSON,
     FactionSubscriptionCheckoutRequestFromJSON,
     FactionSubscriptionCheckoutRequestToJSON,
+    GetApiShopBalance200ResponseFromJSON,
+    GetApiShopBalance200ResponseToJSON,
     GetApiShopBaseAlarmDetail200ResponseFromJSON,
     GetApiShopBaseAlarmDetail200ResponseToJSON,
     GetApiShopBaseAlarmPurchase200ResponseFromJSON,
@@ -123,6 +131,8 @@ import {
     GetApiShopCasinoWins200ResponseToJSON,
     GetApiShopDonationRecent200ResponseFromJSON,
     GetApiShopDonationRecent200ResponseToJSON,
+    GetApiShopFactionApplicationOwn200ResponseFromJSON,
+    GetApiShopFactionApplicationOwn200ResponseToJSON,
     GetApiShopFactionSubscriptionCycles200ResponseFromJSON,
     GetApiShopFactionSubscriptionCycles200ResponseToJSON,
     GetApiShopFactionsAvailableFlags200ResponseFromJSON,
@@ -145,8 +155,6 @@ import {
     GetApiShopSubscriptions200ResponseToJSON,
     LeaderboardCategoryResponseFromJSON,
     LeaderboardCategoryResponseToJSON,
-    PatchApiAdminModsAutoUpdateRequestFromJSON,
-    PatchApiAdminModsAutoUpdateRequestToJSON,
     PatchApiAdminTicketEditMessageRequestFromJSON,
     PatchApiAdminTicketEditMessageRequestToJSON,
     PatchApiAdminTicketSubjectRequestFromJSON,
@@ -215,6 +223,8 @@ import {
     PostApiShopFactionAllianceInviteRequestToJSON,
     PostApiShopFactionAllianceProposalApprove200ResponseFromJSON,
     PostApiShopFactionAllianceProposalApprove200ResponseToJSON,
+    PostApiShopFactionApplicationSubmit201ResponseFromJSON,
+    PostApiShopFactionApplicationSubmit201ResponseToJSON,
     PostApiShopFactionInviteAnswer200ResponseFromJSON,
     PostApiShopFactionInviteAnswer200ResponseToJSON,
     PostApiShopFactionInviteRequestFromJSON,
@@ -239,10 +249,12 @@ import {
     PostApiShopTransactionsTransferRequestToJSON,
     PutApiAdminGroupsRenamePlaceRequestFromJSON,
     PutApiAdminGroupsRenamePlaceRequestToJSON,
+    PutApiAdminModsEnabledRequestFromJSON,
+    PutApiAdminModsEnabledRequestToJSON,
     PutApiAdminOrderItemQuantityRequestFromJSON,
     PutApiAdminOrderItemQuantityRequestToJSON,
-    PutApiCreatorsModsFilesReorder200ResponseFromJSON,
-    PutApiCreatorsModsFilesReorder200ResponseToJSON,
+    PutApiAdminSettingsUpdate200ResponseFromJSON,
+    PutApiAdminSettingsUpdate200ResponseToJSON,
     PutApiShopBaseAlarmUpdateRequestFromJSON,
     PutApiShopBaseAlarmUpdateRequestToJSON,
     PutApiShopFactionAllianceRenameRequestFromJSON,
@@ -362,6 +374,10 @@ export interface GetApiPlayerSearchSchemaRequest {
     xServerSubdomain: string;
 }
 
+export interface GetApiShopBalanceRequest {
+    xServerSubdomain: string;
+}
+
 export interface GetApiShopBaseAlarmDetailRequest {
     xServerSubdomain: string;
     order: number;
@@ -405,6 +421,10 @@ export interface GetApiShopCasinoPokerTableRequest {
 export interface GetApiShopCasinoWinsRequest {
     xServerSubdomain: string;
     since?: string;
+}
+
+export interface GetApiShopFactionApplicationOwnRequest {
+    xServerSubdomain: string;
 }
 
 export interface GetApiShopFactionBaseBuildLocationsRequest {
@@ -766,6 +786,16 @@ export interface PostApiShopFactionAllianceRemovalRequest {
     postApiShopFactionAllianceInviteRequest: PostApiShopFactionAllianceInviteRequest;
 }
 
+export interface PostApiShopFactionApplicationSubmitRequest {
+    xServerSubdomain: string;
+    factionApplicationInput: FactionApplicationInput;
+}
+
+export interface PostApiShopFactionApplicationWithdrawRequest {
+    xServerSubdomain: string;
+    application: number;
+}
+
 export interface PostApiShopFactionInviteOperationRequest {
     xServerSubdomain: string;
     faction: number;
@@ -913,6 +943,12 @@ export interface PutApiShopFactionAllianceViolationDmOperationRequest {
     xServerSubdomain: string;
     faction: number;
     putApiShopFactionAllianceViolationDmRequest: PutApiShopFactionAllianceViolationDmRequest;
+}
+
+export interface PutApiShopFactionApplicationUpdateRequest {
+    xServerSubdomain: string;
+    application: number;
+    factionApplicationInput: FactionApplicationInput;
 }
 
 export interface PutApiShopFactionLocationSharingOperationRequest {
@@ -1865,6 +1901,51 @@ export class ShopApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get the player\'s own wallet balance
+     */
+    async getApiShopBalanceRaw(requestParameters: GetApiShopBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiShopBalance200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiShopBalance().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/balance`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiShopBalance200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the player\'s own wallet balance
+     */
+    async getApiShopBalance(requestParameters: GetApiShopBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiShopBalance200Response> {
+        const response = await this.getApiShopBalanceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Get base alarm detail with timeline
      */
     async getApiShopBaseAlarmDetailRaw(requestParameters: GetApiShopBaseAlarmDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiShopBaseAlarmDetail200Response>> {
@@ -2588,6 +2669,51 @@ export class ShopApi extends runtime.BaseAPI {
      */
     async getApiShopDonationTotals(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getApiShopDonationTotalsRaw(initOverrides);
+    }
+
+    /**
+     * The player\'s latest faction application and whether they may apply now
+     */
+    async getApiShopFactionApplicationOwnRaw(requestParameters: GetApiShopFactionApplicationOwnRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApiShopFactionApplicationOwn200Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling getApiShopFactionApplicationOwn().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/faction-application`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApiShopFactionApplicationOwn200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * The player\'s latest faction application and whether they may apply now
+     */
+    async getApiShopFactionApplicationOwn(requestParameters: GetApiShopFactionApplicationOwnRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApiShopFactionApplicationOwn200Response> {
+        const response = await this.getApiShopFactionApplicationOwnRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -3612,7 +3738,7 @@ export class ShopApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get player position POIs for the map
+     * Get player position POIs for the map; the viewer\'s own point carries `self: true`
      */
     async getApiShopMapPlayersRaw(requestParameters: GetApiShopMapPlayersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<object>>> {
         if (requestParameters['xServerSubdomain'] == null) {
@@ -3649,7 +3775,7 @@ export class ShopApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get player position POIs for the map
+     * Get player position POIs for the map; the viewer\'s own point carries `self: true`
      */
     async getApiShopMapPlayers(requestParameters: GetApiShopMapPlayersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<object>> {
         const response = await this.getApiShopMapPlayersRaw(requestParameters, initOverrides);
@@ -4854,7 +4980,7 @@ export class ShopApi extends runtime.BaseAPI {
     /**
      * Create a bounty
      */
-    async postApiShopBountiesCreateRaw(requestParameters: PostApiShopBountiesCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiShopBountiesCreateRaw(requestParameters: PostApiShopBountiesCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -4895,13 +5021,13 @@ export class ShopApi extends runtime.BaseAPI {
             body: PostApiShopBountiesCreateRequestToJSON(requestParameters['postApiShopBountiesCreateRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Create a bounty
      */
-    async postApiShopBountiesCreate(requestParameters: PostApiShopBountiesCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiShopBountiesCreate(requestParameters: PostApiShopBountiesCreateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiShopBountiesCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -6489,6 +6615,113 @@ export class ShopApi extends runtime.BaseAPI {
     }
 
     /**
+     * Apply to found a faction; the team approves or rejects it
+     */
+    async postApiShopFactionApplicationSubmitRaw(requestParameters: PostApiShopFactionApplicationSubmitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiShopFactionApplicationSubmit201Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiShopFactionApplicationSubmit().'
+            );
+        }
+
+        if (requestParameters['factionApplicationInput'] == null) {
+            throw new runtime.RequiredError(
+                'factionApplicationInput',
+                'Required parameter "factionApplicationInput" was null or undefined when calling postApiShopFactionApplicationSubmit().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/faction-applications`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: FactionApplicationInputToJSON(requestParameters['factionApplicationInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiShopFactionApplicationSubmit201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Apply to found a faction; the team approves or rejects it
+     */
+    async postApiShopFactionApplicationSubmit(requestParameters: PostApiShopFactionApplicationSubmitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiShopFactionApplicationSubmit201Response> {
+        const response = await this.postApiShopFactionApplicationSubmitRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Withdraw an open faction application as its applicant
+     */
+    async postApiShopFactionApplicationWithdrawRaw(requestParameters: PostApiShopFactionApplicationWithdrawRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiShopFactionApplicationSubmit201Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling postApiShopFactionApplicationWithdraw().'
+            );
+        }
+
+        if (requestParameters['application'] == null) {
+            throw new runtime.RequiredError(
+                'application',
+                'Required parameter "application" was null or undefined when calling postApiShopFactionApplicationWithdraw().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/faction-applications/{application}/withdraw`.replace(`{${"application"}}`, encodeURIComponent(String(requestParameters['application']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiShopFactionApplicationSubmit201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Withdraw an open faction application as its applicant
+     */
+    async postApiShopFactionApplicationWithdraw(requestParameters: PostApiShopFactionApplicationWithdrawRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiShopFactionApplicationSubmit201Response> {
+        const response = await this.postApiShopFactionApplicationWithdrawRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Invite a player to the faction; they join once they accept
      */
     async postApiShopFactionInviteRaw(requestParameters: PostApiShopFactionInviteOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -7776,7 +8009,7 @@ export class ShopApi extends runtime.BaseAPI {
     /**
      * Transfer money to another player
      */
-    async postApiShopTransactionsTransferRaw(requestParameters: PostApiShopTransactionsTransferOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiCreatorsModsFilesReorder200Response>> {
+    async postApiShopTransactionsTransferRaw(requestParameters: PostApiShopTransactionsTransferOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminSettingsUpdate200Response>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -7817,13 +8050,13 @@ export class ShopApi extends runtime.BaseAPI {
             body: PostApiShopTransactionsTransferRequestToJSON(requestParameters['postApiShopTransactionsTransferRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiCreatorsModsFilesReorder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminSettingsUpdate200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Transfer money to another player
      */
-    async postApiShopTransactionsTransfer(requestParameters: PostApiShopTransactionsTransferOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiCreatorsModsFilesReorder200Response> {
+    async postApiShopTransactionsTransfer(requestParameters: PostApiShopTransactionsTransferOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminSettingsUpdate200Response> {
         const response = await this.postApiShopTransactionsTransferRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -7953,7 +8186,7 @@ export class ShopApi extends runtime.BaseAPI {
     /**
      * Choose whether the current player gets a DM when a member of this faction kills an ally or is killed by one
      */
-    async putApiShopFactionAllianceViolationDmRaw(requestParameters: PutApiShopFactionAllianceViolationDmOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PatchApiAdminModsAutoUpdateRequest>> {
+    async putApiShopFactionAllianceViolationDmRaw(requestParameters: PutApiShopFactionAllianceViolationDmOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PutApiAdminModsEnabledRequest>> {
         if (requestParameters['xServerSubdomain'] == null) {
             throw new runtime.RequiredError(
                 'xServerSubdomain',
@@ -8001,14 +8234,76 @@ export class ShopApi extends runtime.BaseAPI {
             body: PutApiShopFactionAllianceViolationDmRequestToJSON(requestParameters['putApiShopFactionAllianceViolationDmRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PatchApiAdminModsAutoUpdateRequestFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PutApiAdminModsEnabledRequestFromJSON(jsonValue));
     }
 
     /**
      * Choose whether the current player gets a DM when a member of this faction kills an ally or is killed by one
      */
-    async putApiShopFactionAllianceViolationDm(requestParameters: PutApiShopFactionAllianceViolationDmOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PatchApiAdminModsAutoUpdateRequest> {
+    async putApiShopFactionAllianceViolationDm(requestParameters: PutApiShopFactionAllianceViolationDmOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PutApiAdminModsEnabledRequest> {
         const response = await this.putApiShopFactionAllianceViolationDmRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Change an open faction application as its applicant
+     */
+    async putApiShopFactionApplicationUpdateRaw(requestParameters: PutApiShopFactionApplicationUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PostApiShopFactionApplicationSubmit201Response>> {
+        if (requestParameters['xServerSubdomain'] == null) {
+            throw new runtime.RequiredError(
+                'xServerSubdomain',
+                'Required parameter "xServerSubdomain" was null or undefined when calling putApiShopFactionApplicationUpdate().'
+            );
+        }
+
+        if (requestParameters['application'] == null) {
+            throw new runtime.RequiredError(
+                'application',
+                'Required parameter "application" was null or undefined when calling putApiShopFactionApplicationUpdate().'
+            );
+        }
+
+        if (requestParameters['factionApplicationInput'] == null) {
+            throw new runtime.RequiredError(
+                'factionApplicationInput',
+                'Required parameter "factionApplicationInput" was null or undefined when calling putApiShopFactionApplicationUpdate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xServerSubdomain'] != null) {
+            headerParameters['X-Server-Subdomain'] = String(requestParameters['xServerSubdomain']);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/shop/faction-applications/{application}`.replace(`{${"application"}}`, encodeURIComponent(String(requestParameters['application']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: FactionApplicationInputToJSON(requestParameters['factionApplicationInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostApiShopFactionApplicationSubmit201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Change an open faction application as its applicant
+     */
+    async putApiShopFactionApplicationUpdate(requestParameters: PutApiShopFactionApplicationUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PostApiShopFactionApplicationSubmit201Response> {
+        const response = await this.putApiShopFactionApplicationUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -353,6 +353,7 @@
     "logEventId": "?string",
     "playerId": "?int",
     "data": "object",
+    "data.during_restart": "bool",
     "data.last_pvp_action": "object",
     "data.last_pvp_action.string": "string",
     "data.last_pvp_action.timestamp": "int",

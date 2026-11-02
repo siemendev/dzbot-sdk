@@ -24,7 +24,7 @@ export interface PostApiCreatorsInviteRedeemRequest {
      * @type {number}
      * @memberof PostApiCreatorsInviteRedeemRequest
      */
-    serverId?: number | null;
+    organizationId?: number | null;
 }
 
 /**
@@ -44,7 +44,7 @@ export function PostApiCreatorsInviteRedeemRequestFromJSONTyped(json: any, ignor
     }
     return {
         
-        'serverId': json['serverId'] == null ? undefined : json['serverId'],
+        'organizationId': json['organizationId'] == null ? undefined : json['organizationId'],
     };
 }
 
@@ -59,7 +59,7 @@ export function PostApiCreatorsInviteRedeemRequestToJSONTyped(value?: PostApiCre
 
     return {
         
-        'serverId': value['serverId'],
+        'organizationId': value['organizationId'],
     };
 }
 

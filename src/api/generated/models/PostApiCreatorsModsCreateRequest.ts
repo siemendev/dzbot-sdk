@@ -27,12 +27,6 @@ export interface PostApiCreatorsModsCreateRequest {
     name?: string;
     /**
      * 
-     * @type {string}
-     * @memberof PostApiCreatorsModsCreateRequest
-     */
-    description?: string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof PostApiCreatorsModsCreateRequest
      */
@@ -42,13 +36,7 @@ export interface PostApiCreatorsModsCreateRequest {
      * @type {boolean}
      * @memberof PostApiCreatorsModsCreateRequest
      */
-    _public?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PostApiCreatorsModsCreateRequest
-     */
-    price?: number;
+    multiInstance?: boolean;
 }
 
 /**
@@ -69,10 +57,8 @@ export function PostApiCreatorsModsCreateRequestFromJSONTyped(json: any, ignoreD
     return {
         
         'name': json['name'] == null ? undefined : json['name'],
-        'description': json['description'] == null ? undefined : json['description'],
         'maps': json['maps'] == null ? undefined : json['maps'],
-        '_public': json['public'] == null ? undefined : json['public'],
-        'price': json['price'] == null ? undefined : json['price'],
+        'multiInstance': json['multiInstance'] == null ? undefined : json['multiInstance'],
     };
 }
 
@@ -88,10 +74,8 @@ export function PostApiCreatorsModsCreateRequestToJSONTyped(value?: PostApiCreat
     return {
         
         'name': value['name'],
-        'description': value['description'],
         'maps': value['maps'],
-        'public': value['_public'],
-        'price': value['price'],
+        'multiInstance': value['multiInstance'],
     };
 }
 

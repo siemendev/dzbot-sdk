@@ -27,13 +27,13 @@ import {
     GetApiCreatorsModsAccess200ResponseInvitesInnerToJSON,
     GetApiCreatorsModsAccess200ResponseInvitesInnerToJSONTyped,
 } from './GetApiCreatorsModsAccess200ResponseInvitesInner';
-import type { GetApiCreatorsModsAccess200ResponseServersInner } from './GetApiCreatorsModsAccess200ResponseServersInner';
+import type { GetApiCreatorsModsAccess200ResponseOrganizationsInner } from './GetApiCreatorsModsAccess200ResponseOrganizationsInner';
 import {
-    GetApiCreatorsModsAccess200ResponseServersInnerFromJSON,
-    GetApiCreatorsModsAccess200ResponseServersInnerFromJSONTyped,
-    GetApiCreatorsModsAccess200ResponseServersInnerToJSON,
-    GetApiCreatorsModsAccess200ResponseServersInnerToJSONTyped,
-} from './GetApiCreatorsModsAccess200ResponseServersInner';
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSON,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSONTyped,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSON,
+    GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSONTyped,
+} from './GetApiCreatorsModsAccess200ResponseOrganizationsInner';
 
 /**
  * 
@@ -79,10 +79,10 @@ export interface GetApiCreatorsModsAccess200Response {
     invites?: Array<GetApiCreatorsModsAccess200ResponseInvitesInner>;
     /**
      * 
-     * @type {Array<GetApiCreatorsModsAccess200ResponseServersInner>}
+     * @type {Array<GetApiCreatorsModsAccess200ResponseOrganizationsInner>}
      * @memberof GetApiCreatorsModsAccess200Response
      */
-    servers?: Array<GetApiCreatorsModsAccess200ResponseServersInner>;
+    organizations?: Array<GetApiCreatorsModsAccess200ResponseOrganizationsInner>;
 }
 
 /**
@@ -108,7 +108,7 @@ export function GetApiCreatorsModsAccess200ResponseFromJSONTyped(json: any, igno
         'availableRights': json['availableRights'] == null ? undefined : json['availableRights'],
         'collaborators': json['collaborators'] == null ? undefined : ((json['collaborators'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseCollaboratorsInnerFromJSON)),
         'invites': json['invites'] == null ? undefined : ((json['invites'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseInvitesInnerFromJSON)),
-        'servers': json['servers'] == null ? undefined : ((json['servers'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseServersInnerFromJSON)),
+        'organizations': json['organizations'] == null ? undefined : ((json['organizations'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseOrganizationsInnerFromJSON)),
     };
 }
 
@@ -129,7 +129,7 @@ export function GetApiCreatorsModsAccess200ResponseToJSONTyped(value?: GetApiCre
         'availableRights': value['availableRights'],
         'collaborators': value['collaborators'] == null ? undefined : ((value['collaborators'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseCollaboratorsInnerToJSON)),
         'invites': value['invites'] == null ? undefined : ((value['invites'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseInvitesInnerToJSON)),
-        'servers': value['servers'] == null ? undefined : ((value['servers'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseServersInnerToJSON)),
+        'organizations': value['organizations'] == null ? undefined : ((value['organizations'] as Array<any>).map(GetApiCreatorsModsAccess200ResponseOrganizationsInnerToJSON)),
     };
 }
 

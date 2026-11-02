@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * The server the grant is bound to; null for an org-wide grant
  * @export
  * @interface GetApiDeveloperOauthAuthorizeInfo200ResponseServer
  */
