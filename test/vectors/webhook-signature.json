@@ -34,8 +34,8 @@
       "secret": "whsec_5f1c0a3e9b7d4c2a8e6f0b1d3c5a7e9f",
       "timestamp": 1767225600,
       "now": 1767225600,
-      "body": "{\"id\":\"a1\",\"name\":\"ticket.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"ticket\":{\"subject\":\"Grüße – Basis weg 🏚️\"}}}",
-      "header": "t=1767225600,v1=ef7ffd60d053061a211f39750df1e50a23e15f6df6c2dd4cc2caffdc15032390",
+      "body": "{\"id\":\"a1\",\"name\":\"ticket.created\",\"organizationId\":7,\"serverId\":12,\"occurredAt\":\"2026-01-01T00:00:00.000+00:00\",\"payload\":{\"ticket\":{\"subject\":\"Base gone – déjà vu 🏚️\"}}}",
+      "header": "t=1767225600,v1=04a612326e819d4c8df0b2e8ff4af21601da1b3f19024ca5ad8c371178adca5c",
       "valid": true
     },
     {
