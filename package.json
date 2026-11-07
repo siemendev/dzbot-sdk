@@ -1,6 +1,6 @@
 {
   "name": "@dzbot/sdk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Build your own DayZ Discord bot or website on dzbot: players, wallets, shop, tickets, kill feed and every other dzbot feature through one typed client, plus Sign in with dzbot, webhooks and live events.",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 import { pkceChallenge, pkceVerifier, base64url, randomBytes } from './crypto'
 import { OAuthError, errorFromResponse } from './errors'
-import { DEFAULT_API_URL, isBrowser, type FetchLike } from './env'
+import { DEFAULT_API_URL, isBrowser, withoutTrailingSlashes, type FetchLike } from './env'
 
 /** Where the SDK keeps tokens and the pending sign-in. One store per signed-in user. */
 export interface TokenStore {
@@ -95,8 +95,8 @@ export class OAuthClient {
     this.redirectUri = options.redirectUri
     this.server = options.server ?? null
     this.store = options.store ?? (isBrowser() && globalThis.sessionStorage ? new SessionStorageTokenStore() : new MemoryTokenStore())
-    this.baseUrl = (options.baseUrl ?? DEFAULT_API_URL).replace(/\/+$/, '')
-    this.siteUrl = (options.siteUrl ?? (options.server ? `https://${options.server}.dzbot.de` : 'https://dzbot.de')).replace(/\/+$/, '')
+    this.baseUrl = withoutTrailingSlashes(options.baseUrl ?? DEFAULT_API_URL)
+    this.siteUrl = withoutTrailingSlashes(options.siteUrl ?? (options.server ? `https://${options.server}.dzbot.de` : 'https://dzbot.de'))
     this.fetchImpl = options.fetch ?? ((input, init) => globalThis.fetch(input, init))
   }
 
