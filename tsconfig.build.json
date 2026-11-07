@@ -12,14 +12,14 @@
     "skipLibCheck": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "rootDir": "../..",
+    "rootDir": ".",
     "outDir": "dist",
     "paths": {
       "#generated": [
-        "../../src/api/generated/index.ts"
+        "./generated/index.ts"
       ],
       "#generated/*": [
-        "../../src/api/generated/*"
+        "./generated/*"
       ]
     }
   },

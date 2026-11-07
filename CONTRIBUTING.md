@@ -17,8 +17,14 @@ npm test
 `generated/` is not part of the repository: it is produced from the public API description, the same way dzbot
 produces its own client. Set `API_DOCS_URL` to generate it from another description.
 
-The hand-written SDK lives in `src/`; `src/api.ts` re-exports the generated client as `@dzbot/sdk/api`. The npm
-package is built and published by dzbot.
+The hand-written SDK lives in `src/`; `src/api.ts` re-exports the generated client as `@dzbot/sdk/api`.
+`npm run build` builds the npm package into `dist/`.
+
+## Releases
+
+A version raised in `package.json` is published to npm and tagged when it reaches `main`. Raise `SDK_VERSION` in
+`src/env.ts` with it, and refresh the event types first:
+`node scripts/generate-events.mjs https://api.dzbot.de/api/developer/events`.
 
 ## Pull requests
 
