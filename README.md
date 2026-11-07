@@ -1,5 +1,8 @@
 # @dzbot/sdk
 
+[![CI](https://github.com/siemendev/dzbot-sdk/actions/workflows/test.yml/badge.svg)](https://github.com/siemendev/dzbot-sdk/actions/workflows/test.yml)
+[![npm](https://img.shields.io/npm/v/@dzbot/sdk)](https://www.npmjs.com/package/@dzbot/sdk)
+
 Build your own DayZ Discord bot or website on [dzbot](https://dzbot.de) instead of from scratch. dzbot already
 reads your Nitrado server's logs and runs players, linked accounts and alt detection, wallets, the shop and
 delivery, tickets, factions, bounties, the kill feed and more — this SDK gives your code all of it.

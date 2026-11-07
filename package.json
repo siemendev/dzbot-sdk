@@ -49,10 +49,15 @@
     "generate": "rm -rf generated && openapi-generator-cli generate -i ${API_DOCS_URL:-https://api.dzbot.de/api/docs.json} -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true,useSingleRequestParameter=true && node scripts/trim-generated.mjs",
     "build": "vite build && tsc -p tsconfig.build.json && node scripts/fix-dts-extensions.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --config vitest.config.mts"
+    "lint": "oxlint --deny-warnings",
+    "test": "vitest run --config vitest.config.mts",
+    "check:package": "publint && attw --pack . --profile esm-only"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@openapitools/openapi-generator-cli": "^2.30.2",
+    "oxlint": "^1.92.0",
+    "publint": "^0.3.25",
     "typescript": "~5.9.3",
     "vite": "^7.3.7",
     "vitest": "^5.0.5"

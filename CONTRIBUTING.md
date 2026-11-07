@@ -5,14 +5,18 @@ Issues and pull requests are welcome. Questions are also welcome on the
 
 ## Develop
 
-You need Node.js 20 or newer and Java 11 or newer (for the OpenAPI generator).
+You need Node.js 22 or newer and Java 11 or newer (for the OpenAPI generator).
 
 ```bash
 npm install
 npm run generate    # the typed client in generated/, from https://api.dzbot.de/api/docs.json
 npm run typecheck
+npm run lint
 npm test
+npm run build && npm run check:package   # the package and its types resolve for every consumer (publint, attw)
 ```
+
+CI runs all of these on every pull request.
 
 `generated/` is not part of the repository: it is produced from the public API description, the same way dzbot
 produces its own client. Set `API_DOCS_URL` to generate it from another description.
