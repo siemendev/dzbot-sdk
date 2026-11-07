@@ -7,7 +7,7 @@ import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const dist = resolve(dirname(fileURLToPath(import.meta.url)), '../dist')
-const generated = join(dist, 'src/api/generated')
+const generated = join(dist, 'generated')
 
 function* files(dir) {
   for (const entry of readdirSync(dir)) {

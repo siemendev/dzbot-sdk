@@ -29,14 +29,14 @@
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/packages/sdk/src/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/packages/sdk/src/index.d.ts",
+      "types": "./dist/src/index.d.ts",
       "import": "./dist/index.js"
     },
     "./api": {
-      "types": "./dist/packages/sdk/src/api.d.ts",
+      "types": "./dist/src/api.d.ts",
       "import": "./dist/api.js"
     }
   },
@@ -47,12 +47,14 @@
   ],
   "scripts": {
     "generate": "rm -rf generated && openapi-generator-cli generate -i ${API_DOCS_URL:-https://api.dzbot.de/api/docs.json} -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true,useSingleRequestParameter=true && node scripts/trim-generated.mjs",
+    "build": "vite build && tsc -p tsconfig.build.json && node scripts/fix-dts-extensions.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --config vitest.config.mts"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.30.2",
     "typescript": "~5.9.3",
+    "vite": "^7.3.7",
     "vitest": "^5.0.5"
   }
 }

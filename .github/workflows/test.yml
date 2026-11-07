@@ -21,3 +21,41 @@ jobs:
       - run: npm run generate
       - run: npm run typecheck
       - run: npm test
+  publish:
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      # A version already on npm is skipped, so only a raised version in package.json publishes
+      - name: Is the version new?
+        id: version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          grep -qF "export const SDK_VERSION = '$version'" src/env.ts \
+            || { echo "::error::package.json says $version, src/env.ts (SDK_VERSION) does not"; exit 1; }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ -n "$(npm view "@dzbot/sdk@$version" version 2>/dev/null)" ]; then
+            echo "@dzbot/sdk@$version is already on npm"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.version.outputs.new
+        run: npm ci && npm run generate && npm run build
+      - if: steps.version.outputs.new
+        run: npm publish --access public --provenance
+      - if: steps.version.outputs.new
+        run: |
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
