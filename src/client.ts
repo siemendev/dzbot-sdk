@@ -1,6 +1,6 @@
 import { Configuration } from '#generated/runtime'
 import { DzbotError, RateLimitError, errorFromResponse } from './errors'
-import { DEFAULT_API_URL, SDK_VERSION, isBrowser, type FetchLike } from './env'
+import { DEFAULT_API_URL, SDK_VERSION, isBrowser, withoutTrailingSlashes, type FetchLike } from './env'
 import { LiveEvents } from './live'
 import type { OAuthClient } from './oauth'
 
@@ -277,7 +277,7 @@ export class Dzbot {
     }
     this.options = options
     this.server = options.server ?? null
-    this.baseUrl = (options.baseUrl ?? DEFAULT_API_URL).replace(/\/+$/, '')
+    this.baseUrl = withoutTrailingSlashes(options.baseUrl ?? DEFAULT_API_URL)
     this.apiKey = options.apiKey
     this.oauth = options.oauth
     this.fetchImpl = options.fetch ?? ((input, init) => globalThis.fetch(input, init))
