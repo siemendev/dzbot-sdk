@@ -110,3 +110,63 @@ it('ends the subscription when dzbot refuses the grant', async () => {
   expect(sources).toHaveLength(1)
   vi.useRealTimers()
 })
+
+const recordSources = (sources: FakeEventSource[]) => (url: string) => {
+  const source = new FakeEventSource(url)
+  sources.push(source)
+  return source
+}
+
+it('keeps the open connection when the renewed one fails before opening, and closes it once a later one opens', async () => {
+  vi.useFakeTimers()
+  const sources: FakeEventSource[] = []
+  const dzbot = new Dzbot({ server: 's', apiKey: 'dzk_x', fetch: grantFetch([grant('first', 65_000), grant('second', 300_000), grant('third', 300_000)]) })
+  const subscription = dzbot.events.subscribe(['order.created'], () => undefined, { onError: () => undefined, eventSource: recordSources(sources) })
+  await vi.advanceTimersByTimeAsync(0)
+  sources[0].onopen?.({})
+
+  await vi.advanceTimersByTimeAsync(5_000)
+  expect(sources).toHaveLength(2)
+  sources[1].readyState = 2
+  sources[1].onerror?.({})
+  expect(sources[1].closed).toBe(true)
+  expect(sources[0].closed).toBe(false)
+
+  await vi.advanceTimersByTimeAsync(1_000)
+  expect(sources).toHaveLength(3)
+  sources[2].onopen?.({})
+  expect(sources[0].closed).toBe(true)
+
+  subscription.close()
+  expect(sources.every((source) => source.closed)).toBe(true)
+  vi.useRealTimers()
+})
+
+it('starts one connection when the open one fails while a renewal is fetching its grant', async () => {
+  vi.useFakeTimers()
+  const sources: FakeEventSource[] = []
+  let release: () => void = () => undefined
+  let calls = 0
+  const fetch = async () => {
+    calls++
+    if (calls === 2) await new Promise<void>((resolve) => { release = resolve })
+    return new Response(JSON.stringify(grant(`t${calls}`, 65_000).body), { status: 200 })
+  }
+  const dzbot = new Dzbot({ server: 's', apiKey: 'dzk_x', fetch })
+  dzbot.events.subscribe(['order.created'], () => undefined, { onError: () => undefined, eventSource: recordSources(sources) })
+  await vi.advanceTimersByTimeAsync(0)
+  sources[0].onopen?.({})
+
+  await vi.advanceTimersByTimeAsync(5_000)
+  expect(calls).toBe(2)
+  sources[0].readyState = 2
+  sources[0].onerror?.({})
+  await vi.advanceTimersByTimeAsync(30_000)
+  expect(calls).toBe(2)
+
+  release()
+  await vi.advanceTimersByTimeAsync(0)
+  expect(sources).toHaveLength(2)
+  expect(new URL(sources[1].url).searchParams.get('authorization')).toBe('t2')
+  vi.useRealTimers()
+})

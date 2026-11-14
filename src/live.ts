@@ -37,6 +37,17 @@ const RENEW_BEFORE_MS = 60_000
 const SEEN_IDS = 500
 
 /** A refused grant (revoked sign-in, removed key, rights gone) ends the subscription instead of retrying. */
+/**
+ * Where a subscription stands. `live` is the connection that currently delivers events; during a renewal it stays
+ * open until the next one (`next`) is open, and survives a renewal that fails.
+ */
+type ConnectionState =
+  | { kind: 'granting'; live: EventSourceLike | null }
+  | { kind: 'opening'; live: EventSourceLike | null; next: EventSourceLike }
+  | { kind: 'open'; live: EventSourceLike }
+  | { kind: 'waiting'; live: EventSourceLike | null }
+  | { kind: 'closed' }
+
 const isRefused = (error: unknown) => error instanceof DzbotError && (error.status === 401 || error.status === 403)
 
 /**
@@ -53,25 +64,43 @@ export class LiveEvents {
     const create = options.eventSource ?? defaultEventSource()
     const wanted = new Set(names)
     const seen: string[] = []
-    let source: EventSourceLike | null = null
+    let state: ConnectionState = { kind: 'granting', live: null }
     let timer: ReturnType<typeof setTimeout> | null = null
     let failures = 0
-    let closed = false
+    let attempt = 0
 
-    const stopTimer = () => {
+    const after = (ms: number, action: () => void) => {
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(() => {
+        timer = null
+        action()
+      }, ms)
+    }
+
+    const end = () => {
       if (timer) clearTimeout(timer)
       timer = null
+      if (state.kind !== 'closed') {
+        state.live?.close()
+        if (state.kind === 'opening') state.next.close()
+      }
+      state = { kind: 'closed' }
     }
 
     // A failed renewal keeps the open connection until the hub ends it with the old token.
-    const retry = () => {
-      if (closed) return
-      stopTimer()
-      if (source?.readyState === CLOSED) {
-        source.close()
-        source = null
+    const backOff = (live: EventSourceLike | null) => {
+      state = { kind: 'waiting', live }
+      after(BACKOFF_MS[Math.min(failures++, BACKOFF_MS.length - 1)], () => {
+        if (state.kind === 'waiting') void grant(state.live)
+      })
+    }
+
+    const renew = () => {
+      if (state.kind === 'open') void grant(state.live)
+      else if (state.kind === 'opening') {
+        state.next.close()
+        void grant(state.live)
       }
-      timer = setTimeout(() => void connect(), BACKOFF_MS[Math.min(failures++, BACKOFF_MS.length - 1)])
     }
 
     const deliver = (data: string) => {
@@ -88,65 +117,70 @@ export class LiveEvents {
       if (wanted.has(event.name)) handler(event)
     }
 
-    const connect = async () => {
-      if (closed) return
-      let grant: LiveGrant
-      try {
-        grant = await this.client.post<LiveGrant>('/api/developer/live', { events: names })
-      } catch (e) {
-        options.onError?.(e)
-        if (isRefused(e)) {
-          closed = true
-          stopTimer()
-          source?.close()
-          source = null
-          return
-        }
-        retry()
+    const failed = (source: EventSourceLike, error: unknown) => {
+      if (state.kind === 'closed') return
+      if (state.kind === 'opening' && state.next === source) {
+        source.close()
+        options.onError?.(error)
+        backOff(state.live?.readyState === CLOSED ? null : state.live)
         return
       }
-      if (closed) return
-      if (grant.topics.length === 0) {
-        options.onError?.(new Error(`None of these events is readable with this key or token: ${names.join(', ')}`))
-        closed = true
-        source?.close()
-        source = null
+      if (state.live !== source) return
+      source.close()
+      if (state.kind === 'open') {
+        options.onError?.(error)
+        backOff(null)
         return
       }
+      if (state.kind !== 'opening') options.onError?.(error)
+      state = { ...state, live: null }
+    }
+
+    const open = (hubUrl: string, token: string, topics: string[], live: EventSourceLike | null) => {
       const params = new URLSearchParams()
-      for (const topic of grant.topics) params.append('topic', topic)
-      params.append('authorization', grant.token)
-      const previous = source
-      const next = create(`${grant.hubUrl}?${params.toString()}`)
-      source = next
+      for (const topic of topics) params.append('topic', topic)
+      params.append('authorization', token)
+      const next = create(`${hubUrl}?${params.toString()}`)
+      state = { kind: 'opening', live, next }
       next.onopen = () => {
+        if (state.kind !== 'opening' || state.next !== next) return
         failures = 0
-        previous?.close()
-        options.onOpen?.(grant.topics)
+        state.live?.close()
+        state = { kind: 'open', live: next }
+        options.onOpen?.(topics)
       }
       next.onmessage = (message) => deliver(message.data)
       next.onerror = (e) => {
-        if (next === source && next.readyState === CLOSED) {
-          options.onError?.(e)
-          retry()
-        }
-      }
-      stopTimer()
-      const renewIn = Date.parse(grant.expiresAt) - Date.now() - RENEW_BEFORE_MS
-      if (Number.isFinite(renewIn)) {
-        timer = setTimeout(() => void connect(), Math.max(renewIn, 5000))
+        if (next.readyState === CLOSED) failed(next, e)
       }
     }
 
-    void connect()
-    return {
-      close() {
-        closed = true
-        stopTimer()
-        source?.close()
-        source = null
-      },
+    const grant = async (live: EventSourceLike | null) => {
+      const mine = ++attempt
+      state = { kind: 'granting', live }
+      let granted: LiveGrant
+      try {
+        granted = await this.client.post<LiveGrant>('/api/developer/live', { events: names })
+      } catch (e) {
+        if (state.kind !== 'granting' || attempt !== mine) return
+        options.onError?.(e)
+        if (isRefused(e)) end()
+        else backOff(state.live)
+        return
+      }
+      if (state.kind !== 'granting' || attempt !== mine) return
+      if (granted.topics.length === 0) {
+        options.onError?.(new Error(`None of these events is readable with this key or token: ${names.join(', ')}`))
+        end()
+        return
+      }
+      open(granted.hubUrl, granted.token, granted.topics, state.live)
+      const renewIn = Date.parse(granted.expiresAt) - Date.now() - RENEW_BEFORE_MS
+      if (Number.isFinite(renewIn)) after(Math.max(renewIn, 5000), renew)
     }
+
+    void grant(null)
+    return { close: end }
   }
 }
 
