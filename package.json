@@ -55,11 +55,11 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@openapitools/openapi-generator-cli": "^2.30.2",
-    "oxlint": "^1.92.0",
+    "@openapitools/openapi-generator-cli": "^2.42.2",
+    "oxlint": "^1.94.0",
     "publint": "^0.3.25",
     "typescript": "~5.9.3",
-    "vite": "^7.3.7",
-    "vitest": "^5.0.5"
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
   }
 }
