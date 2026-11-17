@@ -34,7 +34,7 @@ for await (const order of dzbot.search('order', { status: 'pending', created: '7
   and act with their rights.
 - **Search** — every dzbot list through one async iterator.
 - **Webhooks** — `verifyWebhook`, `parseEvent`, `webhookHandler` (Fetch) and `expressWebhook`.
-- **Live events** — `dzbot.events.subscribe(['log.player_kill'], handler)` in the browser or Node 22+.
+- **Live events** — `dzbot.events.subscribe(['log.player_kill'], handler)` in the browser or Node 20+.
 - **Event types** — every event of the catalog, typed (`isEvent(event, 'order.created')`).
 - **`@dzbot/sdk/api`** — every endpoint of the API as a generated, typed client: `new AdminApi(dzbot.configuration())`.
 
