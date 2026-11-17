@@ -1,6 +1,7 @@
 import { expect, it, vi } from 'vitest'
 import { Dzbot } from '../src/client'
 import type { EventSourceLike } from '../src/live'
+import { openEventStream } from '../src/eventStream'
 
 class FakeEventSource implements EventSourceLike {
   readyState = 1
@@ -8,7 +9,7 @@ class FakeEventSource implements EventSourceLike {
   onerror: ((event: unknown) => void) | null = null
   onopen: ((event: unknown) => void) | null = null
   closed = false
-  constructor(readonly url: string) {}
+  constructor(readonly url: string, readonly token: string) {}
   close() {
     this.closed = true
   }
@@ -29,8 +30,8 @@ it('subscribes with the granted topics and delivers only the asked names', async
   const received: string[] = []
   const dzbot = new Dzbot({ server: 's', apiKey: 'dzk_x', fetch })
   const subscription = dzbot.events.subscribe(['log.player_kill'], (event) => void received.push(event.name), {
-    eventSource: (url) => {
-      const source = new FakeEventSource(url)
+    eventSource: (url, token) => {
+      const source = new FakeEventSource(url, token)
       sources.push(source)
       return source
     },
@@ -39,8 +40,9 @@ it('subscribes with the granted topics and delivers only the asked names', async
 
   expect(JSON.parse(bodies[0])).toEqual({ events: ['log.player_kill'] })
   const url = new URL(sources[0].url)
-  expect(url.searchParams.getAll('topic')).toEqual(['urn:dzbot:events:server:12:log.player_kill'])
-  expect(url.searchParams.get('authorization')).toBe('jwt')
+  expect(url.searchParams.getAll('match')).toEqual(['urn:dzbot:events:server:12:log.player_kill'])
+  expect(url.searchParams.has('authorization')).toBe(false)
+  expect(sources[0].token).toBe('jwt')
 
   sources[0].onmessage?.({ data: JSON.stringify({ id: '1', name: 'log.player_kill', organizationId: 1, serverId: 12, occurredAt: '', payload: {} }) })
   sources[0].onmessage?.({ data: JSON.stringify({ id: '2', name: 'order.created', organizationId: 1, serverId: 12, occurredAt: '', payload: {} }) })
@@ -66,8 +68,8 @@ it('opens the next connection before closing the old one and delivers an event o
   const received: string[] = []
   const dzbot = new Dzbot({ server: 's', apiKey: 'dzk_x', fetch: grantFetch([grant('first', 65_000), grant('second', 300_000)]) })
   dzbot.events.subscribe(['order.created'], (event) => void received.push(event.id), {
-    eventSource: (url) => {
-      const source = new FakeEventSource(url)
+    eventSource: (url, token) => {
+      const source = new FakeEventSource(url, token)
       sources.push(source)
       return source
     },
@@ -79,7 +81,7 @@ it('opens the next connection before closing the old one and delivers an event o
 
   await vi.advanceTimersByTimeAsync(5_000)
   expect(sources).toHaveLength(2)
-  expect(new URL(sources[1].url).searchParams.get('authorization')).toBe('second')
+  expect(sources[1].token).toBe('second')
   expect(sources[0].closed).toBe(false)
   sources[1].onopen?.({})
   expect(sources[0].closed).toBe(true)
@@ -96,8 +98,8 @@ it('ends the subscription when dzbot refuses the grant', async () => {
   const dzbot = new Dzbot({ server: 's', apiKey: 'dzk_x', fetch: grantFetch([grant('first', 65_000), { status: 401, body: { error: 'invalid_token' } }]) })
   dzbot.events.subscribe(['order.created'], () => undefined, {
     onError: (e) => void errors.push(e),
-    eventSource: (url) => {
-      const source = new FakeEventSource(url)
+    eventSource: (url, token) => {
+      const source = new FakeEventSource(url, token)
       sources.push(source)
       return source
     },
@@ -111,8 +113,8 @@ it('ends the subscription when dzbot refuses the grant', async () => {
   vi.useRealTimers()
 })
 
-const recordSources = (sources: FakeEventSource[]) => (url: string) => {
-  const source = new FakeEventSource(url)
+const recordSources = (sources: FakeEventSource[]) => (url: string, token: string) => {
+  const source = new FakeEventSource(url, token)
   sources.push(source)
   return source
 }
@@ -167,6 +169,49 @@ it('starts one connection when the open one fails while a renewal is fetching it
   release()
   await vi.advanceTimersByTimeAsync(0)
   expect(sources).toHaveLength(2)
-  expect(new URL(sources[1].url).searchParams.get('authorization')).toBe('t2')
+  expect(sources[1].token).toBe('t2')
   vi.useRealTimers()
+})
+
+it('reads the event stream with the token in the Authorization header', async () => {
+  const requests: Array<{ url: string; headers: Record<string, string> }> = []
+  const encoder = new TextEncoder()
+  const fetch = async (url: string | URL | Request, init: RequestInit = {}) => {
+    requests.push({ url: String(url), headers: init.headers as Record<string, string> })
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(encoder.encode(':\n\nid: urn:uuid:1\ndata: {"a":\n'))
+        controller.enqueue(encoder.encode('data: 1}\n\nevent: mercure\ndata: {"type":"subscription"}\n\ndata: second\r\n\r\n'))
+        controller.close()
+      },
+    })
+    return new Response(body, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })
+  }
+  const messages: string[] = []
+  const errors: unknown[] = []
+  let opened = false
+  const stream = openEventStream('https://hub/.well-known/mercure?match=t', 'jwt', fetch as typeof globalThis.fetch)
+  stream.onopen = () => void (opened = true)
+  stream.onmessage = (message) => void messages.push(message.data)
+  stream.onerror = (error) => void errors.push(error)
+  await new Promise((resolve) => setTimeout(resolve, 10))
+
+  expect(requests[0].url).toBe('https://hub/.well-known/mercure?match=t')
+  expect(requests[0].headers.Authorization).toBe('Bearer jwt')
+  expect(opened).toBe(true)
+  expect(messages).toEqual(['{"a":\n1}', 'second'])
+  expect(errors).toHaveLength(1)
+  expect(stream.readyState).toBe(2)
+})
+
+it('reports and closes the stream when the hub refuses the token', async () => {
+  const errors: unknown[] = []
+  let opened = false
+  const stream = openEventStream('https://hub/', 'expired', (async () => new Response('', { status: 401 })) as typeof globalThis.fetch)
+  stream.onopen = () => void (opened = true)
+  stream.onerror = (error) => void errors.push(error)
+  await new Promise((resolve) => setTimeout(resolve, 10))
+  expect(opened).toBe(false)
+  expect(errors).toHaveLength(1)
+  expect(stream.readyState).toBe(2)
 })

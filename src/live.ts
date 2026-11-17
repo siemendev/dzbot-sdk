@@ -1,6 +1,7 @@
 import type { Dzbot } from './client'
 import type { AnyDzbotEvent } from './events'
 import { DzbotError } from './errors'
+import { openEventStream } from './eventStream'
 
 interface LiveGrant {
   hubUrl: string
@@ -9,7 +10,7 @@ interface LiveGrant {
   expiresAt: string
 }
 
-/** The part of the browser's EventSource the SDK needs; Node 22+ has one built in, older Node can pass the `eventsource` package. */
+/** One connection to the event hub, shaped like the browser's EventSource. */
 export interface EventSourceLike {
   readonly readyState: number
   onmessage: ((event: { data: string }) => void) | null
@@ -18,7 +19,8 @@ export interface EventSourceLike {
   close(): void
 }
 
-export type EventSourceFactory = (url: string) => EventSourceLike
+/** Opens a connection that sends `token` as `Authorization: Bearer`; the hub refuses tokens in the URL. */
+export type EventSourceFactory = (url: string, token: string) => EventSourceLike
 
 export interface SubscribeOptions {
   onError?: (error: unknown) => void
@@ -61,7 +63,7 @@ export class LiveEvents {
 
   /** Delivers every event of these names the caller may read, reconnecting by itself until `close()`. */
   subscribe(names: string[], handler: (event: AnyDzbotEvent) => void, options: SubscribeOptions = {}): Subscription {
-    const create = options.eventSource ?? defaultEventSource()
+    const create = options.eventSource ?? ((url: string, token: string) => openEventStream(url, token))
     const wanted = new Set(names)
     const seen: string[] = []
     let state: ConnectionState = { kind: 'granting', live: null }
@@ -138,9 +140,8 @@ export class LiveEvents {
 
     const open = (hubUrl: string, token: string, topics: string[], live: EventSourceLike | null) => {
       const params = new URLSearchParams()
-      for (const topic of topics) params.append('topic', topic)
-      params.append('authorization', token)
-      const next = create(`${hubUrl}?${params.toString()}`)
+      for (const topic of topics) params.append('match', topic)
+      const next = create(`${hubUrl}?${params.toString()}`, token)
       state = { kind: 'opening', live, next }
       next.onopen = () => {
         if (state.kind !== 'opening' || state.next !== next) return
@@ -182,12 +183,4 @@ export class LiveEvents {
     void grant(null)
     return { close: end }
   }
-}
-
-function defaultEventSource(): EventSourceFactory {
-  const EventSourceCtor = (globalThis as { EventSource?: new (url: string) => EventSourceLike }).EventSource
-  if (!EventSourceCtor) {
-    throw new Error('No EventSource here: use Node 22+, or pass { eventSource: (url) => new EventSource(url) } from the eventsource package')
-  }
-  return (url) => new EventSourceCtor(url)
 }

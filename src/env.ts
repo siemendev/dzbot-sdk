@@ -1,4 +1,4 @@
-export const SDK_VERSION = '0.3.2'
+export const SDK_VERSION = '0.4.0'
 
 export const DEFAULT_API_URL = 'https://api.dzbot.de'
 
